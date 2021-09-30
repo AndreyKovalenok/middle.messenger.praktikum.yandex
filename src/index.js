@@ -1,3 +1,3 @@
-import { hello } from './script'
+import 'handlebars'
 
-hello()
+
