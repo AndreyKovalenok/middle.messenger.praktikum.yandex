@@ -1,0 +1,21 @@
+{
+  "name": "messenger",
+  "version": "1.0.0",
+  "description": "yandex practicum project",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndreyKovalenok/middle.messenger.praktikum.yandex.git"
+  },
+  "author": "a.kovalenok679@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AndreyKovalenok/middle.messenger.praktikum.yandex/issues"
+  },
+  "homepage": "https://github.com/AndreyKovalenok/middle.messenger.praktikum.yandex#readme"
+}
