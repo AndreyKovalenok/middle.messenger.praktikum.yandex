@@ -5,7 +5,13 @@
   "main": "index.js",
   "dependencies": {},
   "devDependencies": {
-    "parcel": "^2.0.0-rc.0"
+    "autoprefixer": "^10.3.6",
+    "parcel": "^2.0.0-rc.0",
+    "postcss": "^8.3.8",
+    "postcss-cli": "^9.0.1",
+    "postcss-nested": "^5.0.6",
+    "postcss-sorting": "^6.0.0",
+    "precss": "^4.0.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
