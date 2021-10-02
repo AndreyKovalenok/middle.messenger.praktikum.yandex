@@ -1,0 +1,18 @@
+@import "normalize.scss";
+
+:root {
+  --primary: #3369f3;
+  --white: #ffffff;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+button {
+  font-family: Inter;
+  cursor: pointer;
+  border: none;
+}
