@@ -1,0 +1,32 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-size: 9px;
+  line-height: 1;
+  font-weight: medium;
+  color: var(--color-grey-900);
+  margin-bottom: 1px;
+}
+
+.input {
+  font-size: 13px;
+  font-weight: medium;
+  line-height: 1;
+  padding: 7px 0 8px;
+  border: none;
+  border-bottom: 1px solid var(--color-primary);
+}
+
+.inputError {
+  color: var(--color-error);
+}
+
+.error {
+  margin-top: 7px;
+  font-size: 8px;
+  line-height: 1;
+  color: var(--color-error);
+}

@@ -1,0 +1,27 @@
+$colors: (
+  "primary": #3369f3,
+  "white": #ffffff,
+  "grey-900": #999999,
+  "error": #ff2f2f,
+);
+
+@function cl($name, $opacity: false) {
+  @if $opacity {
+    @return rgba(var(--color-#{unquote($name)}--rgb), $opacity);
+  } @else {
+    @return var(--color-#{unquote($name)});
+  }
+}
+
+@function HexToRGB($hex) {
+  @return red($hex), green($hex), blue($hex);
+}
+
+:root {
+  @if $colors {
+    @each $key, $value in $colors {
+      --color-#{$key}: #{$value};
+      --color-#{$key}--rgb: #{HexToRGB($value)};
+    }
+  }
+}

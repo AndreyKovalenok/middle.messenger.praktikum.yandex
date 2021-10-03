@@ -1,9 +1,6 @@
-@import "normalize.scss";
-
-:root {
-  --primary: #3369f3;
-  --white: #ffffff;
-}
+@import "normalize";
+@import "mixins";
+@import "variables";
 
 *,
 *::after,
@@ -11,8 +8,11 @@
   box-sizing: border-box;
 }
 
-button {
+body {
   font-family: Inter;
+}
+
+button {
   cursor: pointer;
   border: none;
 }

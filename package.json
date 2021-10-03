@@ -32,5 +32,8 @@
   "bugs": {
     "url": "https://github.com/AndreyKovalenok/middle.messenger.praktikum.yandex/issues"
   },
-  "homepage": "https://github.com/AndreyKovalenok/middle.messenger.praktikum.yandex#readme"
+  "homepage": "https://github.com/AndreyKovalenok/middle.messenger.praktikum.yandex#readme",
+  "alias": {
+    "shared": "./src/shared"
+  }
 }
