@@ -1,0 +1,1 @@
+export { template as AuthFormTemplate } from './auth-form.tmpl'

@@ -34,6 +34,8 @@
   },
   "homepage": "https://github.com/AndreyKovalenok/middle.messenger.praktikum.yandex#readme",
   "alias": {
-    "shared": "./src/shared"
+    "shared": "./src/shared",
+    "entities": "./src/entities",
+    "features": "./src/features"
   }
 }
