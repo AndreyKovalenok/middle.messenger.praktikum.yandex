@@ -1,1 +1,1 @@
-export { AuthFormTemplate, RegisterFormTemplate } from './ui'
+export { AuthForm, RegisterFormTemplate } from './ui'

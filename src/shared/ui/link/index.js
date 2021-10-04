@@ -1,1 +1,1 @@
-export { template as LinkTemplate } from './link.tmpl'
+export { Link } from './link'

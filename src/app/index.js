@@ -1,22 +1,11 @@
-import { registerPartial, compile } from "handlebars";
+import { LoginPage } from 'pages'
+import { partials } from 'shared/ui'
 
-import { uiPartials } from "shared/ui"; 
-import { registerHandlebarsHelpers } from 'shared/config'
-import { AuthFormTemplate, RegisterFormTemplate } from 'features/auth'
+import './style/style.scss'
 
-registerHandlebarsHelpers()
-
-const partials = [...uiPartials];
-
-partials.forEach(({ name, template }) => registerPartial(name, template));
-
-const test = compile(`
-  <div>
-    ${RegisterFormTemplate}
-  </div>
-`)
+partials.forEach(partial => partial())
 
 const root = document.getElementById("root");
 
-root.innerHTML = test({});
+root.innerHTML = LoginPage();
    

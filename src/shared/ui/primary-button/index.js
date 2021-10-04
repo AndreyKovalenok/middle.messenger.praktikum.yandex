@@ -1,2 +1,2 @@
-export { template as PrimaryButtonTemplate } from "./primary-button.tmpl";
+export { PrimaryButton } from "./primary-button";
  

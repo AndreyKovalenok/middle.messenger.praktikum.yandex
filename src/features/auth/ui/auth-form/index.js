@@ -1,1 +1,1 @@
-export { template as AuthFormTemplate } from './auth-form.tmpl'
+export { AuthForm } from './auth-form'

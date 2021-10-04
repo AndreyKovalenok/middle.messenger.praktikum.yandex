@@ -4,24 +4,14 @@ export const template = `
   <div class="${styles.layout}">
     <p class="${styles.title}">Вход</p>
     <div class="${styles.input}">
-      {{> input 
-        label="Логин" 
-        type="text" 
-        value="ivanivanov"
-        placeholder="Введите логин"
-      }}
+      {{{ loginInput }}}
     </div>
     <div class="${styles.input}">
-      {{> input 
-        label="Пароль" 
-        type="password" 
-        value="qwerty"
-        placeholder="Введите пароль"
-      }}
+      {{{ passwordInput }}}
     </div>
     <div class="${styles.spacer}"></div>
-    {{> primaryButton children="Авторизоваться" }}
+    {{{ submitButton }}}
     <div class="${styles.hbox}"></div>
-    {{> link href="/register" children="Нет аккаунта?" }}
+    {{{ registrationLink }}}
   </div>
 `   

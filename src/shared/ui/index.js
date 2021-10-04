@@ -1,9 +1,8 @@
-import { PrimaryButtonTemplate } from "./primary-button"
-import { InputTemplate } from './input'
-import { LinkTemplate } from './link'
+import { AuthLayout } from './auth-layout'
 
-export const uiPartials = [
-  { name: "primaryButton", template: PrimaryButtonTemplate },
-  { name: "input", template: InputTemplate },
-  { name: "link", template: LinkTemplate },
-];
+export const partials = [AuthLayout]
+
+export { Input } from './input'
+export { PrimaryButton } from './primary-button'
+export { Link } from './link'
+

@@ -2,7 +2,10 @@
   "name": "messenger",
   "version": "1.0.0",
   "description": "yandex practicum project",
-  "main": "index.js",
+  "main": "dist/index.html",
+  "targets": {
+    "main": false
+  },
   "dependencies": {
     "handlebars": "^4.7.7",
     "normalize": "^0.3.1"
@@ -21,7 +24,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "./node_modules/.bin/parcel static/index.html --port 3000"
+    "start": "./node_modules/.bin/parcel serve ./static/**/*.html --port 3000 --no-cache",
+    "build": "./node_modules/.bin/parcel build ./static/index.html"
   },
   "repository": {
     "type": "git",
@@ -36,6 +40,7 @@
   "alias": {
     "shared": "./src/shared",
     "entities": "./src/entities",
-    "features": "./src/features"
+    "features": "./src/features",
+    "pages": "./src/pages"
   }
 }

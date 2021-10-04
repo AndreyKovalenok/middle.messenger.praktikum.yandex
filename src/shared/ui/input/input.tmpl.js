@@ -15,4 +15,4 @@ export const template = `
       <span class=${styles.error}>{{ errorMessage }}</span>
     {{/if}}
   </div>
-`
+`  
