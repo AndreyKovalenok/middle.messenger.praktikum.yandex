@@ -1,6 +1,6 @@
-import { AuthLayout } from './auth-layout'
+import { BlancLayout } from './blanc-layout'
 
-export const partials = [AuthLayout]
+export const partials = [BlancLayout]
 
 export { Input } from './input'
 export { PrimaryButton } from './primary-button'

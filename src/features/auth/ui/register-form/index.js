@@ -1,1 +1,1 @@
-export { template as RegisterFormTemplate } from './register-form.tmpl'
+export { RegisterForm } from './register-form'
