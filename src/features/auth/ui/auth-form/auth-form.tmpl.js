@@ -22,6 +22,6 @@ export const template = `
     <div class="${styles.spacer}"></div>
     {{> primaryButton children="Авторизоваться" }}
     <div class="${styles.hbox}"></div>
-    {{> link link="/register" children="Нет аккаунта?" }}
+    {{> link href="/register" children="Нет аккаунта?" }}
   </div>
-`  
+`   

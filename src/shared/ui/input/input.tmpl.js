@@ -11,8 +11,8 @@ export const template = `
       placeholder="{{ placeholder }}"
       class="${styles.input}{{#if error}} ${styles.inputError}{{/if}}" 
     />
-    {{#if error}}
-      <span class=${styles.error}>{{ error }}</span>
+    {{#if errorMessage}}
+      <span class=${styles.error}>{{ errorMessage }}</span>
     {{/if}}
   </div>
 `

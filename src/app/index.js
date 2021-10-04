@@ -2,8 +2,7 @@ import { registerPartial, compile } from "handlebars";
 
 import { uiPartials } from "shared/ui"; 
 import { registerHandlebarsHelpers } from 'shared/config'
-
-import { AuthFormTemplate } from 'features/auth'
+import { AuthFormTemplate, RegisterFormTemplate } from 'features/auth'
 
 registerHandlebarsHelpers()
 
@@ -13,11 +12,11 @@ partials.forEach(({ name, template }) => registerPartial(name, template));
 
 const test = compile(`
   <div>
-    ${AuthFormTemplate}
+    ${RegisterFormTemplate}
   </div>
 `)
 
 const root = document.getElementById("root");
 
 root.innerHTML = test({});
- 
+   
