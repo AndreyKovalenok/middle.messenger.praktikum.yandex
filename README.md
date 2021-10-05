@@ -24,6 +24,5 @@ https://gallant-ardinghelli-f9388c.netlify.app/
 
 ## Используемые технологии
 
-- Шаблонизатор [handlebars](https://handlebarsjs.com/)
-- Архитектура [feature sliced](https://feature-sliced.design/)
+- Шаблонизатор - [handlebars](https://handlebarsjs.com/)
 - CSS - [PostCss](https://postcss.org/)

@@ -16,10 +16,6 @@ const root = document.getElementById("root");
 
 const locationPathname = window.location.pathname
 
-if (locationPathname === '/') {
-  window.location.replace('/login')
-}
-
 const baseRoutes = {
   '/login': LoginPage,
   '/registration': RegisterPage,
@@ -31,4 +27,4 @@ const baseRoutes = {
 
 const currentPage = Object.keys(baseRoutes).find((key) => locationPathname.includes(key))
    
-root.innerHTML = currentPage? baseRoutes[currentPage]()  : Page404();
+root.innerHTML =  baseRoutes[currentPage]() 
