@@ -29,6 +29,6 @@ const baseRoutes = {
   '/chat': ChatPage 
 }
 
-const currentPage = baseRoutes[locationPathname]
+const currentPage = Object.keys(baseRoutes).find((key) => locationPathname.includes(key))
    
-root.innerHTML = currentPage?.() ?? Page404();
+root.innerHTML = currentPage? baseRoutes[currentPage]()  : Page404();

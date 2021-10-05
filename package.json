@@ -11,6 +11,7 @@
     "normalize": "^0.3.1"
   },
   "devDependencies": {
+    "@parcel/transformer-sass": "2.0.0-nightly.852",
     "autoprefixer": "^10.3.6",
     "express": "^4.17.1",
     "parcel": "^2.0.0-nightly.850",
@@ -25,8 +26,9 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "./node_modules/.bin/parcel serve ./static/**/*.html --port 3000 --no-cache",
-    "build": "./node_modules/.bin/parcel build ./static/index.html"
+    "dev": "./node_modules/.bin/parcel serve ./static/**/*.html --port 3000 --no-cache",
+    "build": "./node_modules/.bin/parcel build ./static/**/*.html",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
