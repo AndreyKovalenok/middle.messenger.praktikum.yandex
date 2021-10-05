@@ -1,0 +1,50 @@
+.button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 130px;
+  height: 130px;
+  background-color: var(--color-grey-300);
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.button:hover {
+  & > .layer {
+    opacity: 0.5;
+  }
+
+  & > .text {
+    opacity: 1;
+  }
+}
+
+.layer {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--color-black);
+  transition: 0.3s opacity;
+  opacity: 0;
+  border-radius: 50%;
+}
+
+.text {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: 0;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  color: var(--color-white);
+  font-size: 13px;
+  line-height: 14px;
+  font-weight: 500;
+  max-width: 64px;
+  transition: 0.3s opacity;
+  opacity: 0;
+}
