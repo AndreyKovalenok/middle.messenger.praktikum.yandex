@@ -1,4 +1,4 @@
-import styles from './styles.scss'
+import * as styles from './styles.scss'
 
 export const template = `
   <div class="${styles.wrapper}">
