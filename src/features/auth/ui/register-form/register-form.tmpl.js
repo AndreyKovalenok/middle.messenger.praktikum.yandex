@@ -1,7 +1,8 @@
 import styles from './style.scss'
 
 export const template = `
-  <div class="${styles.layout}">
+  <form>
+    <div class="${styles.layout}">
     <p class="${styles.title}">Регистрация</p>
     <div class="${styles.input}">
       {{{ emailInput }}}
@@ -28,5 +29,6 @@ export const template = `
     {{{ submitButton }}}
     <div class="${styles.hbox}"></div>
     {{{ loginLink }}}
-  </div>
+    </div>
+  </form>
 ` 

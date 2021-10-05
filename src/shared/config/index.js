@@ -1,1 +1,0 @@
-export { registerHandlebarsHelpers } from './handlebars-helpers'
