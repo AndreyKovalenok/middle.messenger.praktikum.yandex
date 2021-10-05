@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.3.6",
+    "express": "^4.17.1",
     "parcel": "^2.0.0-nightly.850",
     "postcss": "^8.3.8",
     "postcss-cli": "^9.0.1",
