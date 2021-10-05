@@ -3,7 +3,8 @@ import {
   RegisterPage, 
   Page500,
   Page404,
-  ProfilePage
+  ProfilePage,
+  ChatPage
 } from 'pages'
 import { partials } from 'shared/ui'
 
@@ -24,7 +25,8 @@ const baseRoutes = {
   '/registration': RegisterPage,
   '/profile': ProfilePage,
   '/500': Page500,
-  '/400': Page404
+  '/400': Page404,
+  '/chat': ChatPage 
 }
 
 const currentPage = baseRoutes[locationPathname]
