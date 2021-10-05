@@ -8,6 +8,7 @@ $colors: (
   "grey-300": #efefef,
   "grey-100": #1e1e1e,
   "error": #ff2f2f,
+  "red": #ff0000,
 );
 
 @function cl($name, $opacity: false) {
