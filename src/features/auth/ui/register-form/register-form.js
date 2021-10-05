@@ -9,6 +9,7 @@ const EmailInput = Input({
   type: "email",
   value: "pochta@yandex.ru",
   placeholder: "Введите почту",
+  name: 'email'
 })
 
 const LoginInput = Input({
@@ -16,6 +17,7 @@ const LoginInput = Input({
   type: "text",
   value: "ivanivanov",
   placeholder: "Введите логин",
+  name: 'login'
 })
 
 const NameInput = Input({
@@ -23,12 +25,14 @@ const NameInput = Input({
   type: "text",
   value: "Иван",
   placeholder: "Введите ваше имя",
+  name: 'first_name'
 })
 const SurnameInput = Input({
   label: "Фамилия",
   type: "text",
   value: "Иванов",
   placeholder: "Введите вашу фамилию",
+  name: 'second_name'
 })
 
 const PhoneInput = Input({
@@ -36,6 +40,7 @@ const PhoneInput = Input({
   type: "tel",
   value: "+7 (909) 967 30 30",
   placeholder: "Введите номер телефона",
+  name: "phone"
 })
 
 const PasswordInput = Input({
@@ -44,6 +49,7 @@ const PasswordInput = Input({
   value: "qwerty",
   placeholder: "Введите пароль",
   error: "true",
+  name: 'password'
 })
 
 const RepeatPasswordInput = Input({
@@ -52,7 +58,8 @@ const RepeatPasswordInput = Input({
   value: "qwerty",
   placeholder: "Повторите пароль",
   error: "true",
-  errorMessage: "Пароли не совпадают"
+  errorMessage: "Пароли не совпадают",
+  name: 'repeat_password'
 })
 
 const SubmitButton = PrimaryButton({

@@ -9,6 +9,7 @@ export const template = `
       type="{{ type }}" 
       value="{{ value }}" 
       placeholder="{{ placeholder }}"
+      name={{ name }}
       class="${styles.input}{{#if error}} ${styles.inputError}{{/if}}" 
     />
     {{#if errorMessage}}

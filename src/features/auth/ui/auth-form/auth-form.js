@@ -11,6 +11,7 @@ const LoginInput = Input({
   type: "text" ,
   value: "ivanivanov",
   placeholder: "Введите логин",
+  name: 'login'
 })
 
 const PasswordInput = Input({
@@ -18,6 +19,7 @@ const PasswordInput = Input({
   type: "password",
   value: "qwerty",
   placeholder: "Введите пароль",
+  name: 'password'
 })
 
 const SubmitButton = PrimaryButton({
