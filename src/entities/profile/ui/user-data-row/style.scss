@@ -1,0 +1,22 @@
+.row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 0;
+}
+
+.border {
+  border-bottom: 1px solid var(--color-grey-400);
+}
+
+.label {
+  font-size: 13px;
+  line-height: 1;
+  font-weight: 500;
+}
+
+.value {
+  font-size: 13px;
+  line-height: 1;
+  color: var(--color-grey-900);
+}
