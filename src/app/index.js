@@ -2,7 +2,8 @@ import {
   LoginPage, 
   RegisterPage, 
   Page500,
-  Page404
+  Page404,
+  ProfilePage
 } from 'pages'
 import { partials } from 'shared/ui'
 
@@ -21,6 +22,7 @@ if (locationPathname === '/') {
 const baseRoutes = {
   '/login': LoginPage,
   '/registration': RegisterPage,
+  '/profile': ProfilePage,
   '/500': Page500,
   '/400': Page404
 }
