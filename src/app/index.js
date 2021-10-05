@@ -1,4 +1,4 @@
-import { LoginPage, RegisterPage } from 'pages'
+import { LoginPage, RegisterPage, Page500 } from 'pages'
 import { partials } from 'shared/ui'
 
 import './style/style.scss'
@@ -7,5 +7,5 @@ partials.forEach(partial => partial())
 
 const root = document.getElementById("root");
 
-root.innerHTML = RegisterPage();
+root.innerHTML = Page500();
    

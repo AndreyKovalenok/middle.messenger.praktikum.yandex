@@ -5,4 +5,4 @@ export const partials = [BlancLayout]
 export { Input } from './input'
 export { PrimaryButton } from './primary-button'
 export { Link } from './link'
-
+export { ErrorPageContent } from './error-page-content'
