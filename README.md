@@ -1,3 +1,5 @@
+Sprint 1 - [PR](https://github.com/AndreyKovalenok/middle.messenger.praktikum.yandex/pull/1)
+
 ## Команды
 
 - dev: запуск дев сервера на 3000-ом порту
