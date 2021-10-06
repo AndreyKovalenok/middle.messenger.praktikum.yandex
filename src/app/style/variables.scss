@@ -1,14 +1,15 @@
 $colors: (
   "primary": #3369f3,
-  "white": #ffffff,
-  "black": #000000,
-  "grey-900": #999999,
-  "grey-500": #fbfbfb,
-  "grey-400": #eaeaea,
-  "grey-300": #efefef,
-  "grey-100": #1e1e1e,
+  "primary-button-text": #ffffff,
+  "avatar-button-text": #ffffff,
+  "avatar-button-background": #efefef,
+  "additional-background": #000000,
+  "input-value": #999999,
+  "aside-button-background": #fbfbfb,
+  "border": #eaeaea,
+  "text": #1e1e1e,
   "error": #ff2f2f,
-  "red": #ff0000,
+  "text-button-additional-text": #ff0000,
 );
 
 @function cl($name, $opacity: false) {
