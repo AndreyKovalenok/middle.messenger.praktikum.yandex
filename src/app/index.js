@@ -21,7 +21,7 @@ const baseRoutes = {
   '/registration': RegisterPage,
   '/profile': ProfilePage,
   '/500': Page500,
-  '/400': Page404,
+  '/404': Page404,
   '/chat': ChatPage 
 }
 
