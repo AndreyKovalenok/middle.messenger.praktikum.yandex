@@ -1,0 +1,19 @@
+@import "normalize";
+@import "mixins";
+@import "variables";
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Inter;
+  color: var(--color-text);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+}

@@ -1,0 +1,20 @@
+.wrapper {
+  width: 100%;
+  max-width: 400px;
+}
+
+.input {
+  &:not(:last-of-type) {
+    margin-bottom: 16px;
+  }
+}
+
+.spacer {
+  height: 48px;
+}
+
+.button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}

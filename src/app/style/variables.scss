@@ -1,0 +1,34 @@
+$colors: (
+  "primary": #3369f3,
+  "primary-button-text": #ffffff,
+  "avatar-button-text": #ffffff,
+  "avatar-button-background": #efefef,
+  "additional-background": #000000,
+  "input-value": #999999,
+  "aside-button-background": #fbfbfb,
+  "border": #eaeaea,
+  "text": #1e1e1e,
+  "error": #ff2f2f,
+  "text-button-additional-text": #ff0000,
+);
+
+@function cl($name, $opacity: false) {
+  @if $opacity {
+    @return rgba(var(--color-#{unquote($name)}--rgb), $opacity);
+  } @else {
+    @return var(--color-#{unquote($name)});
+  }
+}
+
+@function HexToRGB($hex) {
+  @return red($hex), green($hex), blue($hex);
+}
+
+:root {
+  @if $colors {
+    @each $key, $value in $colors {
+      --color-#{$key}: #{$value};
+      --color-#{$key}--rgb: #{HexToRGB($value)};
+    }
+  }
+}

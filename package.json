@@ -1,0 +1,48 @@
+{
+  "name": "messenger",
+  "version": "1.0.0",
+  "description": "yandex practicum project",
+  "main": "dist/index.html",
+  "targets": {
+    "main": false
+  },
+  "dependencies": {
+    "handlebars": "^4.7.7",
+    "normalize": "^0.3.1"
+  },
+  "devDependencies": {
+    "@parcel/transformer-sass": "2.0.0-nightly.852",
+    "autoprefixer": "^10.3.6",
+    "express": "^4.17.1",
+    "parcel": "^2.0.0-nightly.850",
+    "postcss": "^8.3.8",
+    "postcss-cli": "^9.0.1",
+    "postcss-modules": "^4.2.2",
+    "postcss-nested": "^5.0.6",
+    "postcss-sorting": "^6.0.0",
+    "posthtml-parser": "^0.10.1",
+    "precss": "^4.0.0",
+    "typescript": "^4.4.3"
+  },
+  "scripts": {
+    "dev": "./node_modules/.bin/parcel serve ./static/**/*.html --port 3000 --no-cache",
+    "build": "./node_modules/.bin/parcel build ./static/**/*.html",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndreyKovalenok/middle.messenger.praktikum.yandex.git"
+  },
+  "author": "a.kovalenok679@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AndreyKovalenok/middle.messenger.praktikum.yandex/issues"
+  },
+  "homepage": "https://github.com/AndreyKovalenok/middle.messenger.praktikum.yandex#readme",
+  "alias": {
+    "shared": "./src/shared",
+    "entities": "./src/entities",
+    "features": "./src/features",
+    "pages": "./src/pages"
+  }
+}
