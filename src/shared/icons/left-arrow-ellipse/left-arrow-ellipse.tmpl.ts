@@ -4,4 +4,4 @@ export const template = `
     <rect x="20" y="14.8" width="11" height="1.6" transform="rotate(-180 20 14.8)" fill="white"/>
     <path d="M13 19L9 14L13 9" stroke="white" stroke-width="1.6"/>
   </svg>
-`
+`;
