@@ -1,4 +1,4 @@
-import * as styles from './styles.scss'
+import * as styles from "./styles.scss";
 
 export const template = `
   <div class="${styles.wrapper}">
@@ -6,4 +6,4 @@ export const template = `
     <p class="${styles.description}">{{ description }}</p>
     {{{ link }}}
   </div>
-`
+`;
