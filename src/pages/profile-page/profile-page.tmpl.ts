@@ -1,4 +1,4 @@
-import * as styles from './style.scss'
+import * as styles from "./style.scss";
 
 export const template = `
   {{#> blanc-layout}}
@@ -15,4 +15,4 @@ export const template = `
       </div>
     </div>
   {{/blanc-layout}}
-`
+`;

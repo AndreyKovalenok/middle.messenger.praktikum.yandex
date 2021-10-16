@@ -4,6 +4,8 @@ import { template } from "./error-page-content.tmpl";
 
 type Props = {
   link: string;
+  title: string;
+  description: string;
 };
 
 const render = Handlebars.compile(template);
