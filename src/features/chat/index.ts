@@ -1,1 +1,7 @@
-export { Chats, GoBackButton, SearchInput, ChatHeader } from "./ui";
+export {
+  Chats,
+  GoBackButton,
+  SearchInput,
+  ChatHeader,
+  ChatActions,
+} from "./ui";

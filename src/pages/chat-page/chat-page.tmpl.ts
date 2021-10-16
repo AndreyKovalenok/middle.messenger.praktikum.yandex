@@ -24,8 +24,13 @@ export const template = `
           {{{ chatHeader }}}
           <div class=${styles.divider}></div>
         </div>
-        <div></div>
-        <div></div>
+        <div class=${styles.chatContent}>
+        
+        </div>
+        <div class=${styles.chatActions}>
+          <div class=${styles.divider}></div> 
+          {{{ chatActions }}}
+        </div>
       </div>
     </div>
   {{/blanc-layout}}

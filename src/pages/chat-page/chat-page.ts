@@ -1,6 +1,12 @@
 import Handlebars from "handlebars";
 
-import { Chats, GoBackButton, SearchInput, ChatHeader } from "features/chat";
+import {
+  Chats,
+  GoBackButton,
+  SearchInput,
+  ChatHeader,
+  ChatActions,
+} from "features/chat";
 
 import { template } from "./chat-page.tmpl";
 
@@ -24,15 +30,17 @@ const chatHeader = ChatHeader({
   avatarSrc: null,
   title: "Вадим",
 });
+const chatActions = ChatActions();
 
 type RenderProps = {
   chats: string;
   goBackButton: string;
   searchInput: string;
   chatHeader: string;
+  chatActions: string;
 };
 
 const render = Handlebars.compile<RenderProps>(template);
 
 export const ChatPage = () =>
-  render({ chats, goBackButton, searchInput, chatHeader });
+  render({ chats, goBackButton, searchInput, chatHeader, chatActions });

@@ -45,3 +45,12 @@
 .chatHeader {
   width: 100%;
 }
+
+.chatContent {
+  flex: 1;
+  overflow: auto;
+}
+
+.chatActions {
+  width: 100%;
+}
