@@ -4,9 +4,11 @@ import { template } from "./text-button.tmpl";
 
 type Props = {
   children: string;
+  type?: string;
   red?: boolean;
 };
 
-const render = Handlebars.compile(template);
+const render = Handlebars.compile<Props>(template);
 
-export const TextButton = (props: Props) => render(props);
+export const TextButton = ({ type = "button", ...props }: Props) =>
+  render({ type, ...props });

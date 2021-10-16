@@ -1,6 +1,6 @@
-import { BlancImage } from 'shared/icons'
+import { BlancImage } from "shared/icons";
 
-import * as styles from './style.scss'
+import * as styles from "./style.scss";
 
 export const template = `
   <button type="button" class="${styles.button}">
@@ -8,4 +8,4 @@ export const template = `
     <div class="${styles.layer}"></div>
     <p class="${styles.text}">Поменять аватар</p>
   </button>
-`
+`;

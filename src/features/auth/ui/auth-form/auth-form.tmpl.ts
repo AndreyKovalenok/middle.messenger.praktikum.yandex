@@ -1,4 +1,4 @@
-import * as styles from './style.scss'
+import * as styles from "./style.scss";
 
 export const template = `
   <form>
@@ -16,4 +16,4 @@ export const template = `
       {{{ registrationLink }}}
     </div>
   </form>
-`   
+`;

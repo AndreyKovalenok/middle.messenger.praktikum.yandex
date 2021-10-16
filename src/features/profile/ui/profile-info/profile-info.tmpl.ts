@@ -1,4 +1,4 @@
-import * as styles from './style.scss'
+import * as styles from "./style.scss";
 
 export const template = `
   <div class="${styles.profileInfo}">
@@ -9,4 +9,4 @@ export const template = `
       <div class="${styles.row}">{{{ logoutButton }}}</div>
     </div>
   </div>
-` 
+`;

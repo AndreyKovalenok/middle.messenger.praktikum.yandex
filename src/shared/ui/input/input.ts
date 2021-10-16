@@ -8,7 +8,7 @@ type Props = {
   value: string;
   placeholder: string;
   name: string;
-  errorMessage: string;
+  errorMessage?: string;
   error?: boolean;
 };
 

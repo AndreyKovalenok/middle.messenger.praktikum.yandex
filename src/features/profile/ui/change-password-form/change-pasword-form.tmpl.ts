@@ -1,4 +1,4 @@
-import * as styles from './style.scss'
+import * as styles from "./style.scss";
 
 export const template = `
   <div class="${styles.wrapper}">
@@ -12,4 +12,4 @@ export const template = `
       </div>
     </form>
   </div>
-`
+`;
