@@ -3,6 +3,7 @@ import * as styles from "./style.scss";
 export const template = `
   {{#>blanc-layout}}
     <div class=${styles.wrapper}>
+
       <div class=${styles.aside}>
         <div class=${styles.asideHeader}>
           <div class=${styles.headerButtonWrapper}>
@@ -17,7 +18,14 @@ export const template = `
           {{{ chats }}}
         </div>
       </div>
+
       <div class=${styles.content}>
+        <div class=${styles.chatHeader}>
+          {{{ chatHeader }}}
+          <div class=${styles.divider}></div>
+        </div>
+        <div></div>
+        <div></div>
       </div>
     </div>
   {{/blanc-layout}}

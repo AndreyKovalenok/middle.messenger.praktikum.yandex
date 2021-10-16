@@ -11,6 +11,7 @@ $colors: (
   "error": #ff2f2f,
   "text-button-additional-text": #ff0000,
   "chat-item-hover": #e4edfd,
+  "hover-button": #f5f5f5,
 );
 
 @function cl($name, $opacity: false) {
