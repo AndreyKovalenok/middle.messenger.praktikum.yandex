@@ -7,6 +7,7 @@ import {
   ChatHeader,
   ChatActions,
 } from "features/chat";
+import { Messages } from "entities/chat";
 
 import { template } from "./chat-page.tmpl";
 
@@ -31,6 +32,7 @@ const chatHeader = ChatHeader({
   title: "Вадим",
 });
 const chatActions = ChatActions();
+const chatMessages = Messages();
 
 type RenderProps = {
   chats: string;
@@ -38,9 +40,17 @@ type RenderProps = {
   searchInput: string;
   chatHeader: string;
   chatActions: string;
+  chatMessages: string;
 };
 
 const render = Handlebars.compile<RenderProps>(template);
 
 export const ChatPage = () =>
-  render({ chats, goBackButton, searchInput, chatHeader, chatActions });
+  render({
+    chats,
+    goBackButton,
+    searchInput,
+    chatHeader,
+    chatActions,
+    chatMessages,
+  });

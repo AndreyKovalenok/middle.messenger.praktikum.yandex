@@ -25,7 +25,7 @@ export const template = `
           <div class=${styles.divider}></div>
         </div>
         <div class=${styles.chatContent}>
-        
+          {{{ chatMessages }}}
         </div>
         <div class=${styles.chatActions}>
           <div class=${styles.divider}></div> 

@@ -1,3 +1,3 @@
-export { ChatItem } from "./ui";
+export { ChatItem, Messages } from "./ui";
 
 export type { TChatItem } from "./types";
