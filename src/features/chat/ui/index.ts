@@ -1,1 +1,3 @@
 export { Chats } from "./chats";
+export { GoBackButton } from "./go-back-button";
+export { SearchInput } from "./search-input";
