@@ -1,1 +1,1 @@
-export { Chats, ChatItemButton } from "./ui";
+export { Chats } from "./ui";

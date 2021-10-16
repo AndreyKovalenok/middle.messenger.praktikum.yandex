@@ -16,7 +16,7 @@ export const template = `
       </div>
       <div class=${styles.messageRow}>
         <span class=${styles.message}>{{ message }}</span>
-        <div class=${styles.badge}>
+        <div>
           {{{ badge }}}
         </div>
       </div>

@@ -4,15 +4,11 @@ import { Badge } from "shared/ui";
 
 import { template } from "./chat-item.tmpl";
 
+import type { TChatItem } from "../../types";
+
 const render = Handlebars.compile<RenderProps>(template);
 
-type Props = {
-  avatar: string | null;
-  title: string;
-  time: string;
-  message: string;
-  unreadMessages: number;
-};
+type Props = {} & TChatItem;
 
 type RenderProps = Omit<Props, "unreadMessages"> & {
   badge: string;
