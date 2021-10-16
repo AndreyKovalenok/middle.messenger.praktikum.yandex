@@ -1,6 +1,6 @@
 import Handlebars from "handlebars";
 
-import { Badge } from "shared/ui";
+import { Badge, Avatar } from "shared/ui";
 
 import { template } from "./chat-item.tmpl";
 
@@ -10,9 +10,16 @@ const render = Handlebars.compile<RenderProps>(template);
 
 type Props = {} & TChatItem;
 
-type RenderProps = Omit<Props, "unreadMessages"> & {
+type RenderProps = Omit<Props, "unreadMessages" | "avatar"> & {
   badge: string;
+  avatar: string;
 };
 
-export const ChatItem = ({ unreadMessages, ...props }: Props) =>
-  render({ ...props, badge: Badge({ children: String(unreadMessages) }) });
+export const ChatItem = ({ unreadMessages, avatar, ...props }: Props) =>
+  render({
+    ...props,
+    badge: Badge({ children: String(unreadMessages) }),
+    avatar: Avatar({
+      src: avatar,
+    }),
+  });

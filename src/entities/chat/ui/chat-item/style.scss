@@ -5,21 +5,8 @@
 }
 
 .avatar {
-  height: 100%;
-  width: 47px;
   margin-right: 10px;
-  border-radius: 50%;
-  overflow: hidden;
-}
-
-.image {
-  object-fit: contain;
-}
-
-.fill {
-  background-color: var(--color-avatar-button-background);
-  width: 100%;
-  height: 100%;
+  width: 47px;
 }
 
 .content {

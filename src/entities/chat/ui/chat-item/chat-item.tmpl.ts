@@ -3,11 +3,7 @@ import * as styles from "./style.scss";
 export const template = `
   <div class=${styles.item}>
     <div class=${styles.avatar}>
-    {{#if avatar}}
-      <img src={{ avatar }} alt="" class=${styles.image} />
-    {{else}}
-      <div class=${styles.fill}></div>
-    {{/if}}
+      {{{ avatar }}}
     </div>
     <div class=${styles.content}>
       <div class=${styles.titleRow}>
