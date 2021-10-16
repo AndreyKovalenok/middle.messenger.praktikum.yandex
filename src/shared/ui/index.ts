@@ -7,3 +7,4 @@ export { PrimaryButton } from "./primary-button";
 export { Link } from "./link";
 export { ErrorPageContent } from "./error-page-content";
 export { TextButton } from "./text-button";
+export { Badge } from "./badge";
