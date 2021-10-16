@@ -1,0 +1,10 @@
+.button {
+  padding: 10px;
+  background-color: transparent;
+  display: flex;
+  transition: 0.3s background-color;
+
+  &:hover {
+    background-color: var(--color-chat-item-hover);
+  }
+}
