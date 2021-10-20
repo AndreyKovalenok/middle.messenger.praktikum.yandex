@@ -4,7 +4,7 @@ import { Input, PrimaryButton } from "shared/ui";
 
 import { template } from "./change-pasword-form.tmpl";
 
-const oldPasswordInput = Input({
+const oldPasswordInput = new Input({
   type: "password",
   value: "qwerty",
   placeholder: "Введите старый пароль",
@@ -12,7 +12,7 @@ const oldPasswordInput = Input({
   label: "Старый пароль",
 });
 
-const newPasswordInput = Input({
+const newPasswordInput = new Input({
   type: "password",
   value: "qwerty",
   placeholder: "Введите новый пароль",
@@ -20,7 +20,7 @@ const newPasswordInput = Input({
   label: "Новый пароль",
 });
 
-const repeatNewPasswordInput = Input({
+const repeatNewPasswordInput = new Input({
   type: "password",
   value: "qwerty",
   placeholder: "Повторите новый пароль",
@@ -43,8 +43,8 @@ const render = Handlebars.compile<RenderProps>(template);
 
 export const ChangePasswordForm = () =>
   render({
-    oldPasswordInput,
-    newPasswordInput,
-    repeatNewPasswordInput,
+    oldPasswordInput: "",
+    newPasswordInput: "",
+    repeatNewPasswordInput: "",
     submitButton,
   });

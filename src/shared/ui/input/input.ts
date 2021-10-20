@@ -1,4 +1,5 @@
 import Handlebars from "handlebars";
+import { Block } from "shared/utils";
 
 import { template } from "./input.tmpl";
 
@@ -10,8 +11,17 @@ type Props = {
   name: string;
   errorMessage?: string;
   error?: boolean;
+  events?: any;
 };
 
 const render = Handlebars.compile(template);
 
-export const Input = (props: Props) => render(props);
+export class Input extends Block<Props> {
+  constructor(props: Props) {
+    super(props);
+  }
+
+  render() {
+    return template;
+  }
+}

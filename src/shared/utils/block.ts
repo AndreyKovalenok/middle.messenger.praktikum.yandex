@@ -1,15 +1,15 @@
+import Handlebars from "handlebars";
+
 import { EventBus } from "./event-bus";
+import { createElement } from "./create-element";
 
-type TMeta<T> = {
-  tagName: keyof HTMLElementTagNameMap;
-  props: T;
-};
-
-type TEvents = Record<string, EventListenerOrEventListenerObject>;
-
-export class Block<T extends { events?: TEvents } = {}> {
+export class Block<
+  T extends Record<string, any> = Record<string, any>,
+  C extends string = string
+> {
   eventBus: any;
   props: T;
+  components: Record<string, Node>;
 
   static EVENTS = {
     INIT: "init",
@@ -18,23 +18,14 @@ export class Block<T extends { events?: TEvents } = {}> {
     FLOW_RENDER: "flow:render",
   };
 
-  _element: HTMLElement | null = null;
-  _meta: TMeta<T> | null = null;
+  _element: HTMLElement | Element | null = null;
 
-  /** JSDoc
-   * @param {string} tagName
-   * @param {Object} props
-   *
-   * @returns {void}
-   */
-  constructor(tagName: keyof HTMLElementTagNameMap = "div", props: T) {
+  constructor(props: T, components?: Record<C, Node>) {
     const eventBus = new EventBus();
-    this._meta = {
-      tagName,
-      props,
-    };
 
     this.props = this._makePropsProxy(props);
+
+    this.components = components ?? {};
 
     this.eventBus = () => eventBus;
 
@@ -49,18 +40,7 @@ export class Block<T extends { events?: TEvents } = {}> {
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
-  _createResources() {
-    if (!this._meta) {
-      throw new Error("Название компонента не определено");
-    }
-
-    const { tagName } = this._meta;
-
-    this._element = this._createDocumentElement(tagName);
-  }
-
   init() {
-    this._createResources();
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
   }
 
@@ -69,7 +49,6 @@ export class Block<T extends { events?: TEvents } = {}> {
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
 
-  // Может переопределять пользователь, необязательно трогать
   componentDidMount(oldProps: T) {}
 
   _componentDidUpdate(oldProps: T, newProps: T) {
@@ -80,7 +59,6 @@ export class Block<T extends { events?: TEvents } = {}> {
     }
   }
 
-  // Может переопределять пользователь, необязательно трогать
   componentDidUpdate(oldProps: T, newProps: T) {
     return true;
   }
@@ -97,17 +75,35 @@ export class Block<T extends { events?: TEvents } = {}> {
   }
 
   _render() {
-    const block = this.render();
-    // Этот небезопасный метод для упрощения логики
-    // Используйте шаблонизатор из npm или напишите свой безопасный
-    // Нужно не в строку компилировать (или делать это правильно),
-    // либо сразу в DOM-элементы возвращать из compile DOM-ноду
+    const block = Handlebars.compile(this.render());
     this._removeEvents();
+
+    if (this._element) {
+      this._element = null;
+      this._element = createElement(block(this.props));
+    } else {
+      this._element = createElement(block(this.props));
+    }
+
     this._addEvents();
+
+    this._renderComponents();
+  }
+
+  _renderComponents() {
+    Object.entries(this.components).forEach(([name, node]) => {
+      console.log(`node`, node);
+      const plug = this._element?.querySelector(`[data-component="${name}"]`);
+      if (plug) {
+        plug.replaceWith(node);
+      }
+    });
   }
 
   // Может переопределять пользователь, необязательно трогать
-  render() {}
+  render(): string {
+    return "";
+  }
 
   _addEvents() {
     const { events = {} } = this.props;
@@ -130,12 +126,10 @@ export class Block<T extends { events?: TEvents } = {}> {
   }
 
   getContent() {
-    return this.element;
+    return this.element as HTMLElement;
   }
 
   _makePropsProxy(props: T) {
-    // Можно и так передать this
-    // Такой способ больше не применяется с приходом ES6+
     const self = this;
 
     return new Proxy(props, {
@@ -151,10 +145,5 @@ export class Block<T extends { events?: TEvents } = {}> {
         throw new Error("Нет доступа");
       },
     });
-  }
-
-  _createDocumentElement(tagName: keyof HTMLElementTagNameMap) {
-    // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
-    return document.createElement(tagName);
   }
 }

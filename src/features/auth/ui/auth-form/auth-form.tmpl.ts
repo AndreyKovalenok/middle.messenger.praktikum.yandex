@@ -5,7 +5,7 @@ export const template = `
     <div class="${styles.layout}">
       <p class="${styles.title}">Вход</p>
       <div class="${styles.input}">
-        {{{ loginInput }}}
+        <div data-component="loginInput"></div>
       </div>
       <div class="${styles.input}">
         {{{ passwordInput }}}

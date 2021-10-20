@@ -4,7 +4,7 @@ import { Input, PrimaryButton, Link } from "shared/ui";
 
 import { template } from "./register-form.tmpl";
 
-const EmailInput = Input({
+const EmailInput = new Input({
   label: "Почта",
   type: "email",
   value: "pochta@yandex.ru",
@@ -12,7 +12,7 @@ const EmailInput = Input({
   name: "email",
 });
 
-const LoginInput = Input({
+const LoginInput = new Input({
   label: "Логин",
   type: "text",
   value: "ivanivanov",
@@ -20,14 +20,14 @@ const LoginInput = Input({
   name: "login",
 });
 
-const NameInput = Input({
+const NameInput = new Input({
   label: "Имя",
   type: "text",
   value: "Иван",
   placeholder: "Введите ваше имя",
   name: "first_name",
 });
-const SurnameInput = Input({
+const SurnameInput = new Input({
   label: "Фамилия",
   type: "text",
   value: "Иванов",
@@ -35,7 +35,7 @@ const SurnameInput = Input({
   name: "second_name",
 });
 
-const PhoneInput = Input({
+const PhoneInput = new Input({
   label: "Телефон",
   type: "tel",
   value: "+7 (909) 967 30 30",
@@ -43,7 +43,7 @@ const PhoneInput = Input({
   name: "phone",
 });
 
-const PasswordInput = Input({
+const PasswordInput = new Input({
   label: "Пароль",
   type: "password",
   value: "qwerty",
@@ -52,7 +52,7 @@ const PasswordInput = Input({
   name: "password",
 });
 
-const RepeatPasswordInput = Input({
+const RepeatPasswordInput = new Input({
   label: "Пароль (ещё раз)",
   type: "password",
   value: "qwerty",
@@ -87,13 +87,13 @@ type RenderProps = {
 
 export const RegisterForm = () =>
   render({
-    emailInput: EmailInput,
-    loginInput: LoginInput,
-    nameInput: NameInput,
-    surnameInput: SurnameInput,
-    phoneInput: PhoneInput,
-    passwordInput: PasswordInput,
-    repeatPasswordInput: RepeatPasswordInput,
-    submitButton: SubmitButton,
-    loginLink: LoginLink,
+    emailInput: "",
+    loginInput: "",
+    nameInput: "",
+    surnameInput: "",
+    phoneInput: "",
+    passwordInput: "",
+    repeatPasswordInput: "",
+    submitButton: "",
+    loginLink: "",
   });

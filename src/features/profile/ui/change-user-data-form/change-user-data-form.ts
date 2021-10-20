@@ -4,7 +4,7 @@ import { template } from "./change-user-data-form.tmpl";
 
 import { Input, PrimaryButton } from "shared/ui";
 
-const emailInput = Input({
+const emailInput = new Input({
   type: "email",
   value: "pochta@yandex.ru",
   placeholder: "Введите почту",
@@ -12,7 +12,7 @@ const emailInput = Input({
   label: "Почта",
 });
 
-const loginInput = Input({
+const loginInput = new Input({
   type: "text",
   value: "ivanivanov",
   placeholder: "Введите логин",
@@ -20,7 +20,7 @@ const loginInput = Input({
   label: "Логин",
 });
 
-const nameInput = Input({
+const nameInput = new Input({
   type: "text",
   value: "Иван",
   placeholder: "Введите имя",
@@ -28,7 +28,7 @@ const nameInput = Input({
   label: "Имя",
 });
 
-const surnameInput = Input({
+const surnameInput = new Input({
   type: "text",
   value: "Иванов",
   placeholder: "Введите фамилию",
@@ -36,7 +36,7 @@ const surnameInput = Input({
   label: "Фамилия",
 });
 
-const displayNameInput = Input({
+const displayNameInput = new Input({
   type: "text",
   value: "Иван",
   placeholder: "Введите имя в чате",
@@ -44,7 +44,7 @@ const displayNameInput = Input({
   label: "Имя в чате",
 });
 
-const phoneInput = Input({
+const phoneInput = new Input({
   type: "tel",
   value: "+7 (909) 967 30 30",
   placeholder: "Введите телефон",
@@ -70,11 +70,11 @@ const render = Handlebars.compile<RenderProps>(template);
 
 export const ChangeUserDataForm = () =>
   render({
-    emailInput,
-    loginInput,
-    nameInput,
-    surnameInput,
-    displayNameInput,
-    phoneInput,
+    emailInput: "",
+    loginInput: "",
+    nameInput: "",
+    surnameInput: "",
+    displayNameInput: "",
+    phoneInput: "",
     submitButton,
   });

@@ -1,20 +1,11 @@
 import Handlebars from "handlebars";
 
 import { Input, PrimaryButton, Link } from "shared/ui";
+import { Block } from "shared/utils";
 
 import { template } from "./auth-form.tmpl";
 
-const render = Handlebars.compile<RenderProps>(template);
-
-const LoginInput = Input({
-  label: "Логин",
-  type: "text",
-  value: "ivanivanov",
-  placeholder: "Введите логин",
-  name: "login",
-});
-
-const PasswordInput = Input({
+const PasswordInput = new Input({
   label: "Пароль",
   type: "password",
   value: "qwerty",
@@ -31,17 +22,56 @@ const RegistrationLink = Link({
   children: "Нет аккаунта?",
 });
 
+type TComponent = "loginInput";
+const input = new Input({
+  label: "Логин",
+  type: "text",
+  value: "ivanivanov",
+  placeholder: "Введите логин",
+  name: "login",
+  events: {
+    click: function () {
+      console.log(`input.props`, input.props.events);
+      input.setProps({
+        ...input.props,
+        label: "123",
+      });
+    },
+  },
+});
+
+type Props = {
+  value: string;
+};
+
 type RenderProps = {
   loginInput: string;
   passwordInput: string;
   submitButton: string;
   registrationLink: string;
 };
+export class AuthForm extends Block<Props, TComponent> {
+  constructor(props: Props) {
+    super(props, {
+      loginInput: new Input({
+        label: "Логин",
+        type: "text",
+        value: props.value,
+        placeholder: "Введите логин",
+        name: "login",
+        events: {
+          click: () => {
+            this.setProps({
+              ...this.props,
+              value: "123",
+            });
+          },
+        },
+      }).getContent(),
+    });
+  }
 
-export const AuthForm = () =>
-  render({
-    loginInput: LoginInput,
-    passwordInput: PasswordInput,
-    submitButton: SubmitButton,
-    registrationLink: RegistrationLink,
-  });
+  render() {
+    return template;
+  }
+}
