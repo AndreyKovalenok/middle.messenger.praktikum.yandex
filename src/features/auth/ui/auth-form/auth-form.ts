@@ -1,9 +1,9 @@
-import { Input, PrimaryButton, Link } from "shared/ui";
+import { InputField, PrimaryButton, Link } from "shared/ui";
 import { Block } from "shared/utils";
 
 import { template } from "./auth-form.tmpl";
 
-const PasswordInput = new Input({
+const PasswordInput = new InputField({
   label: "Пароль",
   type: "password",
   value: "qwerty",
@@ -34,7 +34,7 @@ export class AuthForm extends Block<Props, RenderProps> {
   constructor(props: Props) {
     super({
       ...props,
-      loginInput: new Input({
+      loginInput: new InputField({
         label: "Логин",
         type: "text",
         value: props.value,
@@ -42,17 +42,11 @@ export class AuthForm extends Block<Props, RenderProps> {
         name: "login",
         events: {
           input: function (evt: any) {
-            console.log(evt.target.value);
+            console.log(this);
           },
         },
       }),
     });
-
-    setTimeout(() => {
-      this.setProps({
-        value: "321",
-      });
-    }, 3000);
   }
 
   render() {

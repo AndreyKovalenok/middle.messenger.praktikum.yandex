@@ -1,6 +1,6 @@
 import { Block } from "shared/utils";
 
-import { template } from "./input.tmpl";
+import { template } from "./input-field.tmpl";
 
 type Props = {
   label: string;
@@ -13,7 +13,7 @@ type Props = {
   events?: any;
 };
 
-export class Input extends Block<Props> {
+export class InputField extends Block<Props> {
   constructor(props: Props) {
     super(props);
   }

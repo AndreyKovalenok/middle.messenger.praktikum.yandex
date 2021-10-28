@@ -2,9 +2,9 @@ import Handlebars from "handlebars";
 
 import { template } from "./change-user-data-form.tmpl";
 
-import { Input, PrimaryButton } from "shared/ui";
+import { InputField, PrimaryButton } from "shared/ui";
 
-const emailInput = new Input({
+const emailInput = new InputField({
   type: "email",
   value: "pochta@yandex.ru",
   placeholder: "Введите почту",
@@ -12,7 +12,7 @@ const emailInput = new Input({
   label: "Почта",
 });
 
-const loginInput = new Input({
+const loginInput = new InputField({
   type: "text",
   value: "ivanivanov",
   placeholder: "Введите логин",
@@ -20,7 +20,7 @@ const loginInput = new Input({
   label: "Логин",
 });
 
-const nameInput = new Input({
+const nameInput = new InputField({
   type: "text",
   value: "Иван",
   placeholder: "Введите имя",
@@ -28,7 +28,7 @@ const nameInput = new Input({
   label: "Имя",
 });
 
-const surnameInput = new Input({
+const surnameInput = new InputField({
   type: "text",
   value: "Иванов",
   placeholder: "Введите фамилию",
@@ -36,7 +36,7 @@ const surnameInput = new Input({
   label: "Фамилия",
 });
 
-const displayNameInput = new Input({
+const displayNameInput = new InputField({
   type: "text",
   value: "Иван",
   placeholder: "Введите имя в чате",
@@ -44,7 +44,7 @@ const displayNameInput = new Input({
   label: "Имя в чате",
 });
 
-const phoneInput = new Input({
+const phoneInput = new InputField({
   type: "tel",
   value: "+7 (909) 967 30 30",
   placeholder: "Введите телефон",

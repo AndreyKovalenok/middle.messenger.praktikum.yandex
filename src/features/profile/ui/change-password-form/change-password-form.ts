@@ -1,10 +1,10 @@
 import Handlebars from "handlebars";
 
-import { Input, PrimaryButton } from "shared/ui";
+import { InputField, PrimaryButton } from "shared/ui";
 
 import { template } from "./change-pasword-form.tmpl";
 
-const oldPasswordInput = new Input({
+const oldPasswordInput = new InputField({
   type: "password",
   value: "qwerty",
   placeholder: "Введите старый пароль",
@@ -12,7 +12,7 @@ const oldPasswordInput = new Input({
   label: "Старый пароль",
 });
 
-const newPasswordInput = new Input({
+const newPasswordInput = new InputField({
   type: "password",
   value: "qwerty",
   placeholder: "Введите новый пароль",
@@ -20,7 +20,7 @@ const newPasswordInput = new Input({
   label: "Новый пароль",
 });
 
-const repeatNewPasswordInput = new Input({
+const repeatNewPasswordInput = new InputField({
   type: "password",
   value: "qwerty",
   placeholder: "Повторите новый пароль",

@@ -106,11 +106,15 @@ export class Block<
     this._registerChildren();
 
     const renderHbs = Handlebars.compile(template);
+
+    this._removeEvents();
     const block = createElement(renderHbs(this.props));
+    this._element = block;
+    this._addEvents();
 
     Object.entries(this.children).forEach(([name, component]) => {
       const plug = block.querySelector(`[data-component="${name}"]`);
-      plug?.replaceWith(component.render() as Element);
+      plug?.replaceChildren(component.render() as Element);
     });
 
     return block;

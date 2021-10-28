@@ -1,10 +1,10 @@
 import Handlebars from "handlebars";
 
-import { Input, PrimaryButton, Link } from "shared/ui";
+import { InputField, PrimaryButton, Link } from "shared/ui";
 
 import { template } from "./register-form.tmpl";
 
-const EmailInput = new Input({
+const EmailInput = new InputField({
   label: "Почта",
   type: "email",
   value: "pochta@yandex.ru",
@@ -12,7 +12,7 @@ const EmailInput = new Input({
   name: "email",
 });
 
-const LoginInput = new Input({
+const LoginInput = new InputField({
   label: "Логин",
   type: "text",
   value: "ivanivanov",
@@ -20,14 +20,14 @@ const LoginInput = new Input({
   name: "login",
 });
 
-const NameInput = new Input({
+const NameInput = new InputField({
   label: "Имя",
   type: "text",
   value: "Иван",
   placeholder: "Введите ваше имя",
   name: "first_name",
 });
-const SurnameInput = new Input({
+const SurnameInput = new InputField({
   label: "Фамилия",
   type: "text",
   value: "Иванов",
@@ -35,7 +35,7 @@ const SurnameInput = new Input({
   name: "second_name",
 });
 
-const PhoneInput = new Input({
+const PhoneInput = new InputField({
   label: "Телефон",
   type: "tel",
   value: "+7 (909) 967 30 30",
@@ -43,7 +43,7 @@ const PhoneInput = new Input({
   name: "phone",
 });
 
-const PasswordInput = new Input({
+const PasswordInput = new InputField({
   label: "Пароль",
   type: "password",
   value: "qwerty",
@@ -52,7 +52,7 @@ const PasswordInput = new Input({
   name: "password",
 });
 
-const RepeatPasswordInput = new Input({
+const RepeatPasswordInput = new InputField({
   label: "Пароль (ещё раз)",
   type: "password",
   value: "qwerty",
