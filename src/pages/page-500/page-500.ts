@@ -15,7 +15,7 @@ export const Page500 = () =>
     content: ErrorPageContent({
       title: "500",
       description: "Мы уже фиксим",
-      link: Link({
+      link: new Link({
         href: "/chats",
         children: "Назад к чатам",
       }),

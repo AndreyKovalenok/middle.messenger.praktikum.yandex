@@ -15,7 +15,7 @@ export const Page404 = () =>
     content: ErrorPageContent({
       title: "404",
       description: "Не туда попали",
-      link: Link({
+      link: new Link({
         href: "/chats",
         children: "Назад к чатам",
       }),

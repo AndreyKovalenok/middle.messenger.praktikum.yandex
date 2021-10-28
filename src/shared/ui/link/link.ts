@@ -1,4 +1,4 @@
-import Handlebars from "handlebars";
+import { Block } from "shared/utils";
 
 import { template } from "./link.tmpl";
 
@@ -8,6 +8,12 @@ type Props = {
   isBlanc?: boolean;
 };
 
-const render = Handlebars.compile(template);
+export class Link extends Block<Props> {
+  constructor(props: Props) {
+    super(props);
+  }
 
-export const Link = (props: Props) => render(props);
+  render() {
+    return this.compile(template);
+  }
+}

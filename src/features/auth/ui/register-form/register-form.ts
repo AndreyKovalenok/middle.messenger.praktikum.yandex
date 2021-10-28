@@ -62,11 +62,11 @@ const RepeatPasswordInput = new InputField({
   name: "repeat_password",
 });
 
-const SubmitButton = PrimaryButton({
+const SubmitButton = new PrimaryButton({
   children: "Зарегистрироваться",
 });
 
-const LoginLink = Link({
+const LoginLink = new Link({
   href: "/auth",
   children: "Войти",
 });

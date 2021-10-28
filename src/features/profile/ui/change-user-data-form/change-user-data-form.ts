@@ -52,7 +52,7 @@ const phoneInput = new InputField({
   label: "Телефон",
 });
 
-const submitButton = PrimaryButton({
+const submitButton = new PrimaryButton({
   children: "Сохранить",
 });
 

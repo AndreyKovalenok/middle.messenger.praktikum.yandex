@@ -3,32 +3,15 @@ import { Block } from "shared/utils";
 
 import { template } from "./auth-form.tmpl";
 
-const PasswordInput = new InputField({
-  label: "Пароль",
-  type: "password",
-  value: "qwerty",
-  placeholder: "Введите пароль",
-  name: "password",
-});
-
-const SubmitButton = PrimaryButton({
-  children: "Авторизоваться",
-});
-
-const RegistrationLink = Link({
-  href: "/registration",
-  children: "Нет аккаунта?",
-});
-
 type Props = {
   value: string;
 };
 
 type RenderProps = {
   loginInput: any;
-  // passwordInput: string;
-  // submitButton: string;
-  // registrationLink: string;
+  passwordInput: any;
+  submitButton: any;
+  registrationLink: any;
 };
 export class AuthForm extends Block<Props, RenderProps> {
   constructor(props: Props) {
@@ -40,9 +23,29 @@ export class AuthForm extends Block<Props, RenderProps> {
         value: props.value,
         placeholder: "Введите логин",
         name: "login",
-        onChange: function (evt) {
+        onChange: () => {
           console.log("change");
         },
+      }),
+      passwordInput: new InputField({
+        label: "Пароль",
+        type: "password",
+        value: "qwerty",
+        placeholder: "Введите пароль",
+        name: "password",
+        onChange: () => {
+          console.log("change");
+        },
+      }),
+      submitButton: new PrimaryButton({
+        children: "Авторизоваться",
+        onClick: () => {
+          console.log("click");
+        },
+      }),
+      registrationLink: new Link({
+        href: "/registration",
+        children: "Нет аккаунта?",
       }),
     });
   }

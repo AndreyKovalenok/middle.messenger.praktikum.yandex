@@ -8,12 +8,12 @@ export const template = `
         <div data-component="loginInput"></div>
       </div>
       <div class="${styles.input}">
-        {{{ passwordInput }}}
-      </div>
+        <div data-component="passwordInput"></div>
+        </div>
       <div class="${styles.spacer}"></div>
-      {{{ submitButton }}}
+        <div data-component="submitButton"></div>
       <div class="${styles.hbox}"></div>
-      {{{ registrationLink }}}
+      <div data-component="registrationLink"></div>
     </div>
   </form>
 `;

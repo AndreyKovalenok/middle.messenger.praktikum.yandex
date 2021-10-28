@@ -1,4 +1,4 @@
-import Handlebars, { create } from "handlebars";
+import Handlebars from "handlebars";
 import { v4 } from "uuid";
 
 import { EventBus } from "./event-bus";
@@ -95,11 +95,7 @@ export class Block<
   }
 
   _render() {
-    this._removeEvents();
-
     this._element = this.render();
-
-    this._addEvents();
   }
 
   compile(template: string) {
@@ -114,6 +110,7 @@ export class Block<
 
     Object.entries(this.children).forEach(([name, component]) => {
       const plug = block.querySelector(`[data-component="${name}"]`);
+      component.setProps(component.props);
       plug?.replaceChildren(component.render() as Element);
     });
 

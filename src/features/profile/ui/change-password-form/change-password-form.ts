@@ -28,7 +28,7 @@ const repeatNewPasswordInput = new InputField({
   label: "Повторите новый пароль",
 });
 
-const submitButton = PrimaryButton({
+const submitButton = new PrimaryButton({
   children: "Сохранить",
 });
 

@@ -1,11 +1,25 @@
-import Handlebars from "handlebars";
+import { Block } from "shared/utils";
 
 import { template } from "./primary-button.tmpl";
 
 type Props = {
   children: string;
+  type?: string;
+  onClick: () => void;
 };
 
-const render = Handlebars.compile(template);
+export class PrimaryButton extends Block<Omit<Props, "onClick">> {
+  constructor({ onClick, type = "button", ...props }: Props) {
+    super({
+      ...props,
+      type,
+      events: {
+        click: onClick,
+      },
+    });
+  }
 
-export const PrimaryButton = (props: Props) => render(props);
+  render() {
+    return this.compile(template);
+  }
+}
