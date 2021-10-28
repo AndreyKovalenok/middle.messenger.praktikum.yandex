@@ -40,10 +40,8 @@ export class AuthForm extends Block<Props, RenderProps> {
         value: props.value,
         placeholder: "Введите логин",
         name: "login",
-        events: {
-          input: function (evt: any) {
-            console.log(this);
-          },
+        onChange: function (evt) {
+          console.log("change");
         },
       }),
     });

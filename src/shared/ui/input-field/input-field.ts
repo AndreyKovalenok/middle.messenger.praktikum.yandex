@@ -1,6 +1,7 @@
 import { Block } from "shared/utils";
 
 import { template } from "./input-field.tmpl";
+import { Input } from "../input";
 
 type Props = {
   label: string;
@@ -10,12 +11,21 @@ type Props = {
   name: string;
   errorMessage?: string;
   error?: boolean;
-  events?: any;
+  onChange: (evt: InputEvent) => void;
 };
 
-export class InputField extends Block<Props> {
+type RenderProps = {
+  input: any;
+};
+
+export class InputField extends Block<Props, RenderProps> {
   constructor(props: Props) {
-    super(props);
+    super({
+      ...props,
+      input: new Input({
+        ...props,
+      }),
+    });
   }
 
   render() {
