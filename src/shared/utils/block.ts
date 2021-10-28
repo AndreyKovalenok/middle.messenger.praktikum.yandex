@@ -1,15 +1,20 @@
-import Handlebars from "handlebars";
+import Handlebars, { create } from "handlebars";
+import { v4 } from "uuid";
 
 import { EventBus } from "./event-bus";
 import { createElement } from "./create-element";
 
+type TMeta<T> = {
+  props: T;
+};
+
 export class Block<
   T extends Record<string, any> = Record<string, any>,
-  C extends string = string
+  RenderProps extends Record<string, any> = Record<string, any>
 > {
   eventBus: any;
-  props: T;
-  components: Record<string, Node>;
+  props: T & RenderProps;
+  children: Record<string, Block>;
 
   static EVENTS = {
     INIT: "init",
@@ -19,15 +24,18 @@ export class Block<
   };
 
   _element: HTMLElement | Element | null = null;
+  _meta: TMeta<T> | null = null;
 
-  constructor(props: T, components?: Record<C, Node>) {
+  id = v4();
+
+  constructor(props: T & RenderProps) {
     const eventBus = new EventBus();
 
     this.props = this._makePropsProxy(props);
 
-    this.components = components ?? {};
-
     this.eventBus = () => eventBus;
+
+    this.children = {};
 
     this._registerEvents(eventBus);
     eventBus.emit(Block.EVENTS.INIT);
@@ -40,6 +48,8 @@ export class Block<
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
+  _createResources() {}
+
   init() {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
   }
@@ -49,6 +59,7 @@ export class Block<
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
 
+  // eslint-disable-next-line no-unused-vars
   componentDidMount(oldProps: T) {}
 
   _componentDidUpdate(oldProps: T, newProps: T) {
@@ -59,6 +70,7 @@ export class Block<
     }
   }
 
+  // eslint-disable-next-line no-unused-vars
   componentDidUpdate(oldProps: T, newProps: T) {
     return true;
   }
@@ -74,35 +86,39 @@ export class Block<
     return this._element;
   }
 
-  _render() {
-    const block = Handlebars.compile(this.render());
-    this._removeEvents();
-
-    if (this._element) {
-      this._element = null;
-      this._element = createElement(block(this.props));
-    } else {
-      this._element = createElement(block(this.props));
-    }
-
-    this._addEvents();
-
-    this._renderComponents();
-  }
-
-  _renderComponents() {
-    Object.entries(this.components).forEach(([name, node]) => {
-      console.log(`node`, node);
-      const plug = this._element?.querySelector(`[data-component="${name}"]`);
-      if (plug) {
-        plug.replaceWith(node);
+  _registerChildren() {
+    Object.entries(this.props).forEach(([name, prop]) => {
+      if (prop instanceof Block) {
+        this.children[name] = prop;
       }
     });
   }
 
+  _render() {
+    this._removeEvents();
+
+    this._element = this.render();
+
+    this._addEvents();
+  }
+
+  compile(template: string) {
+    this._registerChildren();
+
+    const renderHbs = Handlebars.compile(template);
+    const block = createElement(renderHbs(this.props));
+
+    Object.entries(this.children).forEach(([name, component]) => {
+      const plug = block.querySelector(`[data-component="${name}"]`);
+      plug?.replaceWith(component.render() as Element);
+    });
+
+    return block;
+  }
+
   // Может переопределять пользователь, необязательно трогать
-  render(): string {
-    return "";
+  render(): Element {
+    return new Element();
   }
 
   _addEvents() {
@@ -126,10 +142,10 @@ export class Block<
   }
 
   getContent() {
-    return this.element as HTMLElement;
+    return this.element;
   }
 
-  _makePropsProxy(props: T) {
+  _makePropsProxy(props: T & RenderProps) {
     const self = this;
 
     return new Proxy(props, {

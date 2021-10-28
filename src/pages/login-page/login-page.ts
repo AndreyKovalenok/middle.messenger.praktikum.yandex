@@ -1,25 +1,22 @@
-import Handlebars from "handlebars";
-
 import { AuthForm } from "features/auth";
 import { Block } from "shared/utils";
 
 import { template } from "./login-page.tmpl";
 
-type TComponents = "authForm";
+type RenderProps = {
+  authForm: any;
+};
 
-export class LoginPage extends Block<any, TComponents> {
+export class LoginPage extends Block<RenderProps> {
   constructor() {
-    super(
-      {},
-      {
-        authForm: new AuthForm({
-          value: "312",
-        }).getContent(),
-      }
-    );
+    super({
+      authForm: new AuthForm({
+        value: "123",
+      }),
+    });
   }
 
   render() {
-    return template;
+    return this.compile(template);
   }
 }

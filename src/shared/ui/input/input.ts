@@ -1,4 +1,3 @@
-import Handlebars from "handlebars";
 import { Block } from "shared/utils";
 
 import { template } from "./input.tmpl";
@@ -14,14 +13,12 @@ type Props = {
   events?: any;
 };
 
-const render = Handlebars.compile(template);
-
 export class Input extends Block<Props> {
   constructor(props: Props) {
     super(props);
   }
 
   render() {
-    return template;
+    return this.compile(template);
   }
 }
