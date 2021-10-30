@@ -1,71 +1,82 @@
-import Handlebars from "handlebars";
-
 import { UserDataRow } from "entities/profile";
 import { TextButton } from "shared/ui";
+import { Block } from "shared/utils";
 
 import { template } from "./profile-info.tmpl";
 
-const infoContent = `
-  ${UserDataRow({
-    label: "Почта",
-    value: "pochta@yandex.ru",
-    withBorder: true,
-  })}
-  ${UserDataRow({
-    label: "Логин",
-    value: "ivanivanov",
-    withBorder: true,
-  })}
-  ${UserDataRow({
-    label: "Имя",
-    value: "Иван",
-    withBorder: true,
-  })}
-  ${UserDataRow({
-    label: "Фамилия",
-    value: "Иванов",
-    withBorder: true,
-  })}
-  ${UserDataRow({
-    label: "Имя в чате",
-    value: "Иван",
-    withBorder: true,
-  })}
-  ${UserDataRow({
-    label: "Телефон",
-    value: "+7 (909) 967 30 30",
-  })}
-`;
-
-const changeDataButton = TextButton({
-  children: "Изменить данные",
-  type: "button",
-});
-
-const changePasswordButton = TextButton({
-  children: "Изменить пароль",
-  type: "button",
-});
-
-const logoutButton = TextButton({
-  children: "Выйти",
-  type: "button",
-  red: true,
-});
+type Props = {};
 
 type RenderProps = {
-  content: string;
-  changeDataButton: string;
-  changePasswordButton: string;
-  logoutButton: string;
+  emailComponent: any;
+  loginComponent: any;
+  nameComponent: any;
+  surnameComponent: any;
+  chatNameComponent: any;
+  phoneComponent: any;
+  changeDataButton: any;
+  changePasswordButton: any;
+  logoutButton: any;
 };
 
-const render = Handlebars.compile<RenderProps>(template);
+export class ProfileInfo extends Block<Props, RenderProps> {
+  constructor(props: Props) {
+    super({
+      ...props,
+      emailComponent: new UserDataRow({
+        label: "Почта",
+        value: "pochta@yandex.ru",
+        withBorder: true,
+      }),
+      loginComponent: new UserDataRow({
+        label: "Логин",
+        value: "ivanivanov",
+        withBorder: true,
+      }),
+      nameComponent: new UserDataRow({
+        label: "Имя",
+        value: "Иван",
+        withBorder: true,
+      }),
+      surnameComponent: new UserDataRow({
+        label: "Фамилия",
+        value: "Иванов",
+        withBorder: true,
+      }),
+      chatNameComponent: new UserDataRow({
+        label: "Имя в чате",
+        value: "Иван",
+        withBorder: true,
+      }),
+      phoneComponent: new UserDataRow({
+        label: "Телефон",
+        value: "+7 (909) 967 30 30",
+      }),
+      changeDataButton: new TextButton({
+        children: "Изменить данные",
+        type: "button",
+        onClick: () => {
+          console.log("click");
+        },
+      }),
+      changePasswordButton: new TextButton({
+        children: "Изменить пароль",
+        type: "button",
+        onClick: () => {
+          console.log("click");
+        },
+      }),
+      logoutButton: new TextButton({
+        children: "Выйти",
+        type: "button",
+        red: true,
+        onClick: () => {
+          console.log("click");
+        },
+      }),
+    });
+  }
 
-export const ProfileInfo = () =>
-  render({
-    content: infoContent,
-    changeDataButton,
-    changePasswordButton,
-    logoutButton,
-  });
+  render() {
+    return this.compile(template);
+  }
+}

@@ -1,27 +1,36 @@
-import Handlebars from "handlebars";
-
+import { Block } from "shared/utils";
 import { Avatar, IconButton } from "shared/ui";
 import { DotsIcon } from "shared/icons";
 
 import { template } from "./chat-header.tmpl";
-
-const render = Handlebars.compile<RenderProps>(template);
 
 type Props = {
   title: string;
   avatarSrc: string | null;
 };
 
-type RenderProps = Omit<Props, "avatarSrc"> & {
-  avatar: string;
-  actionsButton: string;
+type RenderProps = {
+  avatar: any;
+  actionsButton: any;
 };
 
-export const ChatHeader = ({ avatarSrc, ...props }: Props) =>
-  render({
-    ...props,
-    avatar: Avatar({ src: avatarSrc }),
-    actionsButton: IconButton({
-      icon: DotsIcon(),
-    }),
-  });
+export class ChatHeader extends Block<Props, RenderProps> {
+  constructor(props: Props) {
+    super({
+      ...props,
+      actionsButton: new IconButton({
+        icon: DotsIcon(),
+        onClick: () => {
+          console.log("click");
+        },
+      }),
+      avatar: new Avatar({
+        src: props.avatarSrc,
+      }),
+    });
+  }
+
+  render() {
+    return this.compile(template);
+  }
+}

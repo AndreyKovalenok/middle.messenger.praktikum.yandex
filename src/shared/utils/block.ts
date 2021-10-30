@@ -28,7 +28,7 @@ export class Block<
 
   id = v4();
 
-  constructor(props: T & RenderProps) {
+  constructor(props: T & RenderProps & { events?: Record<string, Function> }) {
     const eventBus = new EventBus();
 
     this.props = this._makePropsProxy(props);

@@ -5,30 +5,30 @@ export const template = `
     <div class="${styles.layout}">
     <p class="${styles.title}">Регистрация</p>
     <div class="${styles.input}">
-      {{{ emailInput }}}
+      <div data-component="emailInput"></div>
     </div>
     <div class="${styles.input}">
-      {{{ loginInput }}}
+      <div data-component="loginInput"></div>
     </div>
     <div class="${styles.input}">
-      {{{ nameInput }}}
+      <div data-component="nameInput"></div>
     </div>
     <div class="${styles.input}">
-      {{{ surnameInput }}}
+      <div data-component="surnameInput"></div>
     </div>
     <div class="${styles.input}">
-      {{{ phoneInput }}}
+      <div data-component="phoneInput"></div>
     </div>
     <div class="${styles.input}">
-      {{{ passwordInput }}}
+      <div data-component="passwordInput"></div>
     </div>
     <div class="${styles.input}">
-      {{{ repeatPasswordInput }}}
+      <div data-component="repeatPasswordInput"></div>
     </div>
     <div class="${styles.spacer}"></div>
-    {{{ submitButton }}}
+      <div data-component="submitButton"></div>
     <div class="${styles.hbox}"></div>
-    {{{ loginLink }}}
+      <div data-component="loginLink"></div>
     </div>
   </form>
 `;

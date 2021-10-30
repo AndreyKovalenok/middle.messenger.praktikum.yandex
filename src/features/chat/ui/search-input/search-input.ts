@@ -1,7 +1,22 @@
-import Handlebars from "handlebars";
+import { Block } from "shared/utils";
 
 import { template } from "./search-input.tmpl";
 
-const render = Handlebars.compile(template);
+type Props = {
+  onChange: () => void;
+};
 
-export const SearchInput = () => render({});
+export class SearchInput extends Block<Omit<Props, "onChange">> {
+  constructor({ onChange, ...props }: Props) {
+    super({
+      ...props,
+      events: {
+        change: onChange,
+      },
+    });
+  }
+
+  render() {
+    return this.compile(template);
+  }
+}

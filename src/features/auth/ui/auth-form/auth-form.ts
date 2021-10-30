@@ -3,9 +3,7 @@ import { Block } from "shared/utils";
 
 import { template } from "./auth-form.tmpl";
 
-type Props = {
-  value: string;
-};
+type Props = {};
 
 type RenderProps = {
   loginInput: any;
@@ -20,7 +18,7 @@ export class AuthForm extends Block<Props, RenderProps> {
       loginInput: new InputField({
         label: "Логин",
         type: "text",
-        value: props.value,
+        value: "qwerty",
         placeholder: "Введите логин",
         name: "login",
         onChange: () => {

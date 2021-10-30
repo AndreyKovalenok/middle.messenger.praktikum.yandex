@@ -3,15 +3,27 @@ import * as styles from "./style.scss";
 export const template = `
   <div class="${styles.wrapper}">
     <form>
-      <div class="${styles.input}">{{{ emailInput }}}</div>
-      <div class="${styles.input}">{{{ loginInput }}}</div>
-      <div class="${styles.input}">{{{ nameInput }}}</div>
-      <div class="${styles.input}">{{{ surnameInput }}}</div>
-      <div class="${styles.input}">{{{ displayNameInput }}}</div>
-      <div class="${styles.input}">{{{ phoneInput }}}</div>
+      <div class="${styles.input}">
+        <div data-component="emailInput"></div>
+      </div>
+      <div class="${styles.input}">
+        <div data-component="loginInput"></div>
+      </div>
+      <div class="${styles.input}">
+        <div data-component="nameInput"></div>
+      </div>
+      <div class="${styles.input}">
+        <div data-component="surnameInput"></div>
+      </div>
+      <div class="${styles.input}">
+        <div data-component="displayNameInput"></div>
+      </div>
+      <div class="${styles.input}">
+        <div data-component="phoneInput"></div>
+      </div>
       <div class="${styles.spacer}"></div>
       <div class="${styles.submit}">
-        {{{ submitButton }}}
+        <div data-component="submitButton"></div>
       </div>
     </form>
   </div>
