@@ -1,25 +1,31 @@
-import Handlebars from "handlebars";
-
 import { Badge, Avatar } from "shared/ui";
+import { Block } from "shared/utils";
 
 import { template } from "./chat-item.tmpl";
 
 import type { TChatItem } from "../../types";
 
-const render = Handlebars.compile<RenderProps>(template);
+type Props = TChatItem;
 
-type Props = {} & TChatItem;
-
-type RenderProps = Omit<Props, "unreadMessages" | "avatar"> & {
-  badge: string;
-  avatar: string;
+type RenderProps = {
+  badgeComponent: any;
+  avatarComponent: any;
 };
 
-export const ChatItem = ({ unreadMessages, avatar, ...props }: Props) =>
-  render({
-    ...props,
-    badge: Badge({ children: String(unreadMessages) }),
-    avatar: Avatar({
-      src: avatar,
-    }),
-  });
+export class ChatItem extends Block<Props, RenderProps> {
+  constructor(props: Props) {
+    super({
+      ...props,
+      avatarComponent: new Avatar({
+        src: props.avatar,
+      }),
+      badgeComponent: new Badge({
+        children: String(props.unreadMessages),
+      }),
+    });
+  }
+
+  render() {
+    return this.compile(template);
+  }
+}

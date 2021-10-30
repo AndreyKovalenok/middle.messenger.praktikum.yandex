@@ -1,4 +1,4 @@
-import Handlebars from "handlebars";
+import { Block } from "shared/utils";
 
 import { template } from "./user-data-row.tmpl";
 
@@ -8,6 +8,12 @@ type Props = {
   withBorder?: boolean;
 };
 
-const render = Handlebars.compile(template);
+export class UserDataRow extends Block<Props> {
+  constructor(props: Props) {
+    super(props);
+  }
 
-export const UserDataRow = (props: Props) => render(props);
+  render() {
+    return this.compile(template);
+  }
+}

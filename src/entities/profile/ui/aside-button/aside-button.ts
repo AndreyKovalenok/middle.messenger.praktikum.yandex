@@ -1,7 +1,22 @@
-import Handlebars from "handlebars";
+import { Block } from "shared/utils";
 
 import { template } from "./aside-button.tmpl";
 
-const render = Handlebars.compile(template);
+type Props = {
+  onClick: () => void;
+};
 
-export const AsideButton = () => render({});
+export class AsideButton extends Block<Omit<Props, "onClick">> {
+  constructor({ onClick, ...props }: Props) {
+    super({
+      ...props,
+      events: {
+        click: onClick,
+      },
+    });
+  }
+
+  render() {
+    return this.compile(template);
+  }
+}

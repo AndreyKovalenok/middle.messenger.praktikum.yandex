@@ -3,7 +3,7 @@ import * as styles from "./style.scss";
 export const template = `
   <div class=${styles.item}>
     <div class=${styles.avatar}>
-      {{{ avatar }}}
+      <div data-component="avatarComponent"></div>
     </div>
     <div class=${styles.content}>
       <div class=${styles.titleRow}>
@@ -13,7 +13,7 @@ export const template = `
       <div class=${styles.messageRow}>
         <span class=${styles.message}>{{ message }}</span>
         <div>
-          {{{ badge }}}
+          <div data-component="badgeComponent"></div>
         </div>
       </div>
       <div>

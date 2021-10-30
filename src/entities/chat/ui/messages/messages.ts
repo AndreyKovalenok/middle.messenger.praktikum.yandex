@@ -1,7 +1,15 @@
-import Handlebars from "handlebars";
+import { Block } from "shared/utils";
 
 import { template } from "./messages.tmpl";
 
-const render = Handlebars.compile(template);
+type Props = {};
 
-export const Messages = () => render({});
+export class Messages extends Block<Props> {
+  constructor(props: Props) {
+    super(props);
+  }
+
+  render() {
+    return this.compile(template);
+  }
+}
