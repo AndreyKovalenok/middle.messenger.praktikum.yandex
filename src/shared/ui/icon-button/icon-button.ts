@@ -1,11 +1,23 @@
-import Handlebars from "handlebars";
+import { Block } from "shared/utils";
 
 import { template } from "./icon-button.tmpl";
 
-const render = Handlebars.compile(template);
-
 type Props = {
   icon: string;
+  onClick: () => void;
 };
 
-export const IconButton = (props: Props) => render(props);
+export class IconButton extends Block<Omit<Props, "onClick">> {
+  constructor({ onClick, ...props }: Props) {
+    super({
+      ...props,
+      events: {
+        click: onClick,
+      },
+    });
+  }
+
+  render() {
+    return this.compile(template);
+  }
+}

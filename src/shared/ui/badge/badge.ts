@@ -1,11 +1,17 @@
-import Handlebars from "handlebars";
+import { Block } from "shared/utils";
 
 import { template } from "./badge.tmpl";
-
-const render = Handlebars.compile<Props>(template);
 
 type Props = {
   children: string;
 };
 
-export const Badge = (props: Props) => render(props);
+export class Badge extends Block<Props> {
+  constructor(props: Props) {
+    super(props);
+  }
+
+  render() {
+    return this.compile(template);
+  }
+}

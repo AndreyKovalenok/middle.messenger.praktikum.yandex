@@ -1,4 +1,4 @@
-import Handlebars from "handlebars";
+import { Block } from "shared/utils";
 
 import { template } from "./error-page-content.tmpl";
 
@@ -8,6 +8,12 @@ type Props = {
   description: string;
 };
 
-const render = Handlebars.compile(template);
+export class ErrorPageContent extends Block<Props> {
+  constructor(props: Props) {
+    super(props);
+  }
 
-export const ErrorPageContent = (props: Props) => render(props);
+  render() {
+    return this.compile(template);
+  }
+}

@@ -1,4 +1,4 @@
-import Handlebars from "handlebars";
+import { Block } from "shared/utils";
 
 import { template } from "./text-button.tmpl";
 
@@ -6,9 +6,15 @@ type Props = {
   children: string;
   type?: string;
   red?: boolean;
+  onClick: () => void;
 };
 
-const render = Handlebars.compile<Props>(template);
+export class TextButton extends Block<Omit<Props, "onClick">> {
+  constructor({ onClick, ...props }: Props) {
+    super({ ...props, events: { click: onClick } });
+  }
 
-export const TextButton = ({ type = "button", ...props }: Props) =>
-  render({ type, ...props });
+  render() {
+    return this.compile(template);
+  }
+}
