@@ -8,6 +8,6 @@ import "../style/style.scss";
 partials.forEach((p) => p());
 
 const page = new LoginPage();
-const pageContent = page.getContent();
+const pageContent = page.getContent() as Element;
 
-document.querySelector("#root")?.appendChild(pageContent);
+renderPage("root", pageContent);

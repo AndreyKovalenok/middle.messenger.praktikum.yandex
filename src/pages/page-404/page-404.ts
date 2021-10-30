@@ -1,23 +1,28 @@
-import Handlebars from "handlebars";
-
-import { ErrorPageContent, Link } from "shared/ui";
+import { ErrorPageContent } from "shared/ui";
+import { Block } from "shared/utils";
 
 import { template } from "./page-404.tmpl";
 
+type Props = {};
+
 type RenderProps = {
-  content: string;
+  content: any;
 };
 
-const render = Handlebars.compile<RenderProps>(template);
-
-export const Page404 = () =>
-  render({
-    content: ErrorPageContent({
-      title: "404",
-      description: "Не туда попали",
-      link: new Link({
+export class Page404 extends Block<Props, RenderProps> {
+  constructor(props: Props) {
+    super({
+      ...props,
+      content: new ErrorPageContent({
+        title: "404",
+        description: "Не туда попали",
         href: "/chats",
-        children: "Назад к чатам",
+        linkText: "Назад к чатам",
       }),
-    }),
-  });
+    });
+  }
+
+  render() {
+    return this.compile(template);
+  }
+}

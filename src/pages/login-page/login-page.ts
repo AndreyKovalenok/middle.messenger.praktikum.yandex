@@ -10,9 +10,7 @@ type RenderProps = {
 export class LoginPage extends Block<RenderProps> {
   constructor() {
     super({
-      authForm: new AuthForm({
-        value: "123",
-      }),
+      authForm: new AuthForm({}),
     });
   }
 

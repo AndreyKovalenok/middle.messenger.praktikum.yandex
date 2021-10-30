@@ -1,25 +1,31 @@
-import Handlebars from "handlebars";
-
 import { TChatItem } from "entities/chat";
+import { Block } from "shared/utils";
 
 import { template } from "./chats.tmpl";
 import { ChatItemButton } from "../chat-item-button";
-
-const render = Handlebars.compile<RenderProps>(template);
 
 type Props = {
   selectedId: string | null;
   chats: TChatItem[];
 };
 
-type RenderProps = { content: string };
+type RenderProps = { content: any };
 
-export const Chats = ({ chats, selectedId }: Props) => {
-  return render({
-    content: chats.reduce(
-      (acc, curr) =>
-        acc + ChatItemButton({ ...curr, isSelected: curr.id === selectedId }),
-      ""
-    ),
-  });
-};
+export class Chats extends Block<Props, RenderProps> {
+  constructor(props: Props) {
+    super({
+      ...props,
+      content: new ChatItemButton({
+        ...props.chats[0],
+        isSelected: false,
+        onClick: () => {
+          console.log("click");
+        },
+      }),
+    });
+  }
+
+  render() {
+    return this.compile(template);
+  }
+}

@@ -1,16 +1,29 @@
 import { Block } from "shared/utils";
 
+import { Link } from "../link";
+
 import { template } from "./error-page-content.tmpl";
 
 type Props = {
-  link: string;
   title: string;
   description: string;
+  href: string;
+  linkText: string;
 };
 
-export class ErrorPageContent extends Block<Props> {
+type RenderProps = {
+  link: any;
+};
+
+export class ErrorPageContent extends Block<Props, RenderProps> {
   constructor(props: Props) {
-    super(props);
+    super({
+      ...props,
+      link: new Link({
+        children: props.linkText,
+        href: props.href,
+      }),
+    });
   }
 
   render() {

@@ -1,4 +1,4 @@
-export const renderPage = (elementId: string, page: string) => {
+export const renderPage = (elementId: string, page: Element) => {
   const node = document.getElementById(elementId);
-  node?.insertAdjacentHTML("afterbegin", page);
+  node?.insertAdjacentElement("afterbegin", page);
 };

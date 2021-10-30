@@ -6,4 +6,7 @@ import "../style/style.scss";
 
 partials.forEach((p) => p());
 
-renderPage("root", RegisterPage());
+const page = new RegisterPage({});
+const pageContent = page.getContent() as Element;
+
+renderPage("root", pageContent);

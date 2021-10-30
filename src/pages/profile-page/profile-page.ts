@@ -1,34 +1,45 @@
-import Handlebars from "handlebars";
-
 import { AsideButton, AvatarButton } from "entities/profile";
 import {
   ProfileInfo,
   ChangePasswordForm,
   ChangeUserDataForm,
 } from "features/profile";
+import { Block } from "shared/utils";
 
 import { template } from "./profile-page.tmpl";
 
-const asideButton = AsideButton();
-const avatarButton = AvatarButton();
+// const changeUserDataForm = new ChangeUserDataForm({});
+// const changePasswordForm = new ChangePasswordForm({});
 
-const changeUserDataForm = ChangeUserDataForm();
-const changePasswordForm = ChangePasswordForm();
-const profileInfo = ProfileInfo();
+type Props = {};
 
 type RenderProps = {
   name: string;
-  asideButton: string;
-  profile: string;
-  avatar: string;
+  asideButton: any;
+  profile: any;
+  avatarButton: any;
 };
 
-const render = Handlebars.compile<RenderProps>(template);
+export class ProfilePage extends Block<Props, RenderProps> {
+  constructor(props: Props) {
+    super({
+      ...props,
+      asideButton: new AsideButton({
+        onClick: () => {
+          console.log("click");
+        },
+      }),
+      avatarButton: new AvatarButton({
+        onClick: () => {
+          console.log("click");
+        },
+      }),
+      profile: new ProfileInfo({}),
+      name: "Иван",
+    });
+  }
 
-export const ProfilePage = () =>
-  render({
-    name: "Иван",
-    asideButton,
-    profile: profileInfo,
-    avatar: avatarButton,
-  });
+  render() {
+    return this.compile(template);
+  }
+}

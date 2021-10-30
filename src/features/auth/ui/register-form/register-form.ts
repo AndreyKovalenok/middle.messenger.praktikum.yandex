@@ -2,6 +2,8 @@ import { Block } from "shared/utils";
 
 import { InputField, PrimaryButton, Link } from "shared/ui";
 
+import { template } from "./register-form.tmpl";
+
 type Props = {};
 
 type RenderProps = {
@@ -104,5 +106,9 @@ export class RegisterForm extends Block<Props, RenderProps> {
         children: "Войти",
       }),
     });
+  }
+
+  render() {
+    return this.compile(template);
   }
 }

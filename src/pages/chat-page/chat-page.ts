@@ -1,5 +1,3 @@
-import Handlebars from "handlebars";
-
 import {
   Chats,
   GoBackButton,
@@ -8,6 +6,7 @@ import {
   ChatActions,
 } from "features/chat";
 import { Messages } from "entities/chat";
+import { Block } from "shared/utils";
 
 import { template } from "./chat-page.tmpl";
 
@@ -21,36 +20,45 @@ const getChatMock = (index: number) => ({
   unreadMessages: 15000,
 });
 
-const chats = Chats({
-  selectedId: "1",
-  chats: Array.from(new Array(100), (_, index) => getChatMock(index)),
-});
-const goBackButton = GoBackButton();
-const searchInput = SearchInput();
-const chatHeader = ChatHeader({
-  avatarSrc: null,
-  title: "Вадим",
-});
-const chatActions = ChatActions();
-const chatMessages = Messages();
+type Props = {};
 
 type RenderProps = {
-  chats: string;
-  goBackButton: string;
-  searchInput: string;
-  chatHeader: string;
-  chatActions: string;
-  chatMessages: string;
+  chats: any;
+  goBackButton: any;
+  searchInput: any;
+  chatHeader: any;
+  chatActions: any;
+  chatMessages: any;
 };
 
-const render = Handlebars.compile<RenderProps>(template);
+export class ChatPage extends Block<Props, RenderProps> {
+  constructor(props: Props) {
+    super({
+      ...props,
+      goBackButton: new GoBackButton({
+        onClick: () => {
+          console.log("click");
+        },
+      }),
+      searchInput: new SearchInput({
+        onChange: () => {
+          console.log("change");
+        },
+      }),
+      chats: new Chats({
+        selectedId: "1",
+        chats: Array.from(new Array(100), (_, index) => getChatMock(index)),
+      }),
+      chatHeader: new ChatHeader({
+        avatarSrc: null,
+        title: "Вадим",
+      }),
+      chatMessages: new Messages({}),
+      chatActions: new ChatActions({}),
+    });
+  }
 
-export const ChatPage = () =>
-  render({
-    chats,
-    goBackButton,
-    searchInput,
-    chatHeader,
-    chatActions,
-    chatMessages,
-  });
+  render() {
+    return this.compile(template);
+  }
+}

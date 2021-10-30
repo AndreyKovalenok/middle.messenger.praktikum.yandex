@@ -4,6 +4,6 @@ export const template = `
   <div class="${styles.wrapper}">
     <p class="${styles.title}">{{ title }}</p>
     <p class="${styles.description}">{{ description }}</p>
-    {{{ link }}}
+    <div data-component="link"></div>
   </div>
 `;
