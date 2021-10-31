@@ -9,14 +9,16 @@ type Props = {
   name: string;
   error?: boolean;
   onChange: (evt: InputEvent) => void;
+  onBlur: (evt: InputEvent) => void;
 };
 
-export class Input extends Block<Omit<Props, "onChange">> {
-  constructor({ onChange, ...props }: Props) {
+export class Input extends Block<Omit<Props, "onChange" | "onBlur">> {
+  constructor({ onChange, onBlur, ...props }: Props) {
     super({
       ...props,
       events: {
         input: onChange,
+        blur: onBlur,
       },
     });
   }

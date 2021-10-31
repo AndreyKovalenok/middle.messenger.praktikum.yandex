@@ -12,6 +12,7 @@ type Props = {
   errorMessage?: string;
   error?: boolean;
   onChange: (evt: InputEvent) => void;
+  onBlur: (evt: InputEvent) => void;
 };
 
 type RenderProps = {
