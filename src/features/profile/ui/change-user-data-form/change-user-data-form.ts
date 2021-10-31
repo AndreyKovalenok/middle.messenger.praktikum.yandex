@@ -43,6 +43,7 @@ export class ChangeUserDataForm extends Block<Props, RenderProps> {
             email: (<HTMLInputElement>evt.target).value,
           };
         },
+        onBlur: () => {},
       }),
       loginInput: new InputField({
         type: "text",
@@ -56,6 +57,7 @@ export class ChangeUserDataForm extends Block<Props, RenderProps> {
             login: (<HTMLInputElement>evt.target).value,
           };
         },
+        onBlur: () => {},
       }),
       nameInput: new InputField({
         type: "text",
@@ -69,6 +71,7 @@ export class ChangeUserDataForm extends Block<Props, RenderProps> {
             first_name: (<HTMLInputElement>evt.target).value,
           };
         },
+        onBlur: () => {},
       }),
       surnameInput: new InputField({
         type: "text",
@@ -82,6 +85,7 @@ export class ChangeUserDataForm extends Block<Props, RenderProps> {
             second_name: (<HTMLInputElement>evt.target).value,
           };
         },
+        onBlur: () => {},
       }),
       displayNameInput: new InputField({
         type: "text",
@@ -95,6 +99,7 @@ export class ChangeUserDataForm extends Block<Props, RenderProps> {
             display_name: (<HTMLInputElement>evt.target).value,
           };
         },
+        onBlur: () => {},
       }),
       phoneInput: new InputField({
         type: "tel",
@@ -108,6 +113,7 @@ export class ChangeUserDataForm extends Block<Props, RenderProps> {
             phone: (<HTMLInputElement>evt.target).value,
           };
         },
+        onBlur: () => {},
       }),
       submitButton: new PrimaryButton({
         children: "Сохранить",

@@ -5,3 +5,4 @@ export { maxLength } from "./max-length";
 export { latinSymbols } from "./latin-symbols";
 export { someNumber } from "./some-number";
 export { someCapitalize } from "./some-capitalize";
+export { email } from "./email";

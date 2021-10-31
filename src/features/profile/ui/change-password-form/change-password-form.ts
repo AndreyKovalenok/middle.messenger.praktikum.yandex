@@ -37,6 +37,7 @@ export class ChangePasswordForm extends Block<Props, RenderProps> {
             oldPassword: (<HTMLInputElement>evt.target).value,
           };
         },
+        onBlur: () => {},
       }),
       newPasswordInput: new InputField({
         type: "password",
@@ -50,6 +51,7 @@ export class ChangePasswordForm extends Block<Props, RenderProps> {
             newPassword: (<HTMLInputElement>evt.target).value,
           };
         },
+        onBlur: () => {},
       }),
       repeatNewPasswordInput: new InputField({
         type: "password",
@@ -63,6 +65,7 @@ export class ChangePasswordForm extends Block<Props, RenderProps> {
             repeatNewPassword: (<HTMLInputElement>evt.target).value,
           };
         },
+        onBlur: () => {},
       }),
       submitButton: new PrimaryButton({
         children: "Сохранить",
