@@ -12,7 +12,13 @@
   },
   "devDependencies": {
     "@parcel/transformer-sass": "2.0.0-nightly.852",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/parser": "^4.33.0",
     "autoprefixer": "^10.3.6",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-prettier": "^4.0.0",
     "express": "^4.17.1",
     "parcel": "^2.0.0-nightly.850",
     "postcss": "^8.3.8",
@@ -22,12 +28,19 @@
     "postcss-sorting": "^6.0.0",
     "posthtml-parser": "^0.10.1",
     "precss": "^4.0.0",
+    "prettier": "2.4.1",
+    "stylelint": "^14.0.1",
+    "stylelint-config-sass-guidelines": "^8.0.0",
+    "stylelint-config-standard": "^23.0.0",
+    "stylelint-scss": "^4.0.0",
     "typescript": "^4.4.3"
   },
   "scripts": {
     "dev": "./node_modules/.bin/parcel serve ./static/**/*.html --port 3000 --no-cache",
     "build": "./node_modules/.bin/parcel build ./static/**/*.html",
-    "start": "node server.js"
+    "start": "node server.js",
+    "lint": "eslint \"src/**/*.ts\" --fix",
+    "lint:css": "stylelint **/*.css **/*.scss"
   },
   "repository": {
     "type": "git",

@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "strict": true,
+    "esModuleInterop": true,
+    "baseUrl": "./src",
+    "paths": {
+      "shared/*": ["./shared/*"],
+      "entities/*": ["./entities/*"]
+    }
+  }
+}

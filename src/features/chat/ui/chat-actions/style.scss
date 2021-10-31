@@ -1,0 +1,38 @@
+.wrapper {
+  padding: 10px 0;
+  display: flex;
+}
+
+.actionButton {
+  padding: 0;
+  background-color: transparent;
+}
+
+.input {
+  flex: 1;
+  margin: 0 10px;
+}
+
+.submitButton {
+  rotate: 180deg;
+  background-color: transparent;
+  padding: 0;
+}
+
+.textarea {
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 500;
+  color: var(--color-text);
+  background-color: var(--color-avatar-button-background);
+  border-radius: 30px;
+  border: none;
+  padding: 0;
+  width: 100%;
+  padding: 10px 20px;
+
+  &::placeholder {
+    color: var(--input-value);
+    opacity: 1;
+  }
+}
