@@ -2,6 +2,7 @@ import { Block } from "shared/utils";
 import { InputField, PrimaryButton } from "shared/ui";
 
 import { template } from "./change-user-data-form.tmpl";
+import type { TChangeUserDataForm } from "../../types";
 
 type Props = {};
 
@@ -15,77 +16,108 @@ type RenderProps = {
   submitButton: any;
 };
 
+const initialValues: TChangeUserDataForm = {
+  email: "pochta@yandex.ru",
+  login: "ivanivanov",
+  first_name: "Иван",
+  second_name: "Иванов",
+  display_name: "Иван",
+  phone: "+7 (909) 967 30 30",
+};
+
 export class ChangeUserDataForm extends Block<Props, RenderProps> {
+  form: TChangeUserDataForm;
+
   constructor(props: Props) {
     super({
       ...props,
       emailInput: new InputField({
         type: "email",
-        value: "pochta@yandex.ru",
+        value: initialValues.email,
         placeholder: "Введите почту",
         name: "email",
         label: "Почта",
-        onChange: () => {
-          console.log("change");
+        onChange: (evt) => {
+          this.form = {
+            ...this.form,
+            email: (<HTMLInputElement>evt.target).value,
+          };
         },
       }),
       loginInput: new InputField({
         type: "text",
-        value: "ivanivanov",
+        value: initialValues.login,
         placeholder: "Введите логин",
         name: "login",
         label: "Логин",
-        onChange: () => {
-          console.log("change");
+        onChange: (evt) => {
+          this.form = {
+            ...this.form,
+            login: (<HTMLInputElement>evt.target).value,
+          };
         },
       }),
       nameInput: new InputField({
         type: "text",
-        value: "Иван",
+        value: initialValues.first_name,
         placeholder: "Введите имя",
         name: "first_name",
         label: "Имя",
-        onChange: () => {
-          console.log("change");
+        onChange: (evt) => {
+          this.form = {
+            ...this.form,
+            first_name: (<HTMLInputElement>evt.target).value,
+          };
         },
       }),
       surnameInput: new InputField({
         type: "text",
-        value: "Иванов",
+        value: initialValues.second_name,
         placeholder: "Введите фамилию",
         name: "second_name",
         label: "Фамилия",
-        onChange: () => {
-          console.log("change");
+        onChange: (evt) => {
+          this.form = {
+            ...this.form,
+            second_name: (<HTMLInputElement>evt.target).value,
+          };
         },
       }),
       displayNameInput: new InputField({
         type: "text",
-        value: "Иван",
+        value: initialValues.display_name,
         placeholder: "Введите имя в чате",
         name: "display_name",
         label: "Имя в чате",
-        onChange: () => {
-          console.log("change");
+        onChange: (evt) => {
+          this.form = {
+            ...this.form,
+            display_name: (<HTMLInputElement>evt.target).value,
+          };
         },
       }),
       phoneInput: new InputField({
         type: "tel",
-        value: "+7 (909) 967 30 30",
+        value: initialValues.phone,
         placeholder: "Введите телефон",
         name: "phone",
         label: "Телефон",
-        onChange: () => {
-          console.log("change");
+        onChange: (evt) => {
+          this.form = {
+            ...this.form,
+            phone: (<HTMLInputElement>evt.target).value,
+          };
         },
       }),
       submitButton: new PrimaryButton({
         children: "Сохранить",
         onClick: () => {
-          console.log("click");
+          console.log(this.form);
         },
       }),
     });
+
+    this.form = initialValues;
   }
 
   render() {
