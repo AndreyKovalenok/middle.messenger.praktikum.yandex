@@ -1,9 +1,10 @@
 import { ProfilePage } from "pages";
-import { renderPage, registerPartials } from "shared/utils";
+import { renderPage } from "shared/utils";
 
+import { registerPage } from "../register-page";
 import "../style/style.scss";
 
-registerPartials();
+registerPage();
 
 const page = new ProfilePage({});
 const pageContent = page.getContent() as Element;

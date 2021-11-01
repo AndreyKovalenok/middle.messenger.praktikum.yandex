@@ -1,9 +1,10 @@
 import { RegisterPage } from "pages";
-import { renderPage, registerPartials } from "shared/utils";
+import { renderPage } from "shared/utils";
 
 import "../style/style.scss";
+import { registerPage } from "../register-page";
 
-registerPartials();
+registerPage();
 
 const page = new RegisterPage({});
 const pageContent = page.getContent() as Element;
