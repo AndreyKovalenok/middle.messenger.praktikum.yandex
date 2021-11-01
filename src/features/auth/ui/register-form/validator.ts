@@ -26,12 +26,9 @@ export const registerValidator = (values: TRegisterForm) => {
     errors.second_name = secondNameError;
   }
 
-  if (!values.phone) {
-    errors.phone = validationMessages.required;
-  } else if (!validators.minLength(values.phone, 10)) {
-    errors.phone = validationMessages.invalidFormat;
-  } else if (!validators.maxLength(values.phone, 15)) {
-    errors.phone = validationMessages.invalidFormat;
+  const phoneError = validators.phone(values.phone);
+  if (phoneError) {
+    errors.phone = phoneError;
   }
 
   const passwordError = validators.password(values.password);
