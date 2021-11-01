@@ -11,12 +11,9 @@ export const registerValidator = (values: TRegisterForm) => {
     errors.email = validationMessages.invalidFormat;
   }
 
-  if (!values.login) {
-    errors.login = validationMessages.required;
-  } else if (!validators.minLength(values.login, 3)) {
-    errors.login = validationMessages.loginMinLength(3);
-  } else if (!validators.maxLength(values.login, 20)) {
-    errors.login = validationMessages.loginMaxLength(20);
+  const loginError = validators.login(values.login);
+  if (loginError) {
+    errors.login = loginError;
   }
 
   if (!validators.required(values.first_name)) {

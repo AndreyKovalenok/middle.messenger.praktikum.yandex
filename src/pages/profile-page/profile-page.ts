@@ -8,8 +8,6 @@ import { Block } from "shared/utils";
 
 import { template } from "./profile-page.tmpl";
 
-// const changeUserDataForm = new ChangeUserDataForm({});
-
 type Props = {};
 
 type RenderProps = {
@@ -33,7 +31,8 @@ export class ProfilePage extends Block<Props, RenderProps> {
           console.log("click");
         },
       }),
-      profile: new ChangePasswordForm({}),
+      profile: new ChangeUserDataForm({}),
+      // profile: new ChangePasswordForm({}),
       // profile: new ProfileInfo({}),
       name: "Иван",
     });

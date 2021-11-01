@@ -5,6 +5,11 @@ import type { TAuthForm } from "../../types";
 export const authValidator = (values: TAuthForm) => {
   const errors: Partial<TAuthForm> = {};
 
+  const loginError = validators.login(values.login);
+  if (loginError) {
+    errors.login = loginError;
+  }
+
   if (!values.login) {
     errors.login = validationMessages.required;
   } else if (!validators.minLength(values.login, 3)) {

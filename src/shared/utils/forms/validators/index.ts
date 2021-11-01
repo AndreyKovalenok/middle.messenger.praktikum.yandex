@@ -6,3 +6,4 @@ export { latinSymbols } from "./latin-symbols";
 export { someNumber } from "./some-number";
 export { someCapitalize } from "./some-capitalize";
 export { email } from "./email";
+export { login } from "./login";
