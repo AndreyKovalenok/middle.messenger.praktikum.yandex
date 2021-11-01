@@ -8,3 +8,4 @@ export { someCapitalize } from "./some-capitalize";
 export { email } from "./email";
 export { login } from "./login";
 export { password } from "./password";
+export { name } from "./name";

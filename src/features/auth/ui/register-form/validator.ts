@@ -16,26 +16,14 @@ export const registerValidator = (values: TRegisterForm) => {
     errors.login = loginError;
   }
 
-  if (!validators.required(values.first_name)) {
-    errors.first_name = validationMessages.required;
-  } else if (
-    !validators.cyrillicSymbols(values.first_name) &&
-    !validators.latinSymbols(values.first_name)
-  ) {
-    errors.first_name = validationMessages.invalidSymbols;
-  } else if (values.first_name[0] !== values.first_name[0].toUpperCase()) {
-    errors.first_name = validationMessages.capitalizedFirstSymbol;
+  const firstNameError = validators.name(values.first_name);
+  if (firstNameError) {
+    errors.first_name = firstNameError;
   }
 
-  if (!validators.required(values.second_name)) {
-    errors.second_name = validationMessages.required;
-  } else if (
-    !validators.cyrillicSymbols(values.second_name) &&
-    !validators.latinSymbols(values.second_name)
-  ) {
-    errors.second_name = validationMessages.invalidSymbols;
-  } else if (values.second_name[0] !== values.second_name[0].toUpperCase()) {
-    errors.second_name = validationMessages.capitalizedFirstSymbol;
+  const secondNameError = validators.name(values.second_name);
+  if (secondNameError) {
+    errors.second_name = secondNameError;
   }
 
   if (!values.phone) {
