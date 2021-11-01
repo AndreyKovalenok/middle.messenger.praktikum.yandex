@@ -5,10 +5,9 @@ import type { TRegisterForm } from "../../types";
 export const registerValidator = (values: TRegisterForm) => {
   const errors: Partial<TRegisterForm> = {};
 
-  if (!values.email) {
-    errors.email = validationMessages.required;
-  } else if (!validators.email(values.email)) {
-    errors.email = validationMessages.invalidFormat;
+  const emailError = validators.email(values.email);
+  if (emailError) {
+    errors.email = emailError;
   }
 
   const loginError = validators.login(values.login);
