@@ -12,6 +12,8 @@ $colors: (
   "text-button-additional-text": #ff0000,
   "chat-item-hover": #e4edfd,
   "hover-button": #f5f5f5,
+  "message-background": #f8f8f8,
+  "user-message-background": #e4edfd,
 );
 
 @function cl($name, $opacity: false) {
