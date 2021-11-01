@@ -35,7 +35,9 @@ export const registerValidator = (values: TRegisterForm) => {
     errors.password = passwordError;
   }
 
-  if (values.password !== values.repeat_password) {
+  if (!validators.required(values.repeat_password)) {
+    errors.repeat_password = validationMessages.required;
+  } else if (values.password !== values.repeat_password) {
     errors.repeat_password = validationMessages.unmatchedPasswords;
   }
 
