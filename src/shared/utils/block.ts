@@ -148,13 +148,11 @@ export class Block<
   }
 
   _makePropsProxy(props: T & RenderProps) {
-    const self = this;
-
     return new Proxy(props, {
-      set(target, prop, value) {
-        if (self.props[prop as keyof T] !== value) {
+      set: (target, prop, value) => {
+        if (this.props[prop as keyof T] !== value) {
           target[prop as keyof T] = value;
-          self.eventBus().emit(Block.EVENTS.FLOW_CDU);
+          this.eventBus().emit(Block.EVENTS.FLOW_CDU);
         }
 
         return true;

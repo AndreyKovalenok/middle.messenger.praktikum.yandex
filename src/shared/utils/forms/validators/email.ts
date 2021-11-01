@@ -1,4 +1,12 @@
-export const email = (value: string) =>
-  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-    value
-  );
+import { required, emailFormat } from ".";
+import { validationMessages } from "../messages";
+
+export const email = (value: string) => {
+  if (!required(value)) {
+    return validationMessages.required;
+  }
+
+  if (!emailFormat(value)) {
+    return validationMessages.invalidFormat;
+  }
+};

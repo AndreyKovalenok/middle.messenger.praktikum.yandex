@@ -1,4 +1,4 @@
-import * as styles from "./styles.scss";
+import * as styles from "./style.scss";
 
 export const template = `
   <input

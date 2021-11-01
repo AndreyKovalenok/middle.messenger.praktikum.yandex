@@ -1,10 +1,12 @@
 import { ChatPage } from "pages";
 import { renderPage } from "shared/utils";
-import { partials } from "shared/ui";
+
+import { registerPage } from "../register-page";
+import "../style/style.scss";
 
 import "../style/style.scss";
 
-partials.forEach((p) => p());
+registerPage();
 
 const page = new ChatPage({});
 const pageContent = page.getContent() as Element;

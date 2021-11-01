@@ -6,6 +6,7 @@
 .actionButton {
   padding: 0;
   background-color: transparent;
+  color: var(--color-primary);
 }
 
 .input {
@@ -17,6 +18,7 @@
   rotate: 180deg;
   background-color: transparent;
   padding: 0;
+  color: var(--color-primary);
 }
 
 .textarea {

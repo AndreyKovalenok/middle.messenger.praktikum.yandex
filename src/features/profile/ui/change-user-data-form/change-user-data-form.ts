@@ -3,6 +3,7 @@ import { InputField, PrimaryButton } from "shared/ui";
 
 import { template } from "./change-user-data-form.tmpl";
 import type { TChangeUserDataForm } from "../../types";
+import { changeUserDataValidator } from "./validator";
 
 type Props = {};
 
@@ -27,6 +28,8 @@ const initialValues: TChangeUserDataForm = {
 
 export class ChangeUserDataForm extends Block<Props, RenderProps> {
   form: TChangeUserDataForm;
+  errors: Partial<TChangeUserDataForm>;
+  touched: Partial<Record<keyof TChangeUserDataForm, boolean>>;
 
   constructor(props: Props) {
     super({
@@ -42,8 +45,17 @@ export class ChangeUserDataForm extends Block<Props, RenderProps> {
             ...this.form,
             email: (<HTMLInputElement>evt.target).value,
           };
+
+          this.validateInput("email", "emailInput");
         },
-        onBlur: () => {},
+        onBlur: () => {
+          this.touched = {
+            ...this.touched,
+            email: true,
+          };
+
+          this.validateInput("email", "emailInput");
+        },
       }),
       loginInput: new InputField({
         type: "text",
@@ -56,8 +68,17 @@ export class ChangeUserDataForm extends Block<Props, RenderProps> {
             ...this.form,
             login: (<HTMLInputElement>evt.target).value,
           };
+
+          this.validateInput("login", "loginInput");
         },
-        onBlur: () => {},
+        onBlur: () => {
+          this.touched = {
+            ...this.touched,
+            login: true,
+          };
+
+          this.validateInput("login", "loginInput");
+        },
       }),
       nameInput: new InputField({
         type: "text",
@@ -70,8 +91,17 @@ export class ChangeUserDataForm extends Block<Props, RenderProps> {
             ...this.form,
             first_name: (<HTMLInputElement>evt.target).value,
           };
+
+          this.validateInput("first_name", "nameInput");
         },
-        onBlur: () => {},
+        onBlur: () => {
+          this.touched = {
+            ...this.touched,
+            first_name: true,
+          };
+
+          this.validateInput("first_name", "nameInput");
+        },
       }),
       surnameInput: new InputField({
         type: "text",
@@ -84,8 +114,17 @@ export class ChangeUserDataForm extends Block<Props, RenderProps> {
             ...this.form,
             second_name: (<HTMLInputElement>evt.target).value,
           };
+
+          this.validateInput("second_name", "surnameInput");
         },
-        onBlur: () => {},
+        onBlur: () => {
+          this.touched = {
+            ...this.touched,
+            second_name: true,
+          };
+
+          this.validateInput("second_name", "surnameInput");
+        },
       }),
       displayNameInput: new InputField({
         type: "text",
@@ -98,8 +137,17 @@ export class ChangeUserDataForm extends Block<Props, RenderProps> {
             ...this.form,
             display_name: (<HTMLInputElement>evt.target).value,
           };
+
+          this.validateInput("display_name", "displayNameInput");
         },
-        onBlur: () => {},
+        onBlur: () => {
+          this.touched = {
+            ...this.touched,
+            display_name: true,
+          };
+
+          this.validateInput("display_name", "displayNameInput");
+        },
       }),
       phoneInput: new InputField({
         type: "tel",
@@ -112,18 +160,72 @@ export class ChangeUserDataForm extends Block<Props, RenderProps> {
             ...this.form,
             phone: (<HTMLInputElement>evt.target).value,
           };
+
+          this.validateInput("phone", "phoneInput");
         },
-        onBlur: () => {},
+        onBlur: () => {
+          this.touched = {
+            ...this.touched,
+            phone: true,
+          };
+
+          this.validateInput("phone", "phoneInput");
+        },
       }),
       submitButton: new PrimaryButton({
         children: "Сохранить",
         onClick: () => {
-          console.log(this.form);
+          this.touched = Object.keys(this.form).reduce(
+            (acc, cur) => ({
+              ...acc,
+              [cur]: true,
+            }),
+            {}
+          );
+
+          this.validateInput("email", "emailInput");
+          this.validateInput("login", "loginInput");
+          this.validateInput("first_name", "nameInput");
+          this.validateInput("second_name", "surnameInput");
+          this.validateInput("display_name", "displayNameInput");
+          this.validateInput("phone", "phoneInput");
+
+          if (Object.keys(this.errors).length === 0) {
+            console.log(this.form);
+          }
         },
       }),
     });
 
     this.form = initialValues;
+    this.errors = {};
+    this.touched = {};
+  }
+
+  validateInput(name: keyof TChangeUserDataForm, input: string) {
+    this.errors = changeUserDataValidator(this.form);
+
+    const component = this.children[input].element;
+    if (!component) {
+      return;
+    }
+
+    const inputNode = component.querySelector("input");
+
+    if (!inputNode) {
+      return;
+    }
+
+    const nextElement = inputNode.nextElementSibling;
+    if (!nextElement) {
+      return;
+    }
+
+    if (this.touched[name] && this.errors[name]) {
+      nextElement.textContent = this.errors[name] as string;
+    } else {
+      nextElement.textContent = "";
+    }
   }
 
   render() {

@@ -20,6 +20,24 @@ const getChatMock = (index: number) => ({
   unreadMessages: 15000,
 });
 
+const messagesMock = [
+  {
+    isUserMessage: false,
+    text: "Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой. Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.",
+    time: "12:00",
+  },
+  {
+    isUserMessage: true,
+    text: "Круто!",
+    time: "12:01",
+  },
+];
+
+const messagesMockArray = Array.from(
+  new Array(100),
+  (_, index) => messagesMock[index % 2 ? 0 : 1]
+);
+
 type Props = {};
 
 type RenderProps = {
@@ -53,7 +71,14 @@ export class ChatPage extends Block<Props, RenderProps> {
         avatarSrc: null,
         title: "Вадим",
       }),
-      chatMessages: new Messages({}),
+      chatMessages: new Messages({
+        days: [
+          {
+            date: "01.01.1970",
+            messages: messagesMockArray,
+          },
+        ],
+      }),
       chatActions: new ChatActions({}),
     });
   }

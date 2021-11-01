@@ -61,17 +61,18 @@ export class HTTPTransport {
     );
   };
 
-  // PUT, POST, DELETE
-
-  // options:
-  // headers — obj
-  // data — obj
   request = (
     url: string,
     options: TRequestOptions = { method: METHODS.GET },
     timeout = 5000
   ) => {
-    const { method, data, headers } = options;
+    const {
+      method,
+      data,
+      headers = {
+        "Content-type": "application/json",
+      },
+    } = options;
 
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();

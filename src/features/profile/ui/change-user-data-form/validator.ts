@@ -1,9 +1,9 @@
-import { validators, validationMessages } from "shared/utils";
+import { validators } from "shared/utils";
 
-import type { TRegisterForm } from "../../types";
+import type { TChangeUserDataForm } from "../../types";
 
-export const registerValidator = (values: TRegisterForm) => {
-  const errors: Partial<TRegisterForm> = {};
+export const changeUserDataValidator = (values: TChangeUserDataForm) => {
+  const errors: Partial<TChangeUserDataForm> = {};
 
   const emailError = validators.email(values.email);
   if (emailError) {
@@ -25,20 +25,14 @@ export const registerValidator = (values: TRegisterForm) => {
     errors.second_name = secondNameError;
   }
 
+  const displayNameError = validators.name(values.display_name);
+  if (displayNameError) {
+    errors.display_name = displayNameError;
+  }
+
   const phoneError = validators.phone(values.phone);
   if (phoneError) {
     errors.phone = phoneError;
-  }
-
-  const passwordError = validators.password(values.password);
-  if (passwordError) {
-    errors.password = passwordError;
-  }
-
-  if (!validators.required(values.repeat_password)) {
-    errors.repeat_password = validationMessages.required;
-  } else if (values.password !== values.repeat_password) {
-    errors.repeat_password = validationMessages.unmatchedPasswords;
   }
 
   return errors;

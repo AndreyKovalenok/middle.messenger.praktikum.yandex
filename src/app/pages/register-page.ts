@@ -1,10 +1,10 @@
 import { RegisterPage } from "pages";
 import { renderPage } from "shared/utils";
-import { partials } from "shared/ui";
 
 import "../style/style.scss";
+import { registerPage } from "../register-page";
 
-partials.forEach((p) => p());
+registerPage();
 
 const page = new RegisterPage({});
 const pageContent = page.getContent() as Element;

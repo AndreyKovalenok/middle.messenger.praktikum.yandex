@@ -1,7 +1,6 @@
 import { TChatItem } from "entities/chat";
 import { Block } from "shared/utils";
 
-import { template } from "./chats.tmpl";
 import { ChatItemButton } from "../chat-item-button";
 
 type Props = {
@@ -9,23 +8,28 @@ type Props = {
   chats: TChatItem[];
 };
 
-type RenderProps = { content: any };
-
-export class Chats extends Block<Props, RenderProps> {
+export class Chats extends Block<Props> {
   constructor(props: Props) {
     super({
       ...props,
-      content: new ChatItemButton({
-        ...props.chats[0],
-        isSelected: false,
-        onClick: () => {
-          console.log("click");
-        },
-      }),
     });
   }
 
   render() {
-    return this.compile(template);
+    const container = document.createElement("div");
+
+    this.props.chats.forEach((item) => {
+      const chatItem = new ChatItemButton({
+        ...item,
+        onClick: () => {
+          console.log("click");
+        },
+        isSelected: false,
+      });
+
+      container.append(chatItem.getContent() as Element);
+    });
+
+    return container;
   }
 }
