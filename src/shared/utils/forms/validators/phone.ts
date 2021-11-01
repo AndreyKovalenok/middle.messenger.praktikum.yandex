@@ -6,11 +6,11 @@ export const phone = (value: string) => {
     return validationMessages.required;
   }
 
-  if (minLength(value, 10)) {
+  if (!minLength(value, 10)) {
     return validationMessages.invalidFormat;
   }
 
-  if (maxLength(value, 15)) {
+  if (!maxLength(value, 15)) {
     return validationMessages.invalidFormat;
   }
 };
