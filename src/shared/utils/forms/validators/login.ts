@@ -1,8 +1,8 @@
-import { minLength, maxLength } from ".";
+import { minLength, maxLength, required } from ".";
 import { validationMessages } from "../messages";
 
 export const login = (value: string) => {
-  if (!value) {
+  if (!required(value)) {
     return validationMessages.required;
   }
   if (!minLength(value, 3)) {

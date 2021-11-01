@@ -46,16 +46,9 @@ export const registerValidator = (values: TRegisterForm) => {
     errors.phone = validationMessages.invalidFormat;
   }
 
-  if (!validators.required(values.password)) {
-    errors.password = validationMessages.required;
-  } else if (!validators.minLength(values.password, 8)) {
-    errors.password = validationMessages.passwordMinLength(8);
-  } else if (!validators.maxLength(values.password, 40)) {
-    errors.password = validationMessages.passwordMaxLength(40);
-  } else if (!validators.someNumber(values.password)) {
-    errors.password = validationMessages.someNumber;
-  } else if (!validators.someCapitalize(values.password)) {
-    errors.password = validationMessages.someCapitalize;
+  const passwordError = validators.password(values.password);
+  if (passwordError) {
+    errors.password = passwordError;
   }
 
   if (values.password !== values.repeat_password) {
