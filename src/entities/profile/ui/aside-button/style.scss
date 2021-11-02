@@ -4,14 +4,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--color-aside-button-background);
+  background-color: var(--color-aside-background);
   transition: 0.2s background-color;
+  color: var(--color-primary);
 
   &:hover {
-    background-color: rgba(var(--color-aside-button-background--rgb), 0.9);
+    background-color: rgba(var(--color-aside-background--rgb), 0.9);
   }
 
   &:active {
-    background-color: rgba(var(--color-aside-button-background--rgb), 0.8);
+    background-color: rgba(var(--color-aside-background--rgb), 0.8);
   }
 }
