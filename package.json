@@ -38,7 +38,7 @@
   "scripts": {
     "dev": "./node_modules/.bin/parcel serve ./static/**/*.html --port 3000 --no-cache",
     "build": "./node_modules/.bin/parcel build ./static/**/*.html",
-    "start": "node server.js",
+    "start": "npm install && npm run build && node server.js",
     "lint": "eslint \"src/**/*.ts\" --fix",
     "lint:css": "stylelint **/*.css **/*.scss"
   },
