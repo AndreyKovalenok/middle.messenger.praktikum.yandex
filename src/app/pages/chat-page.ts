@@ -8,7 +8,7 @@ import "../style/style.scss";
 
 registerPage();
 
-const page = new ChatPage({});
-const pageContent = page.getContent() as Element;
+const page = new ChatPage();
+const pageContent = page.getContent();
 
 renderPage("root", pageContent);

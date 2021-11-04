@@ -7,6 +7,6 @@ import "../style/style.scss";
 registerPage();
 
 const page = new LoginPage();
-const pageContent = page.getContent() as Element;
+const pageContent = page.getContent();
 
 renderPage("root", pageContent);

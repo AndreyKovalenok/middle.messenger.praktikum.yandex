@@ -6,7 +6,7 @@ import "../style/style.scss";
 
 registerPage();
 
-const page = new Page500({});
-const pageContent = page.getContent() as Element;
+const page = new Page500();
+const pageContent = page.getContent();
 
 renderPage("root", pageContent);
