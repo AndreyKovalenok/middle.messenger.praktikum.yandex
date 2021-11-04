@@ -13,7 +13,7 @@ type Props = {
   name: string;
 };
 
-const initialValues: TChangeUserDataForm = {
+const changeDataInitialValues: TChangeUserDataForm = {
   email: "pochta@yandex.ru",
   login: "ivanivanov",
   first_name: "Иван",
@@ -42,9 +42,8 @@ export class ProfilePage extends Block<Props> {
       },
     });
 
-    const profile = new ChangeUserDataForm({ values: initialValues });
-
-    // profile: new ChangePasswordForm({}),
+    // const profile = new ChangeUserDataForm({ values: changeDataInitialValues });
+    const profile = new ChangePasswordForm();
     // profile: new ProfileInfo({}),
 
     return compile(template, {
