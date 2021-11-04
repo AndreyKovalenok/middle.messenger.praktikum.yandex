@@ -4,41 +4,63 @@ import {
   ChangePasswordForm,
   ChangeUserDataForm,
 } from "features/profile";
-import { Block } from "shared/utils";
+import type { TChangeUserDataForm } from "features/profile/types";
+import { Block, compile } from "shared/lib";
 
 import { template } from "./profile-page.tmpl";
 
-type Props = {};
-
-type RenderProps = {
+type Props = {
   name: string;
-  asideButton: any;
-  profile: any;
-  avatarButton: any;
 };
 
-export class ProfilePage extends Block<Props, RenderProps> {
-  constructor(props: Props) {
+const changeDataInitialValues: TChangeUserDataForm = {
+  email: "pochta@yandex.ru",
+  login: "ivanivanov",
+  first_name: "Иван",
+  second_name: "Иванов",
+  display_name: "Иван",
+  phone: "+7 (909) 967 30 30",
+};
+
+export class ProfilePage extends Block<Props> {
+  constructor() {
     super({
-      ...props,
-      asideButton: new AsideButton({
-        onClick: () => {
-          console.log("click");
-        },
-      }),
-      avatarButton: new AvatarButton({
-        onClick: () => {
-          console.log("click");
-        },
-      }),
-      profile: new ChangeUserDataForm({}),
-      // profile: new ChangePasswordForm({}),
-      // profile: new ProfileInfo({}),
       name: "Иван",
     });
   }
 
   render() {
-    return this.compile(template);
+    const asideButton = new AsideButton({
+      onClick: () => {
+        console.log("click");
+      },
+    });
+
+    const avatarButton = new AvatarButton({
+      onClick: () => {
+        console.log("click");
+      },
+    });
+
+    // const profile = new ChangeUserDataForm({ values: changeDataInitialValues });
+    // const profile = new ChangePasswordForm();
+    const profile = new ProfileInfo({
+      email: "pochta@yandex.ru",
+      login: "ivanivanov",
+      name: "Иван",
+      surname: "Иванов",
+      displayName: "Bdfy",
+      phone: "+7 (909) 967 30 30",
+      onChangeData: () => console.log("onChangeData"),
+      onChangePassword: () => console.log("onChangePassword"),
+      onLogout: () => console.log("onLogout"),
+    });
+
+    return compile(template, {
+      name: this.props.name,
+      asideButton,
+      avatarButton,
+      profile,
+    });
   }
 }

@@ -1,7 +1,13 @@
-import Handlebars from "handlebars";
+import { Block, compile } from "shared/lib";
 
 import { template } from "./blanc-image.tmpl";
 
-const render = Handlebars.compile(template);
+export class BlancImage extends Block {
+  constructor() {
+    super({});
+  }
 
-export const BlancImage = () => render({});
+  render() {
+    return compile(template);
+  }
+}

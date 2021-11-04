@@ -1,134 +1,174 @@
 import { InputField, PrimaryButton, Link } from "shared/ui";
-import { Block } from "shared/utils";
+import { Block, compile } from "shared/lib";
 
 import { template } from "./auth-form.tmpl";
 import type { TAuthForm } from "../../types";
 import { authValidator } from "./validator";
-
-type Props = {};
-
-type RenderProps = {
-  loginInput: any;
-  passwordInput: any;
-  submitButton: any;
-  registrationLink: any;
-};
 
 const initialValues: TAuthForm = {
   login: "",
   password: "",
 };
 
-export class AuthForm extends Block<Props, RenderProps> {
-  form: TAuthForm;
-  errors: Partial<Record<keyof TAuthForm, string>>;
+type Props = {
+  values: TAuthForm;
+  errors: Partial<TAuthForm>;
   touched: Partial<Record<keyof TAuthForm, boolean>>;
+};
 
-  constructor(props: Props) {
-    super({
-      ...props,
-      loginInput: new InputField({
-        label: "Логин",
-        type: "text",
-        value: initialValues.login,
-        placeholder: "Введите логин",
-        name: "login",
-        onChange: (evt) => {
-          this.form = {
-            ...this.form,
-            login: (<HTMLInputElement>evt.target).value,
-          };
-          this.validateInput("login", "loginInput");
-        },
-        onBlur: () => {
-          this.touched = {
-            ...this.touched,
-            login: true,
-          };
-          this.validateInput("login", "loginInput");
-        },
-      }),
-      passwordInput: new InputField({
-        label: "Пароль",
-        type: "password",
-        value: initialValues.password,
-        placeholder: "Введите пароль",
-        name: "password",
-        onChange: (evt) => {
-          this.form = {
-            ...this.form,
-            password: (<HTMLInputElement>evt.target).value,
-          };
-          this.validateInput("password", "passwordInput");
-        },
-        onBlur: () => {
-          this.touched = {
-            ...this.touched,
-            password: true,
-          };
+export class AuthForm extends Block<Props> {
+  focus: {
+    name: keyof TAuthForm | null;
+    caretPosition: number | null;
+  };
 
-          this.validateInput("password", "passwordInput");
-        },
-      }),
-      submitButton: new PrimaryButton({
-        children: "Авторизоваться",
-        onClick: () => {
-          this.errors = authValidator(this.form);
+  constructor() {
+    super(
+      {
+        values: initialValues,
+        errors: {},
+        touched: {},
+      },
+      "form"
+    );
 
-          this.touched = Object.keys(this.form).reduce(
-            (acc, cur) => ({
-              ...acc,
-              [cur]: true,
-            }),
-            {}
-          );
-
-          this.validateInput("login", "loginInput");
-          this.validateInput("password", "passwordInput");
-
-          if (Object.keys(this.errors).length === 0) {
-            console.log(this.form);
-          }
-        },
-      }),
-      registrationLink: new Link({
-        href: "/registration",
-        children: "Нет аккаунта?",
-      }),
-    });
-
-    this.form = initialValues;
-    this.errors = {};
-    this.touched = {};
+    this.focus = {
+      caretPosition: null,
+      name: null,
+    };
   }
 
-  validateInput(name: keyof TAuthForm, input: string) {
-    this.errors = authValidator(this.form);
+  componentDidRender = () => {
+    const inputs = this.getContent().querySelectorAll("input");
+    inputs.forEach((input) => {
+      if (input.name === this.focus.name) {
+        input.focus();
+        input.selectionStart = this.focus.caretPosition;
+      }
+    });
+  };
 
-    const component = this.children[input].element;
-    if (!component) {
-      return;
-    }
+  private inputChangeHandler(
+    name: keyof TAuthForm,
+    value: string,
+    selectionStart: number | null
+  ) {
+    this.setProps({
+      ...this.props,
+      values: {
+        ...this.props.values,
+        [name]: value,
+      },
+    });
+    this.focus.caretPosition = selectionStart;
 
-    const inputNode = component.querySelector("input");
+    const errors = authValidator(this.props.values);
+    this.setProps({
+      ...this.props,
+      errors: {
+        ...errors,
+      },
+    });
+  }
 
-    if (!inputNode) {
-      return;
-    }
-
-    const nextElement = inputNode.nextElementSibling;
-    if (!nextElement) {
-      return;
-    }
-
-    if (this.touched[name] && this.errors[name]) {
-      nextElement.textContent = this.errors[name] as string;
-    } else {
-      nextElement.textContent = "";
+  private focusHandler(name: keyof TAuthForm) {
+    this.focus.name = name;
+    if (!this.props.touched[name]) {
+      this.setProps({
+        ...this.props,
+        touched: {
+          ...this.props.touched,
+          [name]: true,
+        },
+      });
     }
   }
 
   render() {
-    return this.compile(template);
+    const loginInput = new InputField({
+      label: "Логин",
+      type: "text",
+      value: this.props.values.login,
+      errorMessage: this.props.errors.login,
+      touched: this.props.touched.login,
+      placeholder: "Введите логин",
+      name: "login",
+      onChange: (evt) => {
+        const target = <HTMLInputElement>evt.target;
+
+        this.inputChangeHandler("login", target.value, target.selectionStart);
+      },
+      onBlur: (evt) => {
+        this.focus.caretPosition = (<HTMLInputElement>(
+          evt.target
+        )).selectionStart;
+      },
+      onFocus: () => {
+        this.focusHandler("login");
+      },
+    });
+
+    const passwordInput = new InputField({
+      label: "Пароль",
+      type: "password",
+      value: this.props.values.password,
+      errorMessage: this.props.errors.password,
+      touched: this.props.touched.password,
+      placeholder: "Введите пароль",
+      name: "password",
+      onChange: (evt) => {
+        const target = <HTMLInputElement>evt.target;
+
+        this.inputChangeHandler(
+          "password",
+          target.value,
+          target.selectionStart
+        );
+      },
+      onBlur: (evt) => {
+        this.focus.caretPosition = (<HTMLInputElement>(
+          evt.target
+        )).selectionStart;
+      },
+      onFocus: () => {
+        this.focusHandler("password");
+      },
+    });
+
+    const submitButton = new PrimaryButton({
+      children: "Авторизоваться",
+      onClick: () => {
+        this.focus = {
+          caretPosition: null,
+          name: null,
+        };
+        const errors = authValidator(this.props.values);
+
+        this.setProps({
+          ...this.props,
+          errors: { ...errors },
+          touched: Object.keys(this.props.values).reduce(
+            (acc, key) => ({ ...acc, [key]: true }),
+            {}
+          ),
+        });
+
+        if (Object.keys(errors).length === 0) {
+          console.log(this.props.values);
+        }
+      },
+    });
+
+    const registrationLink = new Link({
+      href: "/registration",
+      children: "Нет аккаунта?",
+    });
+
+    return compile(template, {
+      loginInput,
+      passwordInput,
+      submitButton,
+      registrationLink,
+    });
   }
 }

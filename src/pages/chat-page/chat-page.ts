@@ -6,7 +6,7 @@ import {
   ChatActions,
 } from "features/chat";
 import { Messages } from "entities/chat";
-import { Block } from "shared/utils";
+import { Block, compile } from "shared/lib";
 
 import { template } from "./chat-page.tmpl";
 
@@ -38,52 +38,68 @@ const messagesMockArray = Array.from(
   (_, index) => messagesMock[index % 2 ? 0 : 1]
 );
 
-type Props = {};
-
-type RenderProps = {
-  chats: any;
-  goBackButton: any;
-  searchInput: any;
-  chatHeader: any;
-  chatActions: any;
-  chatMessages: any;
+type Props = {
+  searchValue: string;
+  selectedId: string | null;
 };
 
-export class ChatPage extends Block<Props, RenderProps> {
-  constructor(props: Props) {
+export class ChatPage extends Block<Props> {
+  constructor() {
     super({
-      ...props,
-      goBackButton: new GoBackButton({
-        onClick: () => {
-          console.log("click");
-        },
-      }),
-      searchInput: new SearchInput({
-        onChange: () => {
-          console.log("change");
-        },
-      }),
-      chats: new Chats({
-        selectedId: "1",
-        chats: Array.from(new Array(100), (_, index) => getChatMock(index)),
-      }),
-      chatHeader: new ChatHeader({
-        avatarSrc: null,
-        title: "Вадим",
-      }),
-      chatMessages: new Messages({
-        days: [
-          {
-            date: "01.01.1970",
-            messages: messagesMockArray,
-          },
-        ],
-      }),
-      chatActions: new ChatActions({}),
+      searchValue: "",
+      selectedId: null,
     });
   }
 
   render() {
-    return this.compile(template);
+    const goBackButton = new GoBackButton({
+      onClick: () => {
+        console.log("click");
+      },
+    });
+    const searchInput = new SearchInput({
+      name: "search",
+      value: this.props.searchValue,
+      onChange: () => console.log("change"),
+    });
+    const chats = new Chats({
+      selectedId: this.props.selectedId,
+      chats: Array.from(new Array(100), (_, index) => getChatMock(index)),
+      setSelectedElement: (id) =>
+        this.setProps({
+          ...this.props,
+          selectedId: id,
+        }),
+    });
+    const chatHeader = new ChatHeader({
+      avatarSrc: null,
+      title: "Вадим",
+      onActionsClick: () => console.log("onActionsClick"),
+    });
+    const chatMessages = new Messages({
+      days: [
+        {
+          date: "01.01.1970",
+          messages: messagesMockArray,
+        },
+      ],
+    });
+    const chatActions = new ChatActions({
+      onActionsClick: () => console.log("onActionsClick"),
+      onSendMessage: () => console.log("onSendMessage"),
+      onBlur: () => console.log("onBlur"),
+      onFocus: () => console.log("onFocus"),
+      onChange: () => console.log("onChange"),
+      messageInputValue: "123",
+    });
+
+    return compile(template, {
+      goBackButton,
+      searchInput,
+      chats,
+      chatHeader,
+      chatMessages,
+      chatActions,
+    });
   }
 }

@@ -1,6 +1,7 @@
-import { Block } from "shared/utils";
+import { Block, compile } from "shared/lib";
 
 import { template } from "./link.tmpl";
+import * as styles from "./style.scss";
 
 type Props = {
   href: string;
@@ -10,10 +11,13 @@ type Props = {
 
 export class Link extends Block<Props> {
   constructor(props: Props) {
-    super(props);
+    super(props, "a", {
+      href: props.href,
+      class: styles.link,
+    });
   }
 
   render() {
-    return this.compile(template);
+    return compile(template, this.props);
   }
 }

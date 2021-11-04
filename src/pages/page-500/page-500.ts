@@ -1,28 +1,21 @@
 import { ErrorPageContent } from "shared/ui";
-import { Block } from "shared/utils";
+import { Block, compile } from "shared/lib";
 
 import { template } from "./page-500.tmpl";
 
-type Props = {};
-
-type RenderProps = {
-  content: any;
-};
-
-export class Page500 extends Block<Props, RenderProps> {
-  constructor(props: Props) {
-    super({
-      ...props,
-      content: new ErrorPageContent({
-        title: "500",
-        description: "Мы уже фиксим",
-        href: "/chats",
-        linkText: "Назад к чатам",
-      }),
-    });
+export class Page500 extends Block {
+  constructor() {
+    super({});
   }
 
   render() {
-    return this.compile(template);
+    const content = new ErrorPageContent({
+      title: "500",
+      description: "Мы уже фиксим",
+      href: "/chats",
+      linkText: "Назад к чатам",
+    });
+
+    return compile(template, { content });
   }
 }

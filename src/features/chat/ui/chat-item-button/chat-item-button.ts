@@ -1,27 +1,40 @@
-import { Block } from "shared/utils";
+import { Block, compile } from "shared/lib";
 import { ChatItem, TChatItem } from "entities/chat";
 
 import { template } from "./chat-item-button.tmpl";
+import * as styles from "./style.scss";
+
+const getClass = (isSelected: boolean) => {
+  if (isSelected) {
+    return `${styles.button} ${styles.selected}`;
+  }
+
+  return styles.button;
+};
 
 type Props = {
   isSelected: boolean;
   onClick: () => void;
 } & TChatItem;
 
-type RenderProps = { children: any };
-
-export class ChatItemButton extends Block<Omit<Props, "onClick">, RenderProps> {
+export class ChatItemButton extends Block<Omit<Props, "onClick">> {
   constructor({ onClick, ...props }: Props) {
-    super({
-      ...props,
-      children: new ChatItem({
+    super(
+      {
         ...props,
-      }),
-      events: { click: onClick },
-    });
+        events: { click: onClick },
+      },
+      "button",
+      {
+        type: "button",
+        class: getClass(props.isSelected),
+      }
+    );
   }
 
   render() {
-    return this.compile(template);
+    const children = new ChatItem(this.props);
+
+    return compile(template, { children });
   }
 }

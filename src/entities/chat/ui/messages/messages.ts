@@ -1,7 +1,9 @@
-import { Block } from "shared/utils";
+import { Block, compile } from "shared/lib";
 
-import type { TDay } from "../../types";
+import type { TDay, TMessage } from "../../types";
 import * as styles from "./style.scss";
+import { MessagesDate } from "../messages-date";
+import { Message } from "../message";
 
 type Props = {
   days: TDay[];
@@ -9,38 +11,28 @@ type Props = {
 
 export class Messages extends Block<Props> {
   constructor(props: Props) {
-    super(props);
+    super(props, "div", { class: styles.messages });
   }
 
   render() {
-    const container = document.createElement("div");
-    container.classList.add(styles.messages);
+    const flat: (string | TMessage)[] = this.props.days.reduce(
+      (acc, { date, messages }) => [...acc, date, ...messages],
+      [] as (string | TMessage)[]
+    );
 
-    this.props.days.forEach(({ date, messages }) => {
-      const dateBlock = document.createElement("div");
-      dateBlock.classList.add(styles.date);
-      dateBlock.textContent = date;
-      container.appendChild(dateBlock);
+    return flat.map((item) => {
+      if (typeof item === "string") {
+        return compile("{{{content}}}", {
+          content: new MessagesDate({ text: item }),
+        });
+      }
 
-      messages.forEach(({ isUserMessage, text, time }) => {
-        const messageWrapper = document.createElement("div");
-        const messageBlock = document.createElement("div");
-        messageWrapper.classList.add(styles.messageWrapper);
-        messageBlock.classList.add(styles.message);
-
-        messageBlock.textContent = text;
-
-        if (isUserMessage) {
-          messageWrapper.classList.add(styles.userMessageWrapper);
-          messageBlock.classList.add(styles.userMessage);
-        }
-
-        messageWrapper.appendChild(messageBlock);
-
-        container.appendChild(messageWrapper);
+      return compile("{{{content}}}", {
+        content: new Message({
+          children: item.text,
+          isUserMessage: item.isUserMessage,
+        }),
       });
     });
-
-    return container;
   }
 }

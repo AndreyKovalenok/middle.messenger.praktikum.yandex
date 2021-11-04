@@ -1,20 +1,20 @@
 import { RegisterForm } from "features/auth";
-import { Block } from "shared/utils";
+import { Block, compile } from "shared/lib";
 
 import { template } from "./register-page.tmpl";
 
 type Props = {};
 
-type RenderProps = {
-  registerForm: any;
-};
-
-export class RegisterPage extends Block<Props, RenderProps> {
-  constructor(props: Props) {
-    super({ ...props, registerForm: new RegisterForm({}) });
+export class RegisterPage extends Block<Props> {
+  constructor() {
+    super({});
   }
 
   render() {
-    return this.compile(template);
+    const registerForm = new RegisterForm();
+
+    return compile(template, {
+      registerForm,
+    });
   }
 }

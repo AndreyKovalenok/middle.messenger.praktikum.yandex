@@ -7,29 +7,29 @@ export const template = `
       <div class=${styles.aside}>
         <div class=${styles.asideHeader}>
           <div class=${styles.headerButtonWrapper}>
-          <div data-component="goBackButton"></div>
+          {{{goBackButton}}}
           </div>
           <div>
-            <div data-component="searchInput"></div>
+            {{{searchInput}}}
           </div>
         </div>
         <div class=${styles.divider}></div>
         <div class=${styles.chats}>
-          <div data-component="chats"></div>
+          {{{chats}}}
         </div>
       </div>
 
       <div class=${styles.content}>
         <div class=${styles.chatHeader}>
-          <div data-component="chatHeader"></div>
+            {{{chatHeader}}}
           <div class=${styles.divider}></div>
         </div>
         <div class=${styles.chatContent}>
-          <div data-component="chatMessages"></div>
+          {{{chatMessages}}}
         </div>
         <div class=${styles.chatActions}>
           <div class=${styles.divider}></div>
-          <div data-component="chatActions"></div>
+          {{{chatActions}}}
         </div>
       </div>
     </div>

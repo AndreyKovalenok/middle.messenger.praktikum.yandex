@@ -1,24 +1,10 @@
-import { Block } from "shared/utils";
+import { Block, compile } from "shared/lib";
 
 import { InputField, PrimaryButton, Link } from "shared/ui";
 
 import { template } from "./register-form.tmpl";
 import type { TRegisterForm } from "../../types";
 import { registerValidator } from "./validator";
-
-type Props = {};
-
-type RenderProps = {
-  emailInput: any;
-  loginInput: any;
-  nameInput: any;
-  surnameInput: any;
-  phoneInput: any;
-  passwordInput: any;
-  repeatPasswordInput: any;
-  submitButton: any;
-  loginLink: any;
-};
 
 const initialValues: TRegisterForm = {
   email: "",
@@ -30,237 +16,285 @@ const initialValues: TRegisterForm = {
   repeat_password: "",
 };
 
-export class RegisterForm extends Block<Props, RenderProps> {
-  form: TRegisterForm;
+type Props = {
+  values: TRegisterForm;
   errors: Partial<Record<keyof TRegisterForm, string>>;
   touched: Partial<Record<keyof TRegisterForm, boolean>>;
+};
 
-  constructor(props: Props) {
-    super({
-      ...props,
-      emailInput: new InputField({
-        label: "Почта",
-        type: "email",
-        value: initialValues.email,
-        placeholder: "Введите почту",
-        name: "email",
-        onChange: (evt) => {
-          this.form = {
-            ...this.form,
-            email: (<HTMLInputElement>evt.target).value,
-          };
+export class RegisterForm extends Block<Props> {
+  focus: {
+    name: keyof TRegisterForm | null;
+    caretPosition: number | null;
+  };
 
-          this.validateInput("email", "emailInput");
-        },
-        onBlur: () => {
-          this.touched = {
-            ...this.touched,
-            email: true,
-          };
+  constructor() {
+    super(
+      {
+        values: initialValues,
+        errors: {},
+        touched: {},
+      },
+      "form"
+    );
 
-          this.validateInput("email", "emailInput");
-        },
-      }),
-      loginInput: new InputField({
-        label: "Логин",
-        type: "text",
-        value: initialValues.login,
-        placeholder: "Введите логин",
-        name: "login",
-        onChange: (evt) => {
-          this.form = {
-            ...this.form,
-            login: (<HTMLInputElement>evt.target).value,
-          };
-
-          this.validateInput("login", "loginInput");
-        },
-        onBlur: () => {
-          this.touched = {
-            ...this.touched,
-            login: true,
-          };
-
-          this.validateInput("login", "loginInput");
-        },
-      }),
-      nameInput: new InputField({
-        label: "Имя",
-        type: "text",
-        value: initialValues.first_name,
-        placeholder: "Введите ваше имя",
-        name: "first_name",
-        onChange: (evt) => {
-          this.form = {
-            ...this.form,
-            first_name: (<HTMLInputElement>evt.target).value,
-          };
-
-          this.validateInput("first_name", "nameInput");
-        },
-        onBlur: () => {
-          this.touched = {
-            ...this.touched,
-            first_name: true,
-          };
-
-          this.validateInput("first_name", "nameInput");
-        },
-      }),
-      surnameInput: new InputField({
-        label: "Фамилия",
-        type: "text",
-        value: initialValues.second_name,
-        placeholder: "Введите вашу фамилию",
-        name: "second_name",
-        onChange: (evt) => {
-          this.form = {
-            ...this.form,
-            second_name: (<HTMLInputElement>evt.target).value,
-          };
-
-          this.validateInput("second_name", "surnameInput");
-        },
-        onBlur: () => {
-          this.touched = {
-            ...this.touched,
-            second_name: true,
-          };
-
-          this.validateInput("second_name", "surnameInput");
-        },
-      }),
-      phoneInput: new InputField({
-        label: "Телефон",
-        type: "tel",
-        value: initialValues.phone,
-        placeholder: "Введите номер телефона",
-        name: "phone",
-        onChange: (evt) => {
-          this.form = {
-            ...this.form,
-            phone: (<HTMLInputElement>evt.target).value,
-          };
-
-          this.validateInput("phone", "phoneInput");
-        },
-        onBlur: () => {
-          this.touched = {
-            ...this.touched,
-            phone: true,
-          };
-
-          this.validateInput("phone", "phoneInput");
-        },
-      }),
-      passwordInput: new InputField({
-        label: "Пароль",
-        type: "password",
-        value: initialValues.password,
-        placeholder: "Введите пароль",
-        name: "password",
-        onChange: (evt) => {
-          this.form = {
-            ...this.form,
-            password: (<HTMLInputElement>evt.target).value,
-          };
-
-          this.validateInput("password", "passwordInput");
-        },
-        onBlur: () => {
-          this.touched = {
-            ...this.touched,
-            password: true,
-          };
-
-          this.validateInput("password", "passwordInput");
-        },
-      }),
-      repeatPasswordInput: new InputField({
-        label: "Пароль (ещё раз)",
-        type: "password",
-        value: initialValues.repeat_password,
-        placeholder: "Повторите пароль",
-        name: "repeat_password",
-        onChange: (evt) => {
-          this.form = {
-            ...this.form,
-            repeat_password: (<HTMLInputElement>evt.target).value,
-          };
-
-          this.validateInput("repeat_password", "repeatPasswordInput");
-        },
-        onBlur: () => {
-          this.touched = {
-            ...this.touched,
-            repeat_password: true,
-          };
-
-          this.validateInput("repeat_password", "repeatPasswordInput");
-        },
-      }),
-      submitButton: new PrimaryButton({
-        children: "Зарегистрироваться",
-        onClick: () => {
-          this.touched = Object.keys(this.form).reduce(
-            (acc, cur) => ({
-              ...acc,
-              [cur]: true,
-            }),
-            {}
-          );
-
-          this.validateInput("email", "emailInput");
-          this.validateInput("login", "loginInput");
-          this.validateInput("first_name", "nameInput");
-          this.validateInput("second_name", "surnameInput");
-          this.validateInput("phone", "phoneInput");
-          this.validateInput("password", "passwordInput");
-          this.validateInput("repeat_password", "repeatPasswordInput");
-
-          if (Object.keys(this.errors).length === 0) {
-            console.log(this.form);
-          }
-        },
-      }),
-      loginLink: new Link({
-        href: "/auth",
-        children: "Войти",
-      }),
-    });
-
-    this.form = initialValues;
-    this.errors = {};
-    this.touched = {};
+    this.focus = {
+      caretPosition: null,
+      name: null,
+    };
   }
 
-  validateInput(name: keyof TRegisterForm, input: string) {
-    this.errors = registerValidator(this.form);
+  componentDidRender = () => {
+    const inputs = this.getContent().querySelectorAll("input");
+    inputs.forEach((input) => {
+      if (input.name === this.focus.name) {
+        input.focus();
+        input.selectionStart = this.focus.caretPosition;
+      }
+    });
+  };
 
-    const component = this.children[input].element;
-    if (!component) {
-      return;
-    }
+  private inputChangeHandler(
+    name: keyof TRegisterForm,
+    value: string,
+    selectionStart: number | null
+  ) {
+    this.setProps({
+      ...this.props,
+      values: {
+        ...this.props.values,
+        [name]: value,
+      },
+    });
+    this.focus.caretPosition = selectionStart;
 
-    const inputNode = component.querySelector("input");
+    const errors = registerValidator(this.props.values);
+    this.setProps({
+      ...this.props,
+      errors: {
+        ...errors,
+      },
+    });
+  }
 
-    if (!inputNode) {
-      return;
-    }
-
-    const nextElement = inputNode.nextElementSibling;
-    if (!nextElement) {
-      return;
-    }
-
-    if (this.touched[name] && this.errors[name]) {
-      nextElement.textContent = this.errors[name] as string;
-    } else {
-      nextElement.textContent = "";
+  private focusHandler(name: keyof TRegisterForm) {
+    this.focus.name = name;
+    if (!this.props.touched[name]) {
+      this.setProps({
+        ...this.props,
+        touched: {
+          ...this.props.touched,
+          [name]: true,
+        },
+      });
     }
   }
 
   render() {
-    return this.compile(template);
+    const emailInput = new InputField({
+      label: "Почта",
+      type: "text",
+      value: this.props.values.email,
+      errorMessage: this.props.errors.email,
+      touched: this.props.touched.email,
+      placeholder: "Введите почту",
+      name: "email",
+      onChange: (evt) => {
+        const target = <HTMLInputElement>evt.target;
+
+        this.inputChangeHandler("email", target.value, target.selectionStart);
+      },
+      onBlur: (evt) => {
+        const target = <HTMLInputElement>evt.target;
+        this.focus.caretPosition = target.selectionStart;
+      },
+      onFocus: () => {
+        this.focusHandler("email");
+      },
+    });
+    const loginInput = new InputField({
+      label: "Логин",
+      type: "text",
+      value: this.props.values.login,
+      errorMessage: this.props.errors.login,
+      touched: this.props.touched.login,
+      placeholder: "Введите логин",
+      name: "login",
+      onChange: (evt) => {
+        const target = <HTMLInputElement>evt.target;
+
+        this.inputChangeHandler("login", target.value, target.selectionStart);
+      },
+      onBlur: (evt) => {
+        this.focus.caretPosition = (<HTMLInputElement>(
+          evt.target
+        )).selectionStart;
+      },
+      onFocus: () => {
+        this.focusHandler("login");
+      },
+    });
+    const nameInput = new InputField({
+      label: "Имя",
+      type: "text",
+      value: this.props.values.first_name,
+      errorMessage: this.props.errors.first_name,
+      touched: this.props.touched.first_name,
+      placeholder: "Введите ваше имя",
+      name: "first_name",
+      onChange: (evt) => {
+        const target = <HTMLInputElement>evt.target;
+
+        this.inputChangeHandler(
+          "first_name",
+          target.value,
+          target.selectionStart
+        );
+      },
+      onBlur: (evt) => {
+        this.focus.caretPosition = (<HTMLInputElement>(
+          evt.target
+        )).selectionStart;
+      },
+      onFocus: () => {
+        this.focusHandler("first_name");
+      },
+    });
+    const surnameInput = new InputField({
+      label: "Фамилия",
+      type: "text",
+      value: this.props.values.second_name,
+      errorMessage: this.props.errors.second_name,
+      touched: this.props.touched.second_name,
+      placeholder: "Введите вашу фамилию",
+      name: "second_name",
+      onChange: (evt) => {
+        const target = <HTMLInputElement>evt.target;
+
+        this.inputChangeHandler(
+          "second_name",
+          target.value,
+          target.selectionStart
+        );
+      },
+      onBlur: (evt) => {
+        this.focus.caretPosition = (<HTMLInputElement>(
+          evt.target
+        )).selectionStart;
+      },
+      onFocus: () => {
+        this.focusHandler("second_name");
+      },
+    });
+    const phoneInput = new InputField({
+      label: "Телефон",
+      type: "tel",
+      value: this.props.values.phone,
+      errorMessage: this.props.errors.phone,
+      touched: this.props.touched.phone,
+      placeholder: "Введите номер телефона",
+      name: "phone",
+      onChange: (evt) => {
+        const target = <HTMLInputElement>evt.target;
+
+        this.inputChangeHandler("phone", target.value, target.selectionStart);
+      },
+      onBlur: (evt) => {
+        this.focus.caretPosition = (<HTMLInputElement>(
+          evt.target
+        )).selectionStart;
+      },
+      onFocus: () => {
+        this.focusHandler("phone");
+      },
+    });
+    const passwordInput = new InputField({
+      label: "Пароль",
+      type: "password",
+      value: this.props.values.password,
+      errorMessage: this.props.errors.password,
+      touched: this.props.touched.password,
+      placeholder: "Введите пароль",
+      name: "password",
+      onChange: (evt) => {
+        const target = <HTMLInputElement>evt.target;
+
+        this.inputChangeHandler(
+          "password",
+          target.value,
+          target.selectionStart
+        );
+      },
+      onBlur: (evt) => {
+        this.focus.caretPosition = (<HTMLInputElement>(
+          evt.target
+        )).selectionStart;
+      },
+      onFocus: () => {
+        this.focusHandler("password");
+      },
+    });
+    const repeatPasswordInput = new InputField({
+      label: "Пароль (ещё раз)",
+      type: "password",
+      value: this.props.values.repeat_password,
+      errorMessage: this.props.errors.repeat_password,
+      touched: this.props.touched.repeat_password,
+      placeholder: "Повторите пароль",
+      name: "repeat_password",
+      onChange: (evt) => {
+        const target = <HTMLInputElement>evt.target;
+
+        this.inputChangeHandler(
+          "repeat_password",
+          target.value,
+          target.selectionStart
+        );
+      },
+      onBlur: (evt) => {
+        this.focus.caretPosition = (<HTMLInputElement>(
+          evt.target
+        )).selectionStart;
+      },
+      onFocus: () => {
+        this.focusHandler("repeat_password");
+      },
+    });
+    const submitButton = new PrimaryButton({
+      children: "Зарегистрироваться",
+      onClick: () => {
+        const errors = registerValidator(this.props.values);
+        this.setProps({
+          ...this.props,
+          errors: {
+            ...errors,
+          },
+          touched: Object.keys(this.props.values).reduce(
+            (acc, key) => ({ ...acc, [key]: true }),
+            {}
+          ),
+        });
+
+        if (Object.keys(errors).length === 0) {
+          console.log(this.props.values);
+        }
+      },
+    });
+    const loginLink = new Link({
+      href: "/auth",
+      children: "Войти",
+    });
+
+    return compile(template, {
+      emailInput,
+      loginInput,
+      nameInput,
+      surnameInput,
+      phoneInput,
+      passwordInput,
+      repeatPasswordInput,
+      submitButton,
+      loginLink,
+    });
   }
 }

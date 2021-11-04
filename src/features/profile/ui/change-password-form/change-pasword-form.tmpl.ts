@@ -4,17 +4,17 @@ export const template = `
   <div class="${styles.wrapper}">
     <form>
       <div class="${styles.input}">
-        <div data-component="oldPasswordInput"></div>
+        {{{oldPasswordInput}}}
       </div>
       <div class="${styles.input}">
-        <div data-component="newPasswordInput"></div>
+        {{{newPasswordInput}}}
       </div>
       <div class="${styles.input}">
-        <div data-component="repeatNewPasswordInput"></div>
+        {{{repeatNewPasswordInput}}}
       </div>
       <div class="${styles.spacer}"></div>
       <div class="${styles.button}">
-        <div data-component="submitButton"></div>
+        {{{submitButton}}}
       </div>
     </form>
   </div>

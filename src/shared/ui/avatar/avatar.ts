@@ -1,6 +1,7 @@
-import { Block } from "shared/utils";
+import { Block, compile } from "shared/lib";
 
 import { template } from "./avatar.tmpl";
+import * as styles from "./style.scss";
 
 type Props = {
   src: string | null;
@@ -8,10 +9,12 @@ type Props = {
 
 export class Avatar extends Block<Props> {
   constructor(props: Props) {
-    super(props);
+    super(props, "div", {
+      class: styles.avatar,
+    });
   }
 
   render() {
-    return this.compile(template);
+    return compile(template, this.props);
   }
 }

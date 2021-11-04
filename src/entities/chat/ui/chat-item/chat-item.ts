@@ -1,31 +1,32 @@
 import { Badge, Avatar } from "shared/ui";
-import { Block } from "shared/utils";
+import { Block, compile } from "shared/lib";
 
 import { template } from "./chat-item.tmpl";
 
 import type { TChatItem } from "../../types";
+import * as styles from "./style.scss";
 
 type Props = TChatItem;
 
-type RenderProps = {
-  badgeComponent: any;
-  avatarComponent: any;
-};
-
-export class ChatItem extends Block<Props, RenderProps> {
+export class ChatItem extends Block<Props> {
   constructor(props: Props) {
-    super({
-      ...props,
-      avatarComponent: new Avatar({
-        src: props.avatar,
-      }),
-      badgeComponent: new Badge({
-        children: String(props.unreadMessages),
-      }),
+    super(props, "div", {
+      class: styles.item,
     });
   }
 
   render() {
-    return this.compile(template);
+    const avatarComponent = new Avatar({
+      src: this.props.avatar,
+    });
+    const badgeComponent = new Badge({
+      children: String(this.props.unreadMessages),
+    });
+
+    return compile(template, {
+      ...this.props,
+      avatarComponent,
+      badgeComponent,
+    });
   }
 }

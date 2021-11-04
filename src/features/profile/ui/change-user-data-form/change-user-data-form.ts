@@ -1,234 +1,264 @@
-import { Block } from "shared/utils";
+import { Block, compile } from "shared/lib";
 import { InputField, PrimaryButton } from "shared/ui";
 
 import { template } from "./change-user-data-form.tmpl";
 import type { TChangeUserDataForm } from "../../types";
 import { changeUserDataValidator } from "./validator";
+import * as styles from "./style.scss";
 
-type Props = {};
-
-type RenderProps = {
-  emailInput: any;
-  loginInput: any;
-  nameInput: any;
-  surnameInput: any;
-  displayNameInput: any;
-  phoneInput: any;
-  submitButton: any;
-};
-
-const initialValues: TChangeUserDataForm = {
-  email: "pochta@yandex.ru",
-  login: "ivanivanov",
-  first_name: "Иван",
-  second_name: "Иванов",
-  display_name: "Иван",
-  phone: "+7 (909) 967 30 30",
-};
-
-export class ChangeUserDataForm extends Block<Props, RenderProps> {
-  form: TChangeUserDataForm;
+type Props = {
+  values: TChangeUserDataForm;
   errors: Partial<TChangeUserDataForm>;
   touched: Partial<Record<keyof TChangeUserDataForm, boolean>>;
+};
+export class ChangeUserDataForm extends Block<Props> {
+  focus: {
+    name: keyof TChangeUserDataForm | null;
+    caretPosition: number | null;
+  };
 
-  constructor(props: Props) {
-    super({
-      ...props,
-      emailInput: new InputField({
-        type: "email",
-        value: initialValues.email,
-        placeholder: "Введите почту",
-        name: "email",
-        label: "Почта",
-        onChange: (evt) => {
-          this.form = {
-            ...this.form,
-            email: (<HTMLInputElement>evt.target).value,
-          };
+  constructor(props: { values: TChangeUserDataForm }) {
+    super(
+      {
+        ...props,
+        errors: {},
+        touched: {},
+      },
+      "div",
+      {
+        class: styles.wrapper,
+      }
+    );
 
-          this.validateInput("email", "emailInput");
-        },
-        onBlur: () => {
-          this.touched = {
-            ...this.touched,
-            email: true,
-          };
-
-          this.validateInput("email", "emailInput");
-        },
-      }),
-      loginInput: new InputField({
-        type: "text",
-        value: initialValues.login,
-        placeholder: "Введите логин",
-        name: "login",
-        label: "Логин",
-        onChange: (evt) => {
-          this.form = {
-            ...this.form,
-            login: (<HTMLInputElement>evt.target).value,
-          };
-
-          this.validateInput("login", "loginInput");
-        },
-        onBlur: () => {
-          this.touched = {
-            ...this.touched,
-            login: true,
-          };
-
-          this.validateInput("login", "loginInput");
-        },
-      }),
-      nameInput: new InputField({
-        type: "text",
-        value: initialValues.first_name,
-        placeholder: "Введите имя",
-        name: "first_name",
-        label: "Имя",
-        onChange: (evt) => {
-          this.form = {
-            ...this.form,
-            first_name: (<HTMLInputElement>evt.target).value,
-          };
-
-          this.validateInput("first_name", "nameInput");
-        },
-        onBlur: () => {
-          this.touched = {
-            ...this.touched,
-            first_name: true,
-          };
-
-          this.validateInput("first_name", "nameInput");
-        },
-      }),
-      surnameInput: new InputField({
-        type: "text",
-        value: initialValues.second_name,
-        placeholder: "Введите фамилию",
-        name: "second_name",
-        label: "Фамилия",
-        onChange: (evt) => {
-          this.form = {
-            ...this.form,
-            second_name: (<HTMLInputElement>evt.target).value,
-          };
-
-          this.validateInput("second_name", "surnameInput");
-        },
-        onBlur: () => {
-          this.touched = {
-            ...this.touched,
-            second_name: true,
-          };
-
-          this.validateInput("second_name", "surnameInput");
-        },
-      }),
-      displayNameInput: new InputField({
-        type: "text",
-        value: initialValues.display_name,
-        placeholder: "Введите имя в чате",
-        name: "display_name",
-        label: "Имя в чате",
-        onChange: (evt) => {
-          this.form = {
-            ...this.form,
-            display_name: (<HTMLInputElement>evt.target).value,
-          };
-
-          this.validateInput("display_name", "displayNameInput");
-        },
-        onBlur: () => {
-          this.touched = {
-            ...this.touched,
-            display_name: true,
-          };
-
-          this.validateInput("display_name", "displayNameInput");
-        },
-      }),
-      phoneInput: new InputField({
-        type: "tel",
-        value: initialValues.phone,
-        placeholder: "Введите телефон",
-        name: "phone",
-        label: "Телефон",
-        onChange: (evt) => {
-          this.form = {
-            ...this.form,
-            phone: (<HTMLInputElement>evt.target).value,
-          };
-
-          this.validateInput("phone", "phoneInput");
-        },
-        onBlur: () => {
-          this.touched = {
-            ...this.touched,
-            phone: true,
-          };
-
-          this.validateInput("phone", "phoneInput");
-        },
-      }),
-      submitButton: new PrimaryButton({
-        children: "Сохранить",
-        onClick: () => {
-          this.touched = Object.keys(this.form).reduce(
-            (acc, cur) => ({
-              ...acc,
-              [cur]: true,
-            }),
-            {}
-          );
-
-          this.validateInput("email", "emailInput");
-          this.validateInput("login", "loginInput");
-          this.validateInput("first_name", "nameInput");
-          this.validateInput("second_name", "surnameInput");
-          this.validateInput("display_name", "displayNameInput");
-          this.validateInput("phone", "phoneInput");
-
-          if (Object.keys(this.errors).length === 0) {
-            console.log(this.form);
-          }
-        },
-      }),
-    });
-
-    this.form = initialValues;
-    this.errors = {};
-    this.touched = {};
+    this.focus = {
+      caretPosition: null,
+      name: null,
+    };
   }
 
-  validateInput(name: keyof TChangeUserDataForm, input: string) {
-    this.errors = changeUserDataValidator(this.form);
+  componentDidRender = () => {
+    const inputs = this.getContent().querySelectorAll("input");
+    inputs.forEach((input) => {
+      if (input.name === this.focus.name) {
+        input.focus();
+        input.selectionStart = this.focus.caretPosition;
+      }
+    });
+  };
 
-    const component = this.children[input].element;
-    if (!component) {
-      return;
-    }
+  private inputChangeHandler(
+    name: keyof TChangeUserDataForm,
+    value: string,
+    selectionStart: number | null
+  ) {
+    this.setProps({
+      ...this.props,
+      values: {
+        ...this.props.values,
+        [name]: value,
+      },
+    });
+    this.focus.caretPosition = selectionStart;
 
-    const inputNode = component.querySelector("input");
+    const errors = changeUserDataValidator(this.props.values);
+    this.setProps({
+      ...this.props,
+      errors: {
+        ...errors,
+      },
+    });
+  }
 
-    if (!inputNode) {
-      return;
-    }
-
-    const nextElement = inputNode.nextElementSibling;
-    if (!nextElement) {
-      return;
-    }
-
-    if (this.touched[name] && this.errors[name]) {
-      nextElement.textContent = this.errors[name] as string;
-    } else {
-      nextElement.textContent = "";
+  private focusHandler(name: keyof TChangeUserDataForm) {
+    this.focus.name = name;
+    if (!this.props.touched[name]) {
+      this.setProps({
+        ...this.props,
+        touched: {
+          ...this.props.touched,
+          [name]: true,
+        },
+      });
     }
   }
 
   render() {
-    return this.compile(template);
+    const emailInput = new InputField({
+      type: "text",
+      value: this.props.values.email,
+      errorMessage: this.props.errors.email,
+      touched: this.props.touched.email,
+      placeholder: "Введите почту",
+      name: "email",
+      label: "Почта",
+      onChange: (evt) => {
+        const target = <HTMLInputElement>evt.target;
+
+        this.inputChangeHandler("email", target.value, target.selectionStart);
+      },
+      onBlur: (evt) => {
+        this.focus.caretPosition = (<HTMLInputElement>(
+          evt.target
+        )).selectionStart;
+      },
+      onFocus: () => {
+        this.focusHandler("email");
+      },
+    });
+    const loginInput = new InputField({
+      type: "text",
+      value: this.props.values.login,
+      errorMessage: this.props.errors.login,
+      touched: this.props.touched.login,
+      placeholder: "Введите логин",
+      name: "login",
+      label: "Логин",
+      onChange: (evt) => {
+        const target = <HTMLInputElement>evt.target;
+
+        this.inputChangeHandler("login", target.value, target.selectionStart);
+      },
+      onBlur: (evt) => {
+        this.focus.caretPosition = (<HTMLInputElement>(
+          evt.target
+        )).selectionStart;
+      },
+      onFocus: () => {
+        this.focusHandler("login");
+      },
+    });
+    const nameInput = new InputField({
+      type: "text",
+      value: this.props.values.first_name,
+      errorMessage: this.props.errors.first_name,
+      touched: this.props.touched.first_name,
+      placeholder: "Введите имя",
+      name: "first_name",
+      label: "Имя",
+      onChange: (evt) => {
+        const target = <HTMLInputElement>evt.target;
+
+        this.inputChangeHandler(
+          "first_name",
+          target.value,
+          target.selectionStart
+        );
+      },
+      onBlur: (evt) => {
+        this.focus.caretPosition = (<HTMLInputElement>(
+          evt.target
+        )).selectionStart;
+      },
+      onFocus: () => {
+        this.focusHandler("first_name");
+      },
+    });
+    const surnameInput = new InputField({
+      type: "text",
+      value: this.props.values.second_name,
+      errorMessage: this.props.errors.second_name,
+      touched: this.props.touched.second_name,
+      placeholder: "Введите фамилию",
+      name: "second_name",
+      label: "Фамилия",
+      onChange: (evt) => {
+        const target = <HTMLInputElement>evt.target;
+
+        this.inputChangeHandler(
+          "second_name",
+          target.value,
+          target.selectionStart
+        );
+      },
+      onBlur: (evt) => {
+        this.focus.caretPosition = (<HTMLInputElement>(
+          evt.target
+        )).selectionStart;
+      },
+      onFocus: () => {
+        this.focusHandler("second_name");
+      },
+    });
+    const displayNameInput = new InputField({
+      type: "text",
+      value: this.props.values.display_name,
+      errorMessage: this.props.errors.display_name,
+      touched: this.props.touched.display_name,
+      placeholder: "Введите имя в чате",
+      name: "display_name",
+      label: "Имя в чате",
+      onChange: (evt) => {
+        const target = <HTMLInputElement>evt.target;
+
+        this.inputChangeHandler(
+          "display_name",
+          target.value,
+          target.selectionStart
+        );
+      },
+      onBlur: (evt) => {
+        this.focus.caretPosition = (<HTMLInputElement>(
+          evt.target
+        )).selectionStart;
+      },
+      onFocus: () => {
+        this.focusHandler("display_name");
+      },
+    });
+    const phoneInput = new InputField({
+      type: "tel",
+      value: this.props.values.phone,
+      errorMessage: this.props.errors.phone,
+      touched: this.props.touched.phone,
+      placeholder: "Введите телефон",
+      name: "phone",
+      label: "Телефон",
+      onChange: (evt) => {
+        const target = <HTMLInputElement>evt.target;
+
+        this.inputChangeHandler("phone", target.value, target.selectionStart);
+      },
+      onBlur: (evt) => {
+        this.focus.caretPosition = (<HTMLInputElement>(
+          evt.target
+        )).selectionStart;
+      },
+      onFocus: () => {
+        this.focusHandler("phone");
+      },
+    });
+    const submitButton = new PrimaryButton({
+      children: "Сохранить",
+      onClick: () => {
+        this.focus = {
+          caretPosition: null,
+          name: null,
+        };
+        const errors = changeUserDataValidator(this.props.values);
+
+        this.setProps({
+          ...this.props,
+          errors: { ...errors },
+          touched: Object.keys(this.props.values).reduce(
+            (acc, key) => ({ ...acc, [key]: true }),
+            {}
+          ),
+        });
+
+        if (Object.keys(errors).length === 0) {
+          console.log(this.props.values);
+        }
+      },
+    });
+
+    return compile(template, {
+      emailInput,
+      loginInput,
+      nameInput,
+      surnameInput,
+      displayNameInput,
+      phoneInput,
+      submitButton,
+    });
   }
 }

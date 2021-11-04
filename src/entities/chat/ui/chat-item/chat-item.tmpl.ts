@@ -1,9 +1,8 @@
 import * as styles from "./style.scss";
 
 export const template = `
-  <div class=${styles.item}>
     <div class=${styles.avatar}>
-      <div data-component="avatarComponent"></div>
+      {{{avatarComponent}}}
     </div>
     <div class=${styles.content}>
       <div class=${styles.titleRow}>
@@ -13,11 +12,10 @@ export const template = `
       <div class=${styles.messageRow}>
         <span class=${styles.message}>{{ message }}</span>
         <div>
-          <div data-component="badgeComponent"></div>
+          {{{badgeComponent}}}
         </div>
       </div>
       <div>
       </div>
     </div>
-  </div>
 `;

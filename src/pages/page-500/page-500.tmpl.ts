@@ -1,5 +1,5 @@
 export const template = `
   {{#> blanc-layout}}
-    <div data-component="content"></div>
+    {{{content}}}
   {{/blanc-layout}}
 `;

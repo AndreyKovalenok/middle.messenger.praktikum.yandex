@@ -1,0 +1,22 @@
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: start;
+}
+
+.message {
+  max-width: 402px;
+  padding: 11px;
+  background-color: var(--color-message-background);
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.userMessage {
+  background-color: var(--color-user-message-background);
+}
+
+.userWrapper {
+  justify-content: end;
+}

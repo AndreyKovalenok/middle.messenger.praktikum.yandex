@@ -1,82 +1,86 @@
 import { UserDataRow } from "entities/profile";
 import { TextButton } from "shared/ui";
-import { Block } from "shared/utils";
+import { Block, compile } from "shared/lib";
 
 import { template } from "./profile-info.tmpl";
+import * as styles from "./style.scss";
 
-type Props = {};
-
-type RenderProps = {
-  emailComponent: any;
-  loginComponent: any;
-  nameComponent: any;
-  surnameComponent: any;
-  chatNameComponent: any;
-  phoneComponent: any;
-  changeDataButton: any;
-  changePasswordButton: any;
-  logoutButton: any;
+type Props = {
+  email: string;
+  login: string;
+  name: string;
+  surname: string;
+  displayName: string;
+  phone: string;
+  onChangeData: () => void;
+  onChangePassword: () => void;
+  onLogout: () => void;
 };
 
-export class ProfileInfo extends Block<Props, RenderProps> {
+export class ProfileInfo extends Block<Props> {
   constructor(props: Props) {
-    super({
-      ...props,
-      emailComponent: new UserDataRow({
-        label: "Почта",
-        value: "pochta@yandex.ru",
-        withBorder: true,
-      }),
-      loginComponent: new UserDataRow({
-        label: "Логин",
-        value: "ivanivanov",
-        withBorder: true,
-      }),
-      nameComponent: new UserDataRow({
-        label: "Имя",
-        value: "Иван",
-        withBorder: true,
-      }),
-      surnameComponent: new UserDataRow({
-        label: "Фамилия",
-        value: "Иванов",
-        withBorder: true,
-      }),
-      chatNameComponent: new UserDataRow({
-        label: "Имя в чате",
-        value: "Иван",
-        withBorder: true,
-      }),
-      phoneComponent: new UserDataRow({
-        label: "Телефон",
-        value: "+7 (909) 967 30 30",
-      }),
-      changeDataButton: new TextButton({
-        children: "Изменить данные",
-        type: "button",
-        onClick: () => {
-          console.log("click");
-        },
-      }),
-      changePasswordButton: new TextButton({
-        children: "Изменить пароль",
-        type: "button",
-        onClick: () => {
-          console.log("click");
-        },
-      }),
-      logoutButton: new TextButton({
-        children: "Выйти",
-        type: "button",
-        red: true,
-        onClick: () => {
-          console.log("click");
-        },
-      }),
+    super(props, "div", {
+      class: styles.profileInfo,
     });
   }
 
   render() {
-    return this.compile(template);
+    const emailComponent = new UserDataRow({
+      label: "Почта",
+      value: this.props.email,
+      withBorder: true,
+    });
+    const loginComponent = new UserDataRow({
+      label: "Логин",
+      value: this.props.login,
+      withBorder: true,
+    });
+    const nameComponent = new UserDataRow({
+      label: "Имя",
+      value: this.props.name,
+      withBorder: true,
+    });
+    const surnameComponent = new UserDataRow({
+      label: "Фамилия",
+      value: this.props.surname,
+      withBorder: true,
+    });
+    const chatNameComponent = new UserDataRow({
+      label: "Имя в чате",
+      value: this.props.displayName,
+      withBorder: true,
+    });
+    const phoneComponent = new UserDataRow({
+      label: "Телефон",
+      value: this.props.phone,
+    });
+    const changeDataButton = new TextButton({
+      children: "Изменить данные",
+      type: "button",
+      onClick: this.props.onChangeData,
+    });
+    const changePasswordButton = new TextButton({
+      children: "Изменить пароль",
+      type: "button",
+      onClick: this.props.onChangePassword,
+    });
+    const logoutButton = new TextButton({
+      children: "Выйти",
+      type: "button",
+      red: true,
+      onClick: this.props.onLogout,
+    });
+
+    return compile(template, {
+      emailComponent,
+      loginComponent,
+      nameComponent,
+      surnameComponent,
+      chatNameComponent,
+      phoneComponent,
+      changeDataButton,
+      changePasswordButton,
+      logoutButton,
+    });
   }
 }

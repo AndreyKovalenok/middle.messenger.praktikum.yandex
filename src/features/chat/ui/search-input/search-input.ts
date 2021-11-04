@@ -1,22 +1,59 @@
-import { Block } from "shared/utils";
+import { Block, compile } from "shared/lib";
+
+import { SearchIcon } from "shared/icons";
 
 import { template } from "./search-input.tmpl";
+import * as styles from "./style.scss";
 
-type Props = {
-  onChange: () => void;
+type InputProps = {
+  value: string;
+  name: string;
+  onChange: (evt: InputEvent) => void;
 };
 
-export class SearchInput extends Block<Omit<Props, "onChange">> {
+class Input extends Block<Omit<InputProps, "onChange">> {
   constructor({ onChange, ...props }: Props) {
-    super({
-      ...props,
-      events: {
-        change: onChange,
+    super(
+      {
+        ...props,
+        events: {
+          change: onChange,
+        },
       },
-    });
+      "input",
+      {
+        class: styles.input,
+        placeholder: "Поиск",
+        type: "Текст",
+        name: props.name,
+        value: props.value,
+      }
+    );
   }
 
   render() {
-    return this.compile(template);
+    return compile("");
+  }
+}
+
+type Props = {
+  value: string;
+  name: string;
+  onChange: (evt: InputEvent) => void;
+};
+
+export class SearchInput extends Block<Props> {
+  constructor(props: Props) {
+    super(props);
+  }
+
+  render() {
+    const icon = new SearchIcon();
+    const input = new Input(this.props);
+
+    return compile(template, {
+      input,
+      icon,
+    });
   }
 }
