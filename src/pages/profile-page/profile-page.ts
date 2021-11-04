@@ -43,8 +43,18 @@ export class ProfilePage extends Block<Props> {
     });
 
     // const profile = new ChangeUserDataForm({ values: changeDataInitialValues });
-    const profile = new ChangePasswordForm();
-    // profile: new ProfileInfo({}),
+    // const profile = new ChangePasswordForm();
+    const profile = new ProfileInfo({
+      email: "pochta@yandex.ru",
+      login: "ivanivanov",
+      name: "Иван",
+      surname: "Иванов",
+      displayName: "Bdfy",
+      phone: "+7 (909) 967 30 30",
+      onChangeData: () => console.log("onChangeData"),
+      onChangePassword: () => console.log("onChangePassword"),
+      onLogout: () => console.log("onLogout"),
+    });
 
     return compile(template, {
       name: this.props.name,

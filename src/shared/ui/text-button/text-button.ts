@@ -1,6 +1,15 @@
-import { Block } from "shared/utils";
+import { Block, compile } from "shared/lib";
 
 import { template } from "./text-button.tmpl";
+import * as styles from "./style.scss";
+
+const getClass = (isRed: boolean) => {
+  if (isRed) {
+    return `${styles.button} ${styles.red}`;
+  }
+
+  return styles.button;
+};
 
 type Props = {
   children: string;
@@ -10,11 +19,14 @@ type Props = {
 };
 
 export class TextButton extends Block<Omit<Props, "onClick">> {
-  constructor({ onClick, ...props }: Props) {
-    super({ ...props, events: { click: onClick } });
+  constructor({ onClick, type = "button", ...props }: Props) {
+    super({ ...props, events: { click: onClick } }, "button", {
+      type,
+      class: getClass(Boolean(props.red)),
+    });
   }
 
   render() {
-    return this.compile(template);
+    return compile(template, this.props);
   }
 }
