@@ -1,7 +1,13 @@
-import Handlebars from "handlebars";
+import { Block, compile } from "shared/lib";
 
 import { template } from "./arrow-right.tmpl";
 
-const render = Handlebars.compile(template);
+export class ArrowRight extends Block {
+  constructor() {
+    super({});
+  }
 
-export const ArrowRight = () => render({});
+  render() {
+    return compile(template);
+  }
+}

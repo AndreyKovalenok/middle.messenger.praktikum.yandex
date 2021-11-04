@@ -123,7 +123,11 @@ export class Block<T extends Object = Object> {
 
     this._element!.innerHTML = "";
 
-    this._element!.appendChild(block);
+    if (Array.isArray(block)) {
+      block.forEach((el) => this.element!.appendChild(el));
+    } else {
+      this._element!.appendChild(block);
+    }
 
     this._addEvents();
 
@@ -131,7 +135,7 @@ export class Block<T extends Object = Object> {
   }
 
   // Может переопределять пользователь, необязательно трогать
-  public render(): DocumentFragment {
+  public render(): DocumentFragment | DocumentFragment[] {
     return new DocumentFragment();
   }
 

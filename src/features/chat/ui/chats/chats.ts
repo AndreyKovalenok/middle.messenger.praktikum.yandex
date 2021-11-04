@@ -1,35 +1,40 @@
 import { TChatItem } from "entities/chat";
-import { Block } from "shared/utils";
+import { Block, compile } from "shared/lib";
 
 import { ChatItemButton } from "../chat-item-button";
+import * as styles from "./style.scss";
+import { template } from "./chats.tmpl";
 
 type Props = {
   selectedId: string | null;
   chats: TChatItem[];
+  setSelectedElement: (id: string) => void;
 };
 
 export class Chats extends Block<Props> {
   constructor(props: Props) {
-    super({
-      ...props,
-    });
+    super(
+      {
+        ...props,
+      },
+      "div",
+      {
+        class: styles.chats,
+      }
+    );
   }
 
   render() {
-    const container = document.createElement("div");
-
-    this.props.chats.forEach((item) => {
+    return this.props.chats.map((chat) => {
       const chatItem = new ChatItemButton({
-        ...item,
+        ...chat,
         onClick: () => {
-          console.log("click");
+          this.props.setSelectedElement(chat.id);
         },
-        isSelected: false,
+        isSelected: this.props.selectedId === chat.id,
       });
 
-      container.append(chatItem.getContent() as Element);
+      return compile(template, { content: chatItem });
     });
-
-    return container;
   }
 }

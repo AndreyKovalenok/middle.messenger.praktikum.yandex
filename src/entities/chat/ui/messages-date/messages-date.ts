@@ -1,16 +1,16 @@
 import { Block, compile } from "shared/lib";
 
-import { template } from "./avatar.tmpl";
+import { template } from "./messages-date.tmpl";
 import * as styles from "./style.scss";
 
 type Props = {
-  src: string | null;
+  text: string;
 };
 
-export class Avatar extends Block<Props> {
+export class MessagesDate extends Block<Props> {
   constructor(props: Props) {
     super(props, "div", {
-      class: styles.avatar,
+      class: styles.date,
     });
   }
 

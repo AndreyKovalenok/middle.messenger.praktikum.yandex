@@ -1,4 +1,4 @@
-import { Block } from "shared/utils";
+import { Block, compile } from "shared/lib";
 
 import { template } from "./badge.tmpl";
 
@@ -12,6 +12,6 @@ export class Badge extends Block<Props> {
   }
 
   render() {
-    return this.compile(template);
+    return compile(template, this.props);
   }
 }
