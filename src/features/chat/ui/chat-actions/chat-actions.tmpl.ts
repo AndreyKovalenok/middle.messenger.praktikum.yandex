@@ -6,14 +6,12 @@ export const template = `
   <div class=${styles.wrapper}>
     <button class=${styles.actionButton} type="button">${ClipIcon()}</button>
     <div class=${styles.input}>
-      <input 
+      <input
         class=${styles.textarea}
         placeholder="Сообщение"
         value="{{ value }}"
       />
     </div>
-    <button class=${
-      styles.submitButton
-    } type="button">${LeftArrowEllipse()}</button>
+    <button class=${styles.submitButton} type="button"></button>
   </div>
 `;

@@ -4,14 +4,14 @@ export const template = `
   {{#> blanc-layout}}
     <div class="${styles.content}">
       <div class="${styles.asideButton}">
-        <div data-component="asideButton"></div>
+        {{{asideButton}}}
       </div>
       <div class="${styles.profile}">
         <div class="${styles.avatar}">
-          <div data-component="avatarButton"></div>
+          {{{avatarButton}}}
         </div>
-        <p class="${styles.name}">{{ name }}</p>
-        <div data-component="profile"></div>
+        <p class="${styles.name}">{{name}}</p>
+        {{{profile}}}
       </div>
     </div>
   {{/blanc-layout}}

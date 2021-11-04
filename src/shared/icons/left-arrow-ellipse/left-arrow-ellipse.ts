@@ -1,7 +1,13 @@
-import Handlebars from "handlebars";
+import { Block, compile } from "shared/lib";
 
 import { template } from "./left-arrow-ellipse.tmpl";
 
-const render = Handlebars.compile(template);
+export class LeftArrowEllipse extends Block {
+  constructor() {
+    super({});
+  }
 
-export const LeftArrowEllipse = () => render({});
+  render() {
+    return compile(template);
+  }
+}

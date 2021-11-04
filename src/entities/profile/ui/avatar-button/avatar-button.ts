@@ -1,4 +1,6 @@
-import { Block } from "shared/utils";
+import { Block, compile } from "shared/lib";
+
+import { BlancImage } from "shared/icons";
 
 import { template } from "./avatar-button.tmpl";
 
@@ -15,6 +17,8 @@ export class AvatarButton extends Block<Omit<Props, "onClick">> {
   }
 
   render() {
-    return this.compile(template);
+    const icon = new BlancImage();
+
+    return compile(template, { icon });
   }
 }

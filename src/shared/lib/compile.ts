@@ -2,7 +2,7 @@ import Handlebars from "handlebars";
 
 import { Block } from "./block";
 
-export const compile = (tmpl: string, props: any): DocumentFragment => {
+export const compile = (tmpl: string, props: any = {}): DocumentFragment => {
   const components: Record<string, Block> = {};
   const fragment = document.createElement("template");
 
