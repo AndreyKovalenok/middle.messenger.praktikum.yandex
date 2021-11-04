@@ -5,7 +5,9 @@ export const template = `
     {{#if label}}
       <span class=${styles.label}>{{ label }}</span>
     {{/if}}
-    <div data-component="input"></div>
-    <span class=${styles.error}>{{ errorMessage }}</span>
+    {{{input}}}
+    {{#if errorMessage}}
+      <span class=${styles.error}>{{ errorMessage }}</span>
+    {{/if}}
   </div>
 `;

@@ -1,5 +1,5 @@
 export const template = `
   {{#> blanc-layout}}
-    <div data-component="authForm"></div>
+    {{{authForm}}}
   {{/blanc-layout}}
 `;

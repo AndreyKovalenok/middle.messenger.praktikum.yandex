@@ -1,6 +1,7 @@
-import { Block } from "shared/utils";
+import { BlockV2, compile } from "shared/utils";
 
 import { template } from "./primary-button.tmpl";
+import * as styles from "./style.scss";
 
 type Props = {
   children: string;
@@ -8,18 +9,25 @@ type Props = {
   onClick: () => void;
 };
 
-export class PrimaryButton extends Block<Omit<Props, "onClick">> {
+export class PrimaryButton extends BlockV2<Omit<Props, "onClick">> {
   constructor({ onClick, type = "button", ...props }: Props) {
-    super({
-      ...props,
-      type,
-      events: {
-        click: onClick,
+    super(
+      {
+        ...props,
+        type,
+        events: {
+          click: onClick,
+        },
       },
-    });
+      "button",
+      {
+        type,
+        class: styles.button,
+      }
+    );
   }
 
   render() {
-    return this.compile(template);
+    return compile(template, this.props);
   }
 }

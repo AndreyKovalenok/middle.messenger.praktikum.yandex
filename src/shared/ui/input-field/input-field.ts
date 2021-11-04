@@ -1,4 +1,4 @@
-import { Block } from "shared/utils";
+import { BlockV2, compile } from "shared/utils";
 
 import { template } from "./input-field.tmpl";
 import { Input } from "../input";
@@ -10,26 +10,30 @@ type Props = {
   placeholder: string;
   name: string;
   errorMessage?: string;
-  error?: boolean;
   onChange: (evt: InputEvent) => void;
   onBlur: (evt: InputEvent) => void;
+  onFocus: (evt: InputEvent) => void;
 };
 
-type RenderProps = {
-  input: any;
-};
-
-export class InputField extends Block<Props, RenderProps> {
+export class InputField extends BlockV2<Props> {
   constructor(props: Props) {
-    super({
-      ...props,
-      input: new Input({
+    super(
+      {
         ...props,
-      }),
-    });
+      },
+      "div"
+    );
   }
 
   render() {
-    return this.compile(template);
+    const input = new Input({
+      ...this.props,
+      error: Boolean(this.props.errorMessage),
+    });
+
+    return compile(template, {
+      input,
+      ...this.props,
+    });
   }
 }
