@@ -9,13 +9,14 @@ type Props = {
   placeholder: string;
   name: string;
   error?: boolean;
+  touched?: boolean;
   onChange: (evt: InputEvent) => void;
   onBlur: (evt: InputEvent) => void;
   onFocus: (evt: InputEvent) => void;
 };
 
-const getClass = (isError: boolean) => {
-  if (isError) {
+const getClass = (isError: boolean, touched: boolean) => {
+  if (isError && touched) {
     return `${styles.input} ${styles.inputError}`;
   }
 
@@ -41,7 +42,7 @@ export class Input extends Block<
         value: props.value,
         placeholder: props.placeholder,
         name: props.name,
-        class: getClass(Boolean(props.error)),
+        class: getClass(Boolean(props.error), Boolean(props.touched)),
       }
     );
   }

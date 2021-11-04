@@ -10,6 +10,7 @@ type Props = {
   placeholder: string;
   name: string;
   errorMessage?: string;
+  touched?: boolean;
   onChange: (evt: InputEvent) => void;
   onBlur: (evt: InputEvent) => void;
   onFocus: (evt: InputEvent) => void;

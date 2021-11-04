@@ -6,8 +6,10 @@ export const template = `
       <span class=${styles.label}>{{ label }}</span>
     {{/if}}
     {{{input}}}
-    {{#if errorMessage}}
-      <span class=${styles.error}>{{ errorMessage }}</span>
+    {{#if touched}}
+      {{#if errorMessage}}
+        <span class=${styles.error}>{{ errorMessage }}</span>
+      {{/if}}
     {{/if}}
   </div>
 `;

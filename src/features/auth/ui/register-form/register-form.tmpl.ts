@@ -1,34 +1,32 @@
 import * as styles from "./style.scss";
 
 export const template = `
-  <form>
     <div class="${styles.layout}">
     <p class="${styles.title}">Регистрация</p>
     <div class="${styles.input}">
-      <div data-component="emailInput"></div>
+      {{{emailInput}}}
     </div>
     <div class="${styles.input}">
-      <div data-component="loginInput"></div>
+      {{{loginInput}}}
     </div>
     <div class="${styles.input}">
-      <div data-component="nameInput"></div>
+      {{{nameInput}}}
     </div>
     <div class="${styles.input}">
-      <div data-component="surnameInput"></div>
+      {{{surnameInput}}}
     </div>
     <div class="${styles.input}">
-      <div data-component="phoneInput"></div>
+      {{{phoneInput}}}
     </div>
     <div class="${styles.input}">
-      <div data-component="passwordInput"></div>
+      {{{passwordInput}}}
     </div>
     <div class="${styles.input}">
-      <div data-component="repeatPasswordInput"></div>
+      {{{repeatPasswordInput}}}
     </div>
     <div class="${styles.spacer}"></div>
-      <div data-component="submitButton"></div>
+      {{{submitButton}}}
     <div class="${styles.hbox}"></div>
-      <div data-component="loginLink"></div>
+      {{{loginLink}}}
     </div>
-  </form>
 `;

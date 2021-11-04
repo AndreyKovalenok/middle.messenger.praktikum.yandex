@@ -48,36 +48,55 @@ export class AuthForm extends Block<Props> {
     });
   };
 
+  private inputChangeHandler(
+    name: keyof TAuthForm,
+    value: string,
+    selectionStart: number | null
+  ) {
+    this.setProps({
+      ...this.props,
+      values: {
+        ...this.props.values,
+        [name]: value,
+      },
+    });
+    this.focus.caretPosition = selectionStart;
+
+    const errors = authValidator(this.props.values);
+    this.setProps({
+      ...this.props,
+      errors: {
+        ...errors,
+      },
+    });
+  }
+
+  private focusHandler(name: keyof TAuthForm) {
+    this.focus.name = name;
+    if (!this.props.touched[name]) {
+      this.setProps({
+        ...this.props,
+        touched: {
+          ...this.props.touched,
+          [name]: true,
+        },
+      });
+    }
+  }
+
   render() {
     const loginInput = new InputField({
       label: "Логин",
       type: "text",
       value: this.props.values.login,
+      errorMessage: this.props.errors.login,
+      touched: this.props.touched.login,
       placeholder: "Введите логин",
       name: "login",
-      errorMessage: this.props.errors.login,
       onChange: (evt) => {
-        this.setProps({
-          ...this.props,
-          values: {
-            ...this.props.values,
-            login: (<HTMLInputElement>evt.target).value,
-          },
-        });
-        this.focus.caretPosition = (<HTMLInputElement>(
-          evt.target
-        )).selectionStart;
+        const target = <HTMLInputElement>evt.target;
 
-        const errors = authValidator(this.props.values);
-
-        if (errors) {
-          this.setProps({
-            ...this.props,
-            errors: {
-              ...errors,
-            },
-          });
-        }
+        this.inputChangeHandler("login", target.value, target.selectionStart);
       },
       onBlur: (evt) => {
         this.focus.caretPosition = (<HTMLInputElement>(
@@ -85,7 +104,7 @@ export class AuthForm extends Block<Props> {
         )).selectionStart;
       },
       onFocus: () => {
-        this.focus.name = "login";
+        this.focusHandler("login");
       },
     });
 
@@ -93,31 +112,18 @@ export class AuthForm extends Block<Props> {
       label: "Пароль",
       type: "password",
       value: this.props.values.password,
+      errorMessage: this.props.errors.password,
+      touched: this.props.touched.password,
       placeholder: "Введите пароль",
       name: "password",
-      errorMessage: this.props.errors.password,
       onChange: (evt) => {
-        this.setProps({
-          ...this.props,
-          values: {
-            ...this.props.values,
-            password: (<HTMLInputElement>evt.target).value,
-          },
-        });
-        this.focus.caretPosition = (<HTMLInputElement>(
-          evt.target
-        )).selectionStart;
+        const target = <HTMLInputElement>evt.target;
 
-        const errors = authValidator(this.props.values);
-
-        if (errors) {
-          this.setProps({
-            ...this.props,
-            errors: {
-              ...errors,
-            },
-          });
-        }
+        this.inputChangeHandler(
+          "password",
+          target.value,
+          target.selectionStart
+        );
       },
       onBlur: (evt) => {
         this.focus.caretPosition = (<HTMLInputElement>(
@@ -125,7 +131,7 @@ export class AuthForm extends Block<Props> {
         )).selectionStart;
       },
       onFocus: () => {
-        this.focus.name = "password";
+        this.focusHandler("password");
       },
     });
 
@@ -138,7 +144,14 @@ export class AuthForm extends Block<Props> {
         };
         const errors = authValidator(this.props.values);
 
-        this.setProps({ ...this.props, errors: { ...errors } });
+        this.setProps({
+          ...this.props,
+          errors: { ...errors },
+          touched: Object.keys(this.props.values).reduce(
+            (acc, key) => ({ ...acc, [key]: true }),
+            {}
+          ),
+        });
 
         if (Object.keys(errors).length === 0) {
           console.log(this.props.values);
