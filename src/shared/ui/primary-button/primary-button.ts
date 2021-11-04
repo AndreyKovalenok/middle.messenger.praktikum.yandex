@@ -1,4 +1,4 @@
-import { BlockV2, compile } from "shared/utils";
+import { Block, compile } from "shared/lib";
 
 import { template } from "./primary-button.tmpl";
 import * as styles from "./style.scss";
@@ -9,7 +9,7 @@ type Props = {
   onClick: () => void;
 };
 
-export class PrimaryButton extends BlockV2<Omit<Props, "onClick">> {
+export class PrimaryButton extends Block<Omit<Props, "onClick">> {
   constructor({ onClick, type = "button", ...props }: Props) {
     super(
       {

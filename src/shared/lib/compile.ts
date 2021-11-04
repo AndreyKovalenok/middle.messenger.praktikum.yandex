@@ -1,6 +1,6 @@
 import Handlebars from "handlebars";
 
-import { Block } from "./block-v2";
+import { Block } from "./block";
 
 export const compile = (tmpl: string, props: any): DocumentFragment => {
   const components: Record<string, Block> = {};

@@ -1,4 +1,4 @@
-import { BlockV2, compile } from "shared/utils";
+import { Block, compile } from "shared/lib";
 
 import { template } from "./input-field.tmpl";
 import { Input } from "../input";
@@ -15,7 +15,7 @@ type Props = {
   onFocus: (evt: InputEvent) => void;
 };
 
-export class InputField extends BlockV2<Props> {
+export class InputField extends Block<Props> {
   constructor(props: Props) {
     super(
       {

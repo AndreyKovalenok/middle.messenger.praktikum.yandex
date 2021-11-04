@@ -1,7 +1,7 @@
 import Handlebars from "handlebars";
 import { v4 } from "uuid";
 
-import { EventBus } from "./event-bus";
+import { EventBus } from "../lib/event-bus";
 import { createElement } from "./create-element";
 
 type TMeta<T> = {

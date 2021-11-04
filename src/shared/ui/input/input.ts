@@ -1,4 +1,4 @@
-import { BlockV2, compile } from "shared/utils";
+import { Block, compile } from "shared/lib";
 
 import { template } from "./input.tmpl";
 import * as styles from "./style.scss";
@@ -22,7 +22,7 @@ const getClass = (isError: boolean) => {
   return `${styles.input}`;
 };
 
-export class Input extends BlockV2<
+export class Input extends Block<
   Omit<Props, "onChange" | "onBlur" | "onFocus">
 > {
   constructor({ onChange, onBlur, onFocus, ...props }: Props) {

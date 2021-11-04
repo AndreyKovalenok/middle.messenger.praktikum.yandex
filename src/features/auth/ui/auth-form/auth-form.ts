@@ -1,5 +1,5 @@
 import { InputField, PrimaryButton, Link } from "shared/ui";
-import { BlockV2, compile } from "shared/utils";
+import { Block, compile } from "shared/lib";
 
 import { template } from "./auth-form.tmpl";
 import type { TAuthForm } from "../../types";
@@ -16,7 +16,7 @@ type Props = {
   touched: Partial<Record<keyof TAuthForm, boolean>>;
 };
 
-export class AuthForm extends BlockV2<Props> {
+export class AuthForm extends Block<Props> {
   focus: {
     name: keyof TAuthForm | null;
     caretPosition: number | null;

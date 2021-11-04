@@ -1,4 +1,4 @@
-import { BlockV2, compile } from "shared/utils";
+import { Block, compile } from "shared/lib";
 
 import { template } from "./link.tmpl";
 import * as styles from "./style.scss";
@@ -9,7 +9,7 @@ type Props = {
   isBlanc?: boolean;
 };
 
-export class Link extends BlockV2<Props> {
+export class Link extends Block<Props> {
   constructor(props: Props) {
     super(props, "a", {
       href: props.href,

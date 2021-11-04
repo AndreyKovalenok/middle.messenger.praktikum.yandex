@@ -1,9 +1,9 @@
 import { AuthForm } from "features/auth";
-import { BlockV2, compile } from "shared/utils";
+import { Block, compile } from "shared/lib";
 
 import { template } from "./login-page.tmpl";
 
-export class LoginPage extends BlockV2 {
+export class LoginPage extends Block {
   constructor() {
     super({});
   }
