@@ -9,10 +9,6 @@ import { Block, compile } from "shared/lib";
 
 import { template } from "./profile-page.tmpl";
 
-type Props = {
-  name: string;
-};
-
 const changeDataInitialValues: TChangeUserDataForm = {
   email: "pochta@yandex.ru",
   login: "ivanivanov",
@@ -22,11 +18,9 @@ const changeDataInitialValues: TChangeUserDataForm = {
   phone: "+7 (909) 967 30 30",
 };
 
-export class ProfilePage extends Block<Props> {
+export class ProfilePage extends Block {
   constructor() {
-    super({
-      name: "Иван",
-    });
+    super({});
   }
 
   render() {
@@ -57,7 +51,7 @@ export class ProfilePage extends Block<Props> {
     });
 
     return compile(template, {
-      name: this.props.name,
+      name: "Иван",
       asideButton,
       avatarButton,
       profile,

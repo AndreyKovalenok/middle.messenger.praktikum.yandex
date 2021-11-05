@@ -38,17 +38,9 @@ const messagesMockArray = Array.from(
   (_, index) => messagesMock[index % 2 ? 0 : 1]
 );
 
-type Props = {
-  searchValue: string;
-  selectedId: string | null;
-};
-
-export class ChatPage extends Block<Props> {
+export class ChatPage extends Block {
   constructor() {
-    super({
-      searchValue: "",
-      selectedId: null,
-    });
+    super({});
   }
 
   render() {
@@ -59,11 +51,11 @@ export class ChatPage extends Block<Props> {
     });
     const searchInput = new SearchInput({
       name: "search",
-      value: this.props.searchValue,
+      value: "",
       onChange: () => console.log("change"),
     });
     const chats = new Chats({
-      selectedId: this.props.selectedId,
+      selectedId: null,
       chats: Array.from(new Array(100), (_, index) => getChatMock(index)),
       setSelectedElement: (id) =>
         this.setProps({
