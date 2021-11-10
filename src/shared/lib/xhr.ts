@@ -5,17 +5,19 @@ const METHODS = {
   DELETE: "DELETE" as const,
 };
 
-type TOptions = {
-  data?: Record<string, unknown>;
+type TOptions<T extends Record<string, unknown> = Record<string, unknown>> = {
+  data?: T;
   headers?: Record<string, string>;
   timeout?: number;
 };
 
 type TMethodsKeys = keyof typeof METHODS;
 
-type TRequestOptions = {
+type TRequestOptions<
+  T extends Record<string, unknown> = Record<string, unknown>
+> = {
   method: typeof METHODS[TMethodsKeys];
-  data?: Record<string, unknown>;
+  data?: T;
   headers?: Record<string, string>;
 };
 
@@ -32,36 +34,64 @@ function queryStringify(data: Record<string, unknown>) {
   return `?${result.slice(1)}`;
 }
 
-export class HTTPTransport {
-  get = (url: string, options: TOptions) => {
-    const { data, headers, timeout } = options;
+type THTTPArgs = {
+  baseUrl?: string;
+};
 
-    return this.request(url, { data, headers, method: METHODS.GET }, timeout);
-  };
+export class HTTP {
+  baseUrl: string;
 
-  post = (url: string, options: TOptions) => {
-    const { data, headers, timeout } = options;
+  constructor({ baseUrl }: THTTPArgs = {}) {
+    this.baseUrl = baseUrl ?? "";
+  }
 
-    return this.request(url, { data, headers, method: METHODS.POST }, timeout);
-  };
-
-  put = (url: string, options: TOptions) => {
-    const { data, headers, timeout } = options;
-
-    return this.request(url, { data, headers, method: METHODS.PUT }, timeout);
-  };
-
-  delete = (url: string, options: TOptions) => {
+  get = <
+    T extends unknown = unknown,
+    R extends Record<string, unknown> = Record<string, unknown>
+  >(
+    url: string,
+    options: TOptions<R> = {}
+  ): Promise<T> => {
     const { data, headers, timeout } = options;
 
     return this.request(
-      url,
+      this.baseUrl + url,
+      { data, headers, method: METHODS.GET },
+      timeout
+    );
+  };
+
+  post = <T extends unknown = unknown>(url: string, options: TOptions) => {
+    const { data, headers, timeout } = options;
+
+    return this.request<T>(
+      this.baseUrl + url,
+      { data, headers, method: METHODS.POST },
+      timeout
+    );
+  };
+
+  put = <T extends unknown = unknown>(url: string, options: TOptions) => {
+    const { data, headers, timeout } = options;
+
+    return this.request<T>(
+      this.baseUrl + url,
+      { data, headers, method: METHODS.PUT },
+      timeout
+    );
+  };
+
+  delete = <T extends unknown = unknown>(url: string, options: TOptions) => {
+    const { data, headers, timeout } = options;
+
+    return this.request<T>(
+      this.baseUrl + url,
       { data, headers, method: METHODS.DELETE },
       timeout
     );
   };
 
-  request = (
+  request = <T extends unknown = unknown>(
     url: string,
     options: TRequestOptions = { method: METHODS.GET },
     timeout = 5000
@@ -74,7 +104,7 @@ export class HTTPTransport {
       },
     } = options;
 
-    return new Promise((resolve, reject) => {
+    return new Promise<T>((resolve, reject) => {
       const xhr = new XMLHttpRequest();
 
       const requestUrl =
@@ -89,7 +119,7 @@ export class HTTPTransport {
       }
 
       xhr.onload = function () {
-        resolve(xhr);
+        resolve(xhr as T);
       };
 
       const handleError = (err: unknown) => {
@@ -116,7 +146,7 @@ export function fetchWithRetry(
   const { retries, ...rest } = options;
   let requestCount = 0;
 
-  const http = new HTTPTransport();
+  const http = new HTTP();
 
   try {
     console.log(retries);
