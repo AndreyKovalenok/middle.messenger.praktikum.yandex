@@ -1,10 +1,10 @@
 import { Block, compile } from "shared/lib";
-
 import { InputField, PrimaryButton, Link } from "shared/ui";
 
 import { template } from "./register-form.tmpl";
 import type { TRegisterForm } from "../../types";
 import { registerValidator } from "./validator";
+import { signup } from "../../model";
 
 const initialValues: TRegisterForm = {
   email: "",
@@ -20,6 +20,7 @@ type Props = {
   values: TRegisterForm;
   errors: Partial<Record<keyof TRegisterForm, string>>;
   touched: Partial<Record<keyof TRegisterForm, boolean>>;
+  isSubmitting: boolean;
 };
 
 export class RegisterForm extends Block<Props> {
@@ -34,6 +35,7 @@ export class RegisterForm extends Block<Props> {
         values: initialValues,
         errors: {},
         touched: {},
+        isSubmitting: false,
       },
       "form"
     );
@@ -262,7 +264,8 @@ export class RegisterForm extends Block<Props> {
     });
     const submitButton = new PrimaryButton({
       children: "Зарегистрироваться",
-      onClick: () => {
+      isLoading: this.props.isSubmitting,
+      onClick: async () => {
         const errors = registerValidator(this.props.values);
         this.setProps({
           ...this.props,
@@ -276,7 +279,17 @@ export class RegisterForm extends Block<Props> {
         });
 
         if (Object.keys(errors).length === 0) {
-          console.log(this.props.values);
+          this.setProps({
+            ...this.props,
+            isSubmitting: true,
+          });
+
+          await signup(this.props.values);
+
+          this.setProps({
+            ...this.props,
+            isSubmitting: false,
+          });
         }
       },
     });
