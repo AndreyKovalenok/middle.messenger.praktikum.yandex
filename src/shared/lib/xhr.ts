@@ -61,7 +61,7 @@ export class HTTP {
     );
   };
 
-  post = <T extends unknown = unknown>(url: string, options: TOptions) => {
+  post = <T extends unknown = unknown>(url: string, options: TOptions = {}) => {
     const { data, headers, timeout } = options;
 
     return this.request<T>(
