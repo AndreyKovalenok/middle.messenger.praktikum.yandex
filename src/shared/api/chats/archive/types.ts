@@ -1,4 +1,4 @@
-export type TUser = {
+type TUser = {
   id: number;
   first_name: string;
   second_name: string;
@@ -9,16 +9,20 @@ export type TUser = {
   avatar: string;
 };
 
-export type TChatMessage = {
+type TLastMessage = {
   user: TUser;
   time: string;
   content: string;
 };
 
-export type TGetChatsResponse = {
+export type TArchiveChatsRequestResponse = {
   id: number;
   title: string;
   avatar: string;
   unread_count: number;
-  last_message: TChatMessage;
+  last_message: TLastMessage;
+};
+
+export type TArchiveChatReqestPayload = {
+  chatId: number;
 };
