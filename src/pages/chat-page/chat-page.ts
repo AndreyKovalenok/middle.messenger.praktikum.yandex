@@ -7,6 +7,7 @@ import {
 } from "features/chat";
 import { Messages } from "entities/chat";
 import { Block, compile } from "shared/lib";
+import { router } from "shared/utils";
 
 import { template } from "./chat-page.tmpl";
 
@@ -45,9 +46,7 @@ export class ChatPage extends Block {
 
   render() {
     const goBackButton = new GoBackButton({
-      onClick: () => {
-        console.log("click");
-      },
+      onClick: () => router.go("/profile"),
     });
     const searchInput = new SearchInput({
       name: "search",

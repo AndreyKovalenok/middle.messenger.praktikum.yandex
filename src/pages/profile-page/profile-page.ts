@@ -3,9 +3,13 @@ import {
   ProfileInfo,
   ChangePasswordForm,
   ChangeUserDataForm,
+  profileModel,
 } from "features/profile";
+import { authModel } from "features/auth";
 import type { TChangeUserDataForm } from "features/profile/types";
 import { Block, compile } from "shared/lib";
+import { router } from "shared/utils";
+import { Loader } from "shared/ui";
 
 import { template } from "./profile-page.tmpl";
 
@@ -18,15 +22,54 @@ const changeDataInitialValues: TChangeUserDataForm = {
   phone: "+7 (909) 967 30 30",
 };
 
-export class ProfilePage extends Block {
+type TActiveContent = "profile" | "password" | "change-profile";
+
+type Props = {
+  activeContent: TActiveContent;
+  isLoading: boolean;
+};
+
+export class ProfilePage extends Block<Props> {
   constructor() {
-    super({});
+    super({
+      activeContent: "profile",
+      isLoading: false,
+    });
+  }
+
+  async getUserData() {
+    this.setProps({
+      ...this.props,
+      isLoading: true,
+    });
+
+    // TODO: add id
+    const data = await profileModel.getUserData("1");
+
+    this.setProps({
+      ...this.props,
+      isLoading: false,
+    });
+  }
+
+  componentDidMount() {
+    this.getUserData();
   }
 
   render() {
+    const loader = new Loader();
+
     const asideButton = new AsideButton({
       onClick: () => {
-        console.log("click");
+        if (
+          this.props.activeContent === "change-profile" ||
+          this.props.activeContent === "password"
+        ) {
+          this.setProps({ ...this.props, activeContent: "profile" });
+          return;
+        }
+
+        router.go("/chats");
       },
     });
 
@@ -36,8 +79,10 @@ export class ProfilePage extends Block {
       },
     });
 
-    // const profile = new ChangeUserDataForm({ values: changeDataInitialValues });
-    // const profile = new ChangePasswordForm();
+    const changeUserDataForm = new ChangeUserDataForm({
+      values: changeDataInitialValues,
+    });
+    const changePasswordForm = new ChangePasswordForm();
     const profile = new ProfileInfo({
       email: "pochta@yandex.ru",
       login: "ivanivanov",
@@ -45,16 +90,31 @@ export class ProfilePage extends Block {
       surname: "Иванов",
       displayName: "Bdfy",
       phone: "+7 (909) 967 30 30",
-      onChangeData: () => console.log("onChangeData"),
-      onChangePassword: () => console.log("onChangePassword"),
-      onLogout: () => console.log("onLogout"),
+      onChangeData: () =>
+        this.setProps({
+          ...this.props,
+          activeContent: "change-profile",
+        }),
+      onChangePassword: () =>
+        this.setProps({
+          ...this.props,
+          activeContent: "password",
+        }),
+      onLogout: () => authModel.logout(),
     });
+
+    const content: Record<TActiveContent, unknown> = {
+      "change-profile": changeUserDataForm,
+      password: changePasswordForm,
+      profile,
+    };
 
     return compile(template, {
       name: "Иван",
       asideButton,
       avatarButton,
-      profile,
+      profile: content[this.props.activeContent],
+      loader,
     });
   }
 }

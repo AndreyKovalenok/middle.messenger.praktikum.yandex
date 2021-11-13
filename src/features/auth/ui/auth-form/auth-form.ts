@@ -4,6 +4,7 @@ import { Block, compile } from "shared/lib";
 import { template } from "./auth-form.tmpl";
 import type { TAuthForm } from "../../types";
 import { authValidator } from "./validator";
+import { signin } from "../../model";
 
 const initialValues: TAuthForm = {
   login: "",
@@ -14,6 +15,7 @@ type Props = {
   values: TAuthForm;
   errors: Partial<TAuthForm>;
   touched: Partial<Record<keyof TAuthForm, boolean>>;
+  isLoading: boolean;
 };
 
 export class AuthForm extends Block<Props> {
@@ -28,6 +30,7 @@ export class AuthForm extends Block<Props> {
         values: initialValues,
         errors: {},
         touched: {},
+        isLoading: false,
       },
       "form"
     );
@@ -137,7 +140,8 @@ export class AuthForm extends Block<Props> {
 
     const submitButton = new PrimaryButton({
       children: "Авторизоваться",
-      onClick: () => {
+      isLoading: this.props.isLoading,
+      onClick: async () => {
         this.focus = {
           caretPosition: null,
           name: null,
@@ -154,7 +158,16 @@ export class AuthForm extends Block<Props> {
         });
 
         if (Object.keys(errors).length === 0) {
-          console.log(this.props.values);
+          this.setProps({ ...this.props, isLoading: true });
+
+          const { login, password } = this.props.values;
+
+          await signin({
+            login,
+            password,
+          });
+
+          this.setProps({ ...this.props, isLoading: false });
         }
       },
     });
