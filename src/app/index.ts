@@ -14,10 +14,10 @@ import "./style/style.scss";
 registerPartials();
 
 router
-  .use("/login", new LoginPage())
-  .use("/registration", new RegisterPage())
-  .use("/profile", new ProfilePage())
-  .use("/chats", new ChatPage())
-  .use("/404", new Page404())
-  .use("/500", new Page500())
+  .use("/login", LoginPage)
+  .use("/registration", RegisterPage)
+  .use("/profile", ProfilePage)
+  .use("/chats", ChatPage)
+  .use("/404", Page404)
+  .use("/500", Page500)
   .start();

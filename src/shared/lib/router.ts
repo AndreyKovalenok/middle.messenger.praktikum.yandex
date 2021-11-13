@@ -8,7 +8,7 @@ function render(query: string, block: Block) {
   }
 
   root.innerHTML = "";
-  root.insertAdjacentElement("afterbegin", block.getContent());
+  root.insertAdjacentElement("afterbegin", new block().getContent());
   return root;
 }
 
@@ -45,7 +45,7 @@ class Route<T extends Record<string, unknown> = Record<string, unknown>> {
   }
 }
 
-export class Router {
+class Router {
   private static __instance: Router;
   public routes: Route[] = [];
   public history: History = window.history;
@@ -113,3 +113,5 @@ export class Router {
     return this.routes.find((route) => route.match(pathname));
   }
 }
+
+export default Router;

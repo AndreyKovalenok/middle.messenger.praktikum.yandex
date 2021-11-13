@@ -294,7 +294,7 @@ export class RegisterForm extends Block<Props> {
       },
     });
     const loginLink = new Link({
-      href: "/auth",
+      href: "/login",
       children: "Войти",
     });
 

@@ -1,4 +1,4 @@
-import { Router } from "shared/lib";
+import Router from "shared/lib/router";
 
 const ROOT_QUERY = "#root";
 

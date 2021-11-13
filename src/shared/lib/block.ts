@@ -10,7 +10,7 @@ type TMeta<T> = {
 
 type TProps<T> = T & { events?: Record<string, any> };
 
-export class Block<T extends Object = Object> {
+export class Block<T extends any = any> {
   eventBus: any;
   props: TProps<T>;
 
@@ -100,7 +100,7 @@ export class Block<T extends Object = Object> {
 
   // eslint-disable-next-line no-unused-vars
   public componentDidUpdate(oldProps: T, newProps: T) {
-    return Object.entries(oldProps).some(
+    return Object.entries(oldProps as Object).some(
       ([name, value]) => newProps[name as keyof T] !== value
     );
   }
@@ -166,7 +166,7 @@ export class Block<T extends Object = Object> {
   private _makePropsProxy(props: TProps<T>) {
     return new Proxy(props, {
       set: (target, prop, value) => {
-        const oldProps = { ...props };
+        const oldProps = { ...(props as Object) };
         target[prop as keyof T] = value;
         this.eventBus().emit(Block.EVENTS.FLOW_CDU, oldProps, props);
 
