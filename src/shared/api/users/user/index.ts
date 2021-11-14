@@ -1,2 +1,5 @@
 export { User } from "./user";
-export type { TChangePasswordRequestPayload } from "./types";
+export type {
+  TChangePasswordRequestPayload,
+  TChangeUserProfileRequestPayload,
+} from "./types";
