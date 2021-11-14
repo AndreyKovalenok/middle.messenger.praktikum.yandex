@@ -1,6 +1,7 @@
 import { BlancLayout } from "./blanc-layout";
+import { ModalLayout } from "./modal-layout";
 
-export const partials = [BlancLayout];
+export const partials = [BlancLayout, ModalLayout];
 
 export { InputField } from "./input-field";
 export { PrimaryButton } from "./primary-button";
