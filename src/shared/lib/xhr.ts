@@ -106,6 +106,7 @@ export class HTTP {
 
     return new Promise<T>((resolve, reject) => {
       const xhr = new XMLHttpRequest();
+      xhr.withCredentials = true;
 
       const requestUrl =
         method === METHODS.GET && data ? url + queryStringify(data) : url;
