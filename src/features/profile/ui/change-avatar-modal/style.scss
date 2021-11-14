@@ -1,4 +1,5 @@
 .wrapper {
+  position: relative;
   display: none;
   z-index: 1000;
   position: absolute;
@@ -39,4 +40,10 @@
   font-size: 14px;
   line-height: 16px;
   color: var(--color-file-text);
+}
+
+.closeButton {
+  position: absolute;
+  right: 8px;
+  top: 8px;
 }

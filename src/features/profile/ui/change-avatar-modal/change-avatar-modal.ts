@@ -1,6 +1,8 @@
 import { Block, compile } from "shared/lib";
 
-import { PrimaryButton, FileInputField } from "shared/ui";
+import { PrimaryButton, FileInputField, IconButton } from "shared/ui";
+import { CloseIcon } from "shared/icons";
+
 import { template } from "./change-avatar-modal.tmpl";
 import * as styles from "./style.scss";
 
@@ -17,6 +19,7 @@ type Props = {
   isLoading: boolean;
   file: File | null;
   onSubmit: (file: File) => void;
+  onClose: () => void;
 };
 
 export class ChangeAvatarModal extends Block<Props> {
@@ -68,11 +71,17 @@ export class ChangeAvatarModal extends Block<Props> {
       },
     });
 
+    const closeButton = new IconButton({
+      icon: new CloseIcon(),
+      onClick: () => this.props.onClose(),
+    });
+
     return compile(template, {
       title: "Загрузите файл",
       button,
       fileInput,
       fileName: this.props.file ? this.props.file.name : undefined,
+      closeButton,
     });
   }
 }

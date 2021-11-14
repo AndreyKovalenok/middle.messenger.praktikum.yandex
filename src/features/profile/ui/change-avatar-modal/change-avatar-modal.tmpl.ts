@@ -12,6 +12,9 @@ export const template = `
         {{/if}}
         </div>
       {{{button}}}
+      <div class="${styles.closeButton}">
+        {{{closeButton}}}
+      </div>
     </div>
   {{/modal-layout}}
 `;

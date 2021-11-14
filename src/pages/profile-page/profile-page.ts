@@ -174,6 +174,8 @@ export class ProfilePage extends Block<Props> {
 
     const changeAvatarModal = new ChangeAvatarModal({
       isActive: this.props.isAvatarModalActive,
+      onClose: () =>
+        this.setProps({ ...this.props, isAvatarModalActive: false }),
       onSubmit: async (file: File) => {
         const formData = new FormData();
         formData.set("avatar", file);
