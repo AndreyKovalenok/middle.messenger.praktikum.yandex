@@ -3,30 +3,26 @@ import {
   ProfileInfo,
   ChangePasswordForm,
   ChangeUserDataForm,
-  profileModel,
 } from "features/profile";
 import { authModel } from "features/auth";
-import type { TChangeUserDataForm } from "features/profile/types";
 import { Block, compile } from "shared/lib";
 import { router, state } from "shared/utils";
 import { Loader } from "shared/ui";
 
 import { template } from "./profile-page.tmpl";
 
-const changeDataInitialValues: TChangeUserDataForm = {
-  email: "pochta@yandex.ru",
-  login: "ivanivanov",
-  first_name: "Иван",
-  second_name: "Иванов",
-  display_name: "Иван",
-  phone: "+7 (909) 967 30 30",
-};
-
 type TActiveContent = "profile" | "password" | "change-profile";
 
 type Props = {
   activeContent: TActiveContent;
   isLoading: boolean;
+  email: string;
+  login: string;
+  name: string;
+  surname: string;
+  displayName: string;
+  phone: string;
+  error?: string;
 };
 
 export class ProfilePage extends Block<Props> {
@@ -34,6 +30,12 @@ export class ProfilePage extends Block<Props> {
     super({
       activeContent: "profile",
       isLoading: false,
+      email: "",
+      login: "",
+      name: "",
+      surname: "",
+      displayName: "",
+      phone: "",
     });
   }
 
@@ -43,13 +45,29 @@ export class ProfilePage extends Block<Props> {
       isLoading: true,
     });
 
-    // TODO: add id
-    console.log(state);
-    const data = await profileModel.getUserData("1");
+    const data = await authModel.getUser();
+
+    if (!data) {
+      this.setProps({
+        ...this.props,
+        isLoading: false,
+      });
+      return;
+    }
+
+    state.change({
+      user: data,
+    });
 
     this.setProps({
       ...this.props,
       isLoading: false,
+      displayName: data.display_name,
+      email: data.email,
+      login: data.login,
+      name: data.first_name,
+      phone: data.phone,
+      surname: data.second_name,
     });
   }
 
@@ -81,16 +99,23 @@ export class ProfilePage extends Block<Props> {
     });
 
     const changeUserDataForm = new ChangeUserDataForm({
-      values: changeDataInitialValues,
+      values: {
+        display_name: this.props.displayName,
+        email: this.props.email,
+        first_name: this.props.name,
+        login: this.props.login,
+        phone: this.props.phone,
+        second_name: this.props.surname,
+      },
     });
     const changePasswordForm = new ChangePasswordForm();
     const profile = new ProfileInfo({
-      email: "pochta@yandex.ru",
-      login: "ivanivanov",
-      name: "Иван",
-      surname: "Иванов",
-      displayName: "Bdfy",
-      phone: "+7 (909) 967 30 30",
+      email: this.props.email,
+      login: this.props.login,
+      name: this.props.name,
+      surname: this.props.surname,
+      displayName: this.props.displayName,
+      phone: this.props.phone,
       onChangeData: () =>
         this.setProps({
           ...this.props,
@@ -111,7 +136,7 @@ export class ProfilePage extends Block<Props> {
     };
 
     return compile(template, {
-      name: "Иван",
+      ...this.props,
       asideButton,
       avatarButton,
       profile: content[this.props.activeContent],
