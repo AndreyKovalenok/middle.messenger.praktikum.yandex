@@ -16,6 +16,9 @@ export const template = `
         <div class=${styles.divider}></div>
         <div class=${styles.chats}>
           {{{chats}}}
+          <div class="${styles.addChatButton}">
+            {{{addChatButton}}}
+          </div>
         </div>
       </div>
 

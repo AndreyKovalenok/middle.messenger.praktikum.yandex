@@ -4,4 +4,5 @@ export {
   SearchInput,
   ChatHeader,
   ChatActions,
+  AddChatButton,
 } from "./ui";

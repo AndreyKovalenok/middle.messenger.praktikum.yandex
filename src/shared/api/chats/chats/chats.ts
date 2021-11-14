@@ -4,10 +4,10 @@ import { PATH } from "../../config";
 import type { TChatPostPayload, TChatDeletePayload } from "./types";
 import type { TGetChatsResponse } from "../types";
 
-const chatsInstance = new HTTP({ baseUrl: PATH + "api/v2/chats" });
+const chatsInstance = new HTTP({ baseUrl: PATH + "/api/v2/chats" });
 
 export class Chats {
-  get = () => chatsInstance.get<TGetChatsResponse[]>("/");
+  get = () => chatsInstance.get<TGetChatsResponse[]>("");
 
   post = (payload: TChatPostPayload) =>
     chatsInstance.post("/", {

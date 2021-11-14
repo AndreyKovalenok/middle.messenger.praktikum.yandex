@@ -4,22 +4,13 @@ import {
   SearchInput,
   ChatHeader,
   ChatActions,
+  AddChatButton,
 } from "features/chat";
-import { Messages } from "entities/chat";
+import { Messages, chatModel, TChatItem, chatMappers } from "entities/chat";
 import { Block, compile } from "shared/lib";
 import { router } from "shared/utils";
 
 import { template } from "./chat-page.tmpl";
-
-const getChatMock = (index: number) => ({
-  id: String(index),
-  avatar: null,
-  title: "тет-а-теты",
-  time: "15:12",
-  message:
-    "И Human Interface Guidelines и Material Design рекомендуют И Human Interface Guidelines и Material Design рекомендуют",
-  unreadMessages: 15000,
-});
 
 const messagesMock = [
   {
@@ -39,9 +30,38 @@ const messagesMockArray = Array.from(
   (_, index) => messagesMock[index % 2 ? 0 : 1]
 );
 
-export class ChatPage extends Block {
+type Props = {
+  isChatsLoading: boolean;
+  selectedId: string | null;
+  chats: TChatItem[];
+};
+
+export class ChatPage extends Block<Props> {
   constructor() {
-    super({});
+    super({
+      isChatsLoading: false,
+      chats: [],
+      selectedId: null,
+    });
+  }
+
+  async fetchChats() {
+    this.setProps({
+      ...this.props,
+      isChatsLoading: true,
+    });
+
+    const chats = await chatModel.getChats();
+
+    this.setProps({
+      ...this.props,
+      isChatsLoading: true,
+      chats: chatMappers.mapChats(chats),
+    });
+  }
+
+  componentDidMount() {
+    this.fetchChats();
   }
 
   render() {
@@ -55,7 +75,7 @@ export class ChatPage extends Block {
     });
     const chats = new Chats({
       selectedId: null,
-      chats: Array.from(new Array(100), (_, index) => getChatMock(index)),
+      chats: this.props.chats,
       setSelectedElement: (id) =>
         this.setProps({
           ...this.props,
@@ -84,6 +104,10 @@ export class ChatPage extends Block {
       messageInputValue: "123",
     });
 
+    const addChatButton = new AddChatButton({
+      onClick: () => console.log("click"),
+    });
+
     return compile(template, {
       goBackButton,
       searchInput,
@@ -91,6 +115,7 @@ export class ChatPage extends Block {
       chatHeader,
       chatMessages,
       chatActions,
+      addChatButton,
     });
   }
 }
