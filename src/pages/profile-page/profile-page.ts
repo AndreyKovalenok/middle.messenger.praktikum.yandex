@@ -108,7 +108,14 @@ export class ProfilePage extends Block<Props> {
         second_name: this.props.surname,
       },
     });
-    const changePasswordForm = new ChangePasswordForm();
+    const changePasswordForm = new ChangePasswordForm({
+      onSubmit: () => {
+        this.setProps({
+          ...this.props,
+          activeContent: "profile",
+        });
+      },
+    });
     const profile = new ProfileInfo({
       email: this.props.email,
       login: this.props.login,

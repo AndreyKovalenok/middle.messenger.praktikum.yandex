@@ -1,1 +1,1 @@
-export { User } from "./user";
+export { User, TChangePasswordRequestPayload } from "./user";
