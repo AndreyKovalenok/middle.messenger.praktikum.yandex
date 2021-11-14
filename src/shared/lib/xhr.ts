@@ -120,7 +120,11 @@ export class HTTP {
       }
 
       xhr.onload = function () {
-        resolve(xhr as T);
+        try {
+          resolve(JSON.parse(xhr.response));
+        } catch (e) {
+          return resolve(xhr.response);
+        }
       };
 
       const handleError = (err: unknown) => {

@@ -8,7 +8,7 @@ import {
 import { authModel } from "features/auth";
 import type { TChangeUserDataForm } from "features/profile/types";
 import { Block, compile } from "shared/lib";
-import { router } from "shared/utils";
+import { router, state } from "shared/utils";
 import { Loader } from "shared/ui";
 
 import { template } from "./profile-page.tmpl";
@@ -44,6 +44,7 @@ export class ProfilePage extends Block<Props> {
     });
 
     // TODO: add id
+    console.log(state);
     const data = await profileModel.getUserData("1");
 
     this.setProps({
