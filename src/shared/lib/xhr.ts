@@ -5,7 +5,7 @@ const METHODS = {
   DELETE: "DELETE" as const,
 };
 
-type TOptions<T extends Record<string, unknown> = Record<string, unknown>> = {
+type TOptions<T extends unknown = Record<string, unknown>> = {
   data?: T;
   headers?: Record<string, string>;
   timeout?: number;
@@ -13,15 +13,13 @@ type TOptions<T extends Record<string, unknown> = Record<string, unknown>> = {
 
 type TMethodsKeys = keyof typeof METHODS;
 
-type TRequestOptions<
-  T extends Record<string, unknown> = Record<string, unknown>
-> = {
+type TRequestOptions<T extends unknown = Record<string, unknown>> = {
   method: typeof METHODS[TMethodsKeys];
   data?: T;
   headers?: Record<string, string>;
 };
 
-function queryStringify(data: Record<string, unknown>) {
+function queryStringify(data: Object) {
   if (data instanceof Object === false) {
     return null;
   }
@@ -71,10 +69,16 @@ export class HTTP {
     );
   };
 
-  put = <T extends unknown = unknown>(url: string, options: TOptions) => {
+  put = <
+    T extends unknown = unknown,
+    R extends unknown = Record<string, unknown>
+  >(
+    url: string,
+    options: TOptions<R>
+  ) => {
     const { data, headers, timeout } = options;
 
-    return this.request<T>(
+    return this.request<T, R>(
       this.baseUrl + url,
       { data, headers, method: METHODS.PUT },
       timeout
@@ -91,25 +95,24 @@ export class HTTP {
     );
   };
 
-  request = <T extends unknown = unknown>(
+  request = <
+    T extends unknown = unknown,
+    R extends unknown = Record<string, unknown>
+  >(
     url: string,
-    options: TRequestOptions = { method: METHODS.GET },
+    options: TRequestOptions<R> = { method: METHODS.GET },
     timeout = 5000
   ) => {
-    const {
-      method,
-      data,
-      headers = {
-        "Content-type": "application/json",
-      },
-    } = options;
+    const { method, data, headers } = options;
 
     return new Promise<T>((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.withCredentials = true;
 
       const requestUrl =
-        method === METHODS.GET && data ? url + queryStringify(data) : url;
+        method === METHODS.GET && data && data instanceof Object
+          ? url + queryStringify(data)
+          : url;
 
       xhr.open(method, requestUrl, true);
 
@@ -117,6 +120,10 @@ export class HTTP {
 
       for (const header in headers) {
         xhr.setRequestHeader(header, headers[header]);
+      }
+
+      if (data instanceof FormData === false) {
+        xhr.setRequestHeader("Content-type", "application/json");
       }
 
       xhr.onload = function () {
@@ -138,7 +145,11 @@ export class HTTP {
       if (method === METHODS.GET || !data) {
         xhr.send();
       } else {
-        xhr.send(JSON.stringify(data));
+        if (data instanceof FormData) {
+          xhr.send(data);
+        } else {
+          xhr.send(JSON.stringify(data));
+        }
       }
     });
   };

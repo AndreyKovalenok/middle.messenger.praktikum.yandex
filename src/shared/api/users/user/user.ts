@@ -16,10 +16,9 @@ export class User {
       data,
     });
 
-  // TODO: add data
-  changeAvatar = () =>
-    userInstance.put("/profile/avatar", {
-      data: {},
+  changeAvatar = (data: FormData) =>
+    userInstance.put<TUser, FormData>("/profile/avatar", {
+      data,
     });
 
   changePassword = (data: TChangePasswordRequestPayload) =>

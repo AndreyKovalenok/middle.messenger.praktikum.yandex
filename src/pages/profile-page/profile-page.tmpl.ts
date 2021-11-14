@@ -19,4 +19,5 @@ export const template = `
       </div>
     </div>
   {{/blanc-layout}}
+  {{{changeAvatarModal}}}
 `;

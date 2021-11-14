@@ -4,7 +4,10 @@ import { BlancImage } from "shared/icons";
 
 import { template } from "./avatar-button.tmpl";
 
-type Props = { onClick: () => void };
+type Props = {
+  src?: string;
+  onClick: () => void;
+};
 
 export class AvatarButton extends Block<Omit<Props, "onClick">> {
   constructor({ onClick, ...props }: Props) {
@@ -19,6 +22,6 @@ export class AvatarButton extends Block<Omit<Props, "onClick">> {
   render() {
     const icon = new BlancImage();
 
-    return compile(template, { icon });
+    return compile(template, { ...this.props, icon });
   }
 }

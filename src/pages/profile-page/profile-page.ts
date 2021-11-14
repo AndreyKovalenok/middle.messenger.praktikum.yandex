@@ -3,6 +3,8 @@ import {
   ProfileInfo,
   ChangePasswordForm,
   ChangeUserDataForm,
+  ChangeAvatarModal,
+  profileModel,
 } from "features/profile";
 import { authModel } from "features/auth";
 import { Block, compile } from "shared/lib";
@@ -10,33 +12,42 @@ import { router, state } from "shared/utils";
 import { Loader } from "shared/ui";
 
 import { template } from "./profile-page.tmpl";
+import * as styles from "./style.scss";
 
 type TActiveContent = "profile" | "password" | "change-profile";
 
 type Props = {
   activeContent: TActiveContent;
   isLoading: boolean;
+  isAvatarModalActive: boolean;
   email: string;
   login: string;
   name: string;
   surname: string;
   displayName: string;
   phone: string;
+  avatar?: string;
   error?: string;
 };
 
 export class ProfilePage extends Block<Props> {
   constructor() {
-    super({
-      activeContent: "profile",
-      isLoading: false,
-      email: "",
-      login: "",
-      name: "",
-      surname: "",
-      displayName: "",
-      phone: "",
-    });
+    super(
+      {
+        activeContent: "profile",
+        isLoading: false,
+        isAvatarModalActive: false,
+        email: "",
+        login: "",
+        name: "",
+        surname: "",
+        displayName: "",
+        phone: "",
+        avatar: "",
+      },
+      "div",
+      { class: styles.page }
+    );
   }
 
   async getUserData() {
@@ -68,6 +79,7 @@ export class ProfilePage extends Block<Props> {
       name: data.first_name,
       phone: data.phone,
       surname: data.second_name,
+      avatar: data.avatar,
     });
   }
 
@@ -93,8 +105,12 @@ export class ProfilePage extends Block<Props> {
     });
 
     const avatarButton = new AvatarButton({
+      src: this.props.avatar,
       onClick: () => {
-        console.log("click");
+        this.setProps({
+          ...this.props,
+          isAvatarModalActive: true,
+        });
       },
     });
 
@@ -156,12 +172,29 @@ export class ProfilePage extends Block<Props> {
       profile,
     };
 
+    const changeAvatarModal = new ChangeAvatarModal({
+      isActive: this.props.isAvatarModalActive,
+      onSubmit: async (file: File) => {
+        const formData = new FormData();
+        formData.set("avatar", file);
+
+        const userData = await profileModel.changeAvatar(formData);
+
+        this.setProps({
+          ...this.props,
+          isAvatarModalActive: false,
+          avatar: userData.avatar,
+        });
+      },
+    });
+
     return compile(template, {
       ...this.props,
       asideButton,
       avatarButton,
       profile: content[this.props.activeContent],
       loader,
+      changeAvatarModal,
     });
   }
 }

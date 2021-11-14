@@ -1,0 +1,42 @@
+.wrapper {
+  display: none;
+  z-index: 1000;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.active {
+  display: block;
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 340px;
+  padding: 40px 30px;
+  background-color: var(--color-white);
+  border-radius: 12px;
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.14);
+}
+
+.title {
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 500;
+  margin: 0 0 43px;
+}
+
+.inputWrapper {
+  max-width: 122px;
+  margin-bottom: 45px;
+}
+
+.fileName {
+  font-size: 14px;
+  line-height: 16px;
+  color: var(--color-file-text);
+}
