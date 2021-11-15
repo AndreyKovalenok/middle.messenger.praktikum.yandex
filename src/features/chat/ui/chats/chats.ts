@@ -8,7 +8,7 @@ import { template } from "./chats.tmpl";
 type Props = {
   selectedId: string | null;
   chats: TChatItem[];
-  setSelectedElement: (id: string) => void;
+  setSelectedElement: (chat: TChatItem) => void;
 };
 
 export class Chats extends Block<Props> {
@@ -29,7 +29,7 @@ export class Chats extends Block<Props> {
       const chatItem = new ChatItemButton({
         ...chat,
         onClick: () => {
-          this.props.setSelectedElement(chat.id);
+          this.props.setSelectedElement(chat);
         },
         isSelected: this.props.selectedId === chat.id,
       });

@@ -5,10 +5,12 @@ import {
   ChatHeader,
   ChatActions,
   AddChatButton,
+  chatsModel,
 } from "features/chat";
 import { Messages, chatModel, TChatItem, chatMappers } from "entities/chat";
 import { Block, compile } from "shared/lib";
 import { router } from "shared/utils";
+import { InputModal } from "shared/ui";
 
 import { template } from "./chat-page.tmpl";
 
@@ -32,7 +34,8 @@ const messagesMockArray = Array.from(
 
 type Props = {
   isChatsLoading: boolean;
-  selectedId: string | null;
+  isAddChatModalActive: boolean;
+  selectedChat: TChatItem | null;
   chats: TChatItem[];
 };
 
@@ -41,7 +44,8 @@ export class ChatPage extends Block<Props> {
     super({
       isChatsLoading: false,
       chats: [],
-      selectedId: null,
+      selectedChat: null,
+      isAddChatModalActive: false,
     });
   }
 
@@ -74,17 +78,17 @@ export class ChatPage extends Block<Props> {
       onChange: () => console.log("change"),
     });
     const chats = new Chats({
-      selectedId: null,
+      selectedId: this.props.selectedChat?.id ?? null,
       chats: this.props.chats,
-      setSelectedElement: (id) =>
+      setSelectedElement: (chat) =>
         this.setProps({
           ...this.props,
-          selectedId: id,
+          selectedChat: chat,
         }),
     });
     const chatHeader = new ChatHeader({
-      avatarSrc: null,
-      title: "Вадим",
+      avatarSrc: this.props.selectedChat?.avatar ?? "",
+      title: this.props.selectedChat?.title ?? "",
       onActionsClick: () => console.log("onActionsClick"),
     });
     const chatMessages = new Messages({
@@ -105,10 +109,27 @@ export class ChatPage extends Block<Props> {
     });
 
     const addChatButton = new AddChatButton({
-      onClick: () => console.log("click"),
+      onClick: () => {
+        this.setProps({ ...this.props, isAddChatModalActive: true });
+      },
+    });
+
+    const addChatModal = new InputModal({
+      buttonText: "Добавить",
+      inputLabel: "Название чата",
+      onSubmit: async (title: string) => {
+        await chatsModel.addChat(title);
+        this.setProps({ ...this.props, isAddChatModalActive: false });
+      },
+      onClose: () => {
+        this.setProps({ ...this.props, isAddChatModalActive: false });
+      },
+      title: "Добавить чат",
     });
 
     return compile(template, {
+      ...this.props,
+      selectedId: this.props.selectedChat?.id,
       goBackButton,
       searchInput,
       chats,
@@ -116,6 +137,7 @@ export class ChatPage extends Block<Props> {
       chatMessages,
       chatActions,
       addChatButton,
+      addChatModal,
     });
   }
 }

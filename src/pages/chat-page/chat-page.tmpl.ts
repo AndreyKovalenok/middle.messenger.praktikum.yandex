@@ -23,18 +23,25 @@ export const template = `
       </div>
 
       <div class=${styles.content}>
-        <div class=${styles.chatHeader}>
-            {{{chatHeader}}}
-          <div class=${styles.divider}></div>
-        </div>
-        <div class=${styles.chatContent}>
-          {{{chatMessages}}}
-        </div>
-        <div class=${styles.chatActions}>
-          <div class=${styles.divider}></div>
-          {{{chatActions}}}
-        </div>
+        {{#if selectedId}}
+          <div class=${styles.chatHeader}>
+              {{{chatHeader}}}
+            <div class=${styles.divider}></div>
+          </div>
+          <div class=${styles.chatContent}>
+            {{{chatMessages}}}
+          </div>
+          <div class=${styles.chatActions}>
+            <div class=${styles.divider}></div>
+            {{{chatActions}}}
+          </div>
+        {{else}}
+          <div class="${styles.emptyContent}">Выберите чат чтобы отправить сообщение</div>
+        {{/if}}
       </div>
     </div>
+    {{#if isAddChatModalActive}}
+      {{{addChatModal}}}
+    {{/if}}
   {{/blanc-layout}}
 `;

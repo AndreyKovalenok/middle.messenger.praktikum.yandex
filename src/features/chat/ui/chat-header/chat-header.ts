@@ -28,6 +28,7 @@ export class ChatHeader extends Block<Props> {
     });
 
     return compile(template, {
+      ...this.props,
       actionsButton,
       avatar,
     });

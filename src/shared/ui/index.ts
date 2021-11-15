@@ -13,3 +13,4 @@ export { Avatar } from "./avatar";
 export { IconButton } from "./icon-button";
 export { Loader } from "./loader";
 export { FileInputField } from "./file-input-field";
+export { InputModal } from "./input-modal";

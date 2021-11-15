@@ -18,7 +18,7 @@ export type TChatMessage = {
 export type TGetChatsResponse = {
   id: number;
   title: string;
-  avatar: string;
+  avatar: string | null;
   unread_count: number;
-  last_message: TChatMessage;
+  last_message: TChatMessage | null;
 };

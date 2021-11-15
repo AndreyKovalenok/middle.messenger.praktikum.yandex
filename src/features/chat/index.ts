@@ -6,3 +6,4 @@ export {
   ChatActions,
   AddChatButton,
 } from "./ui";
+export * as chatsModel from "./model";
