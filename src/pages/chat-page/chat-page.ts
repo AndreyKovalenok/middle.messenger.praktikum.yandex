@@ -89,7 +89,8 @@ export class ChatPage extends Block<Props> {
     const chatHeader = new ChatHeader({
       avatarSrc: this.props.selectedChat?.avatar ?? "",
       title: this.props.selectedChat?.title ?? "",
-      onActionsClick: () => console.log("onActionsClick"),
+      onAddUserClick: () => {},
+      onRemoveUserClick: () => {},
     });
     const chatMessages = new Messages({
       days: [

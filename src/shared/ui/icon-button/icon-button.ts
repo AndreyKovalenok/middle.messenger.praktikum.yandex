@@ -4,7 +4,8 @@ import { template } from "./icon-button.tmpl";
 import * as styles from "./style.scss";
 
 type Props = {
-  icon: Block;
+  icon?: Block;
+  text?: string;
   onClick: () => void;
 };
 
