@@ -43,5 +43,8 @@ export const template = `
     {{#if isAddChatModalActive}}
       {{{addChatModal}}}
     {{/if}}
+    {{#if isAddUserModalActive}}
+      {{{addUserModal}}}
+    {{/if}}
   {{/blanc-layout}}
 `;

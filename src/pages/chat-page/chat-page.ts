@@ -35,6 +35,7 @@ const messagesMockArray = Array.from(
 type Props = {
   isChatsLoading: boolean;
   isAddChatModalActive: boolean;
+  isAddUserModalActive: boolean;
   selectedChat: TChatItem | null;
   chats: TChatItem[];
 };
@@ -46,6 +47,7 @@ export class ChatPage extends Block<Props> {
       chats: [],
       selectedChat: null,
       isAddChatModalActive: false,
+      isAddUserModalActive: false,
     });
   }
 
@@ -89,7 +91,9 @@ export class ChatPage extends Block<Props> {
     const chatHeader = new ChatHeader({
       avatarSrc: this.props.selectedChat?.avatar ?? "",
       title: this.props.selectedChat?.title ?? "",
-      onAddUserClick: () => {},
+      onAddUserClick: () => {
+        this.setProps({ ...this.props, isAddUserModalActive: true });
+      },
       onRemoveUserClick: () => {},
     });
     const chatMessages = new Messages({
@@ -128,6 +132,28 @@ export class ChatPage extends Block<Props> {
       title: "Добавить чат",
     });
 
+    const addUserModal = new InputModal({
+      buttonText: "Добавить",
+      inputLabel: "Login",
+      title: "Добавить пользователя",
+
+      onSubmit: async (login: string) => {
+        if (this.props.selectedChat?.id) {
+          const user = await chatsModel.searchUser(login);
+          if (user) {
+            await chatsModel.addUser(
+              Number(this.props.selectedChat.id),
+              user[0].id
+            );
+          }
+        }
+        this.setProps({ ...this.props, isAddUserModalActive: false });
+      },
+      onClose: () => {
+        this.setProps({ ...this.props, isAddUserModalActive: false });
+      },
+    });
+
     return compile(template, {
       ...this.props,
       selectedId: this.props.selectedChat?.id,
@@ -139,6 +165,7 @@ export class ChatPage extends Block<Props> {
       chatActions,
       addChatButton,
       addChatModal,
+      addUserModal,
     });
   }
 }

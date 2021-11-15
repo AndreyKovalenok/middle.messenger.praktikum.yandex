@@ -9,7 +9,7 @@ import type {
 } from "./types";
 import type { TGetChatsResponse } from "../types";
 
-const chatInstance = new HTTP({ baseUrl: PATH + "api/v2/chats" });
+const chatInstance = new HTTP({ baseUrl: PATH + "/api/v2/chats" });
 
 export class Chat {
   getChatFiles = (id: string) =>
