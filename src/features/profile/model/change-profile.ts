@@ -1,5 +1,5 @@
 import { api } from "shared/api";
-import { TChangeUserProfileRequestPayload } from "shared/api/users";
+import { TChangeUserProfileRequestPayload } from "shared/api/users/types";
 
 const userApi = new api.user.User();
 
