@@ -34,18 +34,18 @@ router
   .use("/404", Page404)
   .use("/500", Page500)
   .guard(async () => {
-    if (window.location.pathname !== "/404") {
-      if (!routes.includes(window.location.pathname)) {
-        router.go("/404");
-        return false;
-      }
-    }
-
     if (!availableRoutes.includes(window.location.pathname)) {
       const res = await authModel.getUser();
       if (res.reason === "Cookie is not valid") {
         router.go("/login");
         return false;
+      }
+
+      if (window.location.pathname !== "/404") {
+        if (!routes.includes(window.location.pathname)) {
+          router.go("/404");
+          return false;
+        }
       }
 
       return true;
