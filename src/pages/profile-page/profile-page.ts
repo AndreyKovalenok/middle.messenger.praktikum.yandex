@@ -100,7 +100,7 @@ export class ProfilePage extends Block<Props> {
           return;
         }
 
-        router.go("/chats");
+        router.go("/messenger");
       },
     });
 

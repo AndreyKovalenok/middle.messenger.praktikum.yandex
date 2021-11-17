@@ -87,7 +87,7 @@ export class ChatPage extends Block<Props> {
 
   render() {
     const goBackButton = new GoBackButton({
-      onClick: () => router.go("/profile"),
+      onClick: () => router.go("/settings"),
     });
     const searchInput = new SearchInput({
       name: "search",

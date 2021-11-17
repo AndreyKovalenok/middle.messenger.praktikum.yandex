@@ -51,6 +51,8 @@ class Router {
   public history: History = window.history;
   private _currentRoute: Route | null = null;
   private _rootQuery: string = "";
+  private _guard: () => Promise<boolean> = () =>
+    new Promise((resolve) => resolve(true));
 
   constructor(rootQuery: string) {
     if (Router.__instance) {
@@ -61,6 +63,7 @@ class Router {
     this.history = window.history;
     this._currentRoute = null;
     this._rootQuery = rootQuery;
+    this._guard = () => new Promise((resolve) => resolve(true));
 
     Router.__instance = this;
   }
@@ -69,6 +72,11 @@ class Router {
     const route = new Route(pathname, block, { rootQuery: this._rootQuery });
     this.routes.push(route);
 
+    return this;
+  }
+
+  guard(func: () => Promise<boolean>) {
+    this._guard = func;
     return this;
   }
 
@@ -82,18 +90,22 @@ class Router {
   }
 
   _onRoute(pathname: string) {
-    const route = this.getRoute(pathname);
+    this._guard().then((res) => {
+      if (res) {
+        const route = this.getRoute(pathname);
 
-    if (!route) {
-      return;
-    }
+        if (!route) {
+          return;
+        }
 
-    if (this._currentRoute) {
-      this._currentRoute.leave();
-    }
+        if (this._currentRoute) {
+          this._currentRoute.leave();
+        }
 
-    this._currentRoute = route;
-    route.render();
+        this._currentRoute = route;
+        route.render();
+      }
+    });
   }
 
   go(pathname: string) {

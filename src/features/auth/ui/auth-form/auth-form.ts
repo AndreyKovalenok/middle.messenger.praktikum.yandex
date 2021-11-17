@@ -173,7 +173,7 @@ export class AuthForm extends Block<Props> {
     });
 
     const registrationLink = new Link({
-      href: "/registration",
+      href: "/sign-up",
       children: "Нет аккаунта?",
     });
 

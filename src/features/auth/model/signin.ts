@@ -7,5 +7,5 @@ const signinApi = new api.auth.Signin();
 export const signin = async (data: TSigninRequestPayload) => {
   await signinApi.post(data);
 
-  router.go("/chats");
+  router.go("/messenger");
 };
