@@ -18,4 +18,9 @@ export class Chats {
     chatsInstance.delete("/", {
       data: payload,
     });
+
+  token = (id: string) =>
+    chatsInstance.post<{
+      token: string;
+    }>(`/token/${id}`);
 }

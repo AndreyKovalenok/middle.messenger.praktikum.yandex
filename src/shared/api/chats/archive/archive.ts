@@ -6,7 +6,7 @@ import type {
   TArchiveChatReqestPayload,
 } from "./types";
 
-const archiveInstance = new HTTP({ baseUrl: PATH + "api/v2/chats" });
+const archiveInstance = new HTTP({ baseUrl: PATH + "/api/v2/chats" });
 
 export class Archive {
   get = () =>

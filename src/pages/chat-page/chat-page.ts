@@ -10,29 +10,16 @@ import {
 import { Messages, chatModel, TChatItem, chatMappers } from "entities/chat";
 import { Block, compile } from "shared/lib";
 import { router } from "shared/utils";
-import { InputModal } from "shared/ui";
+import { InputModal, Loader } from "shared/ui";
+import { authModel } from "features/auth";
 
 import { template } from "./chat-page.tmpl";
-
-const messagesMock = [
-  {
-    isUserMessage: false,
-    text: "Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой. Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.",
-    time: "12:00",
-  },
-  {
-    isUserMessage: true,
-    text: "Круто!",
-    time: "12:01",
-  },
-];
-
-const messagesMockArray = Array.from(
-  new Array(100),
-  (_, index) => messagesMock[index % 2 ? 0 : 1]
-);
+import { TMessage } from "entities/chat/types";
 
 type Props = {
+  messages: TMessage[];
+  isLoading: boolean;
+  userId: string | null;
   isChatsLoading: boolean;
   isAddChatModalActive: boolean;
   isAddUserModalActive: boolean;
@@ -42,8 +29,13 @@ type Props = {
 };
 
 export class ChatPage extends Block<Props> {
+  socket: WebSocket | null;
+
   constructor() {
     super({
+      messages: [],
+      isLoading: false,
+      userId: null,
       isChatsLoading: false,
       chats: [],
       selectedChat: null,
@@ -51,6 +43,8 @@ export class ChatPage extends Block<Props> {
       isAddUserModalActive: false,
       isDeleteUserModalActive: false,
     });
+
+    this.socket = null;
   }
 
   async fetchChats() {
@@ -68,8 +62,27 @@ export class ChatPage extends Block<Props> {
     });
   }
 
+  async fetchUser() {
+    this.setProps({
+      ...this.props,
+      isLoading: true,
+    });
+
+    const data = await authModel.getUser();
+
+    if (data) {
+      this.setProps({ ...this.props, userId: String(data.id) });
+    }
+
+    this.setProps({
+      ...this.props,
+      isLoading: false,
+    });
+  }
+
   componentDidMount() {
     this.fetchChats();
+    this.fetchUser();
   }
 
   render() {
@@ -84,11 +97,67 @@ export class ChatPage extends Block<Props> {
     const chats = new Chats({
       selectedId: this.props.selectedChat?.id ?? null,
       chats: this.props.chats,
-      setSelectedElement: (chat) =>
+      setSelectedElement: async (chat) => {
         this.setProps({
           ...this.props,
           selectedChat: chat,
-        }),
+        });
+
+        if (this.props.userId) {
+          const { token } = await chatsModel.token(chat.id);
+
+          const socket = chatsModel.createSocket({
+            chatId: chat.id,
+            token,
+            userId: this.props.userId,
+          });
+
+          this.socket = socket;
+
+          this.setProps({
+            ...this.props,
+            messages: [],
+          });
+
+          socket.addEventListener("message", (message) => {
+            const data = JSON.parse(message.data);
+
+            console.log(`this.props`, this.props);
+
+            if (Array.isArray(data)) {
+              this.setProps({
+                ...this.props,
+                messages: [
+                  ...data.map((item) => ({
+                    isUserMessage: item.user_id === Number(this.props.userId),
+                    text: item.content,
+                    time:
+                      new Date(item.time).getHours() +
+                      ":" +
+                      new Date(item.time).getMinutes(),
+                  })),
+                  ...this.props.messages,
+                ],
+              });
+            } else {
+              this.setProps({
+                ...this.props,
+                messages: [
+                  {
+                    isUserMessage: data.user_id === Number(this.props.userId),
+                    text: data.content,
+                    time:
+                      new Date(data.time).getHours() +
+                      ":" +
+                      new Date(data.time).getMinutes(),
+                  },
+                  ...this.props.messages,
+                ],
+              });
+            }
+          });
+        }
+      },
     });
     const chatHeader = new ChatHeader({
       avatarSrc: this.props.selectedChat?.avatar ?? "",
@@ -104,17 +173,20 @@ export class ChatPage extends Block<Props> {
       days: [
         {
           date: "01.01.1970",
-          messages: messagesMockArray,
+          messages: this.props.messages,
         },
       ],
     });
     const chatActions = new ChatActions({
       onActionsClick: () => console.log("onActionsClick"),
-      onSendMessage: () => console.log("onSendMessage"),
-      onBlur: () => console.log("onBlur"),
-      onFocus: () => console.log("onFocus"),
-      onChange: () => console.log("onChange"),
-      messageInputValue: "123",
+      onSendMessage: (message: string) => {
+        this.socket?.send(
+          JSON.stringify({
+            content: message,
+            type: "message",
+          })
+        );
+      },
     });
 
     const addChatButton = new AddChatButton({
@@ -178,6 +250,8 @@ export class ChatPage extends Block<Props> {
       },
     });
 
+    const loader = new Loader();
+
     return compile(template, {
       ...this.props,
       selectedId: this.props.selectedChat?.id,
@@ -191,6 +265,7 @@ export class ChatPage extends Block<Props> {
       addChatModal,
       addUserModal,
       deleteUserModal,
+      loader,
     });
   }
 }
