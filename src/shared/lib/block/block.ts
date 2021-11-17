@@ -1,6 +1,6 @@
 import { v4 } from "uuid";
 
-import { EventBus } from "./event-bus";
+import { EventBus } from "../event-bus";
 
 type TMeta<T> = {
   tagName: string;
