@@ -36,6 +36,7 @@ type Props = {
   isChatsLoading: boolean;
   isAddChatModalActive: boolean;
   isAddUserModalActive: boolean;
+  isDeleteUserModalActive: boolean;
   selectedChat: TChatItem | null;
   chats: TChatItem[];
 };
@@ -48,6 +49,7 @@ export class ChatPage extends Block<Props> {
       selectedChat: null,
       isAddChatModalActive: false,
       isAddUserModalActive: false,
+      isDeleteUserModalActive: false,
     });
   }
 
@@ -94,7 +96,9 @@ export class ChatPage extends Block<Props> {
       onAddUserClick: () => {
         this.setProps({ ...this.props, isAddUserModalActive: true });
       },
-      onRemoveUserClick: () => {},
+      onRemoveUserClick: () => {
+        this.setProps({ ...this.props, isDeleteUserModalActive: true });
+      },
     });
     const chatMessages = new Messages({
       days: [
@@ -136,7 +140,6 @@ export class ChatPage extends Block<Props> {
       buttonText: "Добавить",
       inputLabel: "Login",
       title: "Добавить пользователя",
-
       onSubmit: async (login: string) => {
         if (this.props.selectedChat?.id) {
           const user = await chatsModel.searchUser(login);
@@ -154,6 +157,27 @@ export class ChatPage extends Block<Props> {
       },
     });
 
+    const deleteUserModal = new InputModal({
+      buttonText: "Удалить",
+      inputLabel: "Login",
+      title: "Удалить пользователя",
+      onSubmit: async (login: string) => {
+        if (this.props.selectedChat?.id) {
+          const user = await chatsModel.searchUser(login);
+          if (user) {
+            await chatsModel.deleteUser(
+              Number(this.props.selectedChat.id),
+              user[0].id
+            );
+          }
+        }
+        this.setProps({ ...this.props, isDeleteUserModalActive: false });
+      },
+      onClose: () => {
+        this.setProps({ ...this.props, isDeleteUserModalActive: false });
+      },
+    });
+
     return compile(template, {
       ...this.props,
       selectedId: this.props.selectedChat?.id,
@@ -166,6 +190,7 @@ export class ChatPage extends Block<Props> {
       addChatButton,
       addChatModal,
       addUserModal,
+      deleteUserModal,
     });
   }
 }

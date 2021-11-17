@@ -46,5 +46,8 @@ export const template = `
     {{#if isAddUserModalActive}}
       {{{addUserModal}}}
     {{/if}}
+    {{#if isDeleteUserModalActive}}
+      {{{deleteUserModal}}}
+    {{/if}}
   {{/blanc-layout}}
 `;
