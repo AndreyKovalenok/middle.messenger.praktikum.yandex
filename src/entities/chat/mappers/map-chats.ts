@@ -1,4 +1,4 @@
-import type { TGetChatsResponse } from "shared/api/chats";
+import type { TGetChatsResponse } from "shared/api/chats/types";
 import type { TChatItem } from "../types";
 
 export const mapChats = (chats: TGetChatsResponse[]): TChatItem[] =>
