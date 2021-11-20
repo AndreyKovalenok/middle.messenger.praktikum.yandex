@@ -46,26 +46,18 @@ class Route<T extends Record<string, unknown> = Record<string, unknown>> {
 }
 
 class Router {
-  private static __instance: Router;
-  public routes: Route[] = [];
-  public history: History = window.history;
-  private _currentRoute: Route | null = null;
-  private _rootQuery: string = "";
-  private _guard: () => Promise<boolean> = () =>
-    new Promise((resolve) => resolve(true));
+  public routes: Route[];
+  public history: History;
+  private _currentRoute: Route | null;
+  private _rootQuery: string;
+  private _guard: () => Promise<boolean>;
 
   constructor(rootQuery: string) {
-    if (Router.__instance) {
-      return Router.__instance;
-    }
-
     this.routes = [];
     this.history = window.history;
     this._currentRoute = null;
     this._rootQuery = rootQuery;
     this._guard = () => new Promise((resolve) => resolve(true));
-
-    Router.__instance = this;
   }
 
   use(pathname: string, block: Block) {
@@ -126,4 +118,4 @@ class Router {
   }
 }
 
-export default Router;
+export default new Router("#root");

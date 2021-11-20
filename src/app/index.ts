@@ -1,5 +1,5 @@
 import { registerPartials } from "shared/lib";
-import { router } from "shared/utils";
+import Router from "shared/lib/router";
 import {
   LoginPage,
   RegisterPage,
@@ -26,8 +26,7 @@ const routes = [
 const availableRoutes = ["/login", "/sign-up", "/404", "/500"];
 const loginRoutes = ["/login", "/sign-up"];
 
-router
-  .use("/login", LoginPage)
+Router.use("/login", LoginPage)
   .use("/sign-up", RegisterPage)
   .use("/settings", ProfilePage)
   .use("/messenger", ChatPage)

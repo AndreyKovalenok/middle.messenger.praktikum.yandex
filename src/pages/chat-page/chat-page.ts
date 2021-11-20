@@ -9,7 +9,7 @@ import {
 } from "features/chat";
 import { Messages, chatModel, TChatItem, chatMappers } from "entities/chat";
 import { Block, compile } from "shared/lib";
-import { router } from "shared/utils";
+import Router from "shared/lib/router";
 import { InputModal, Loader } from "shared/ui";
 import { authModel } from "features/auth";
 
@@ -176,7 +176,7 @@ export class ChatPage extends Block<Props> {
 
   render() {
     const goBackButton = new GoBackButton({
-      onClick: () => router.go("/settings"),
+      onClick: () => Router.go("/settings"),
     });
     const searchInput = new SearchInput({
       name: "search",
