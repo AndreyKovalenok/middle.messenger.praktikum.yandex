@@ -58,31 +58,38 @@ export class ProfilePage extends Block<Props> {
       isLoading: true,
     });
 
-    const data = await authModel.getUser();
+    try {
+      const data = await authModel.getUser();
 
-    if (!data) {
+      if (!data) {
+        this.setProps({
+          ...this.props,
+          isLoading: false,
+        });
+        return;
+      }
+
+      state.change({
+        user: data,
+      });
+
+      this.setProps({
+        ...this.props,
+        isLoading: false,
+        displayName: data.display_name,
+        email: data.email,
+        login: data.login,
+        name: data.first_name,
+        phone: data.phone,
+        surname: data.second_name,
+        avatar: data.avatar,
+      });
+    } catch (error) {
       this.setProps({
         ...this.props,
         isLoading: false,
       });
-      return;
     }
-
-    state.change({
-      user: data,
-    });
-
-    this.setProps({
-      ...this.props,
-      isLoading: false,
-      displayName: data.display_name,
-      email: data.email,
-      login: data.login,
-      name: data.first_name,
-      phone: data.phone,
-      surname: data.second_name,
-      avatar: data.avatar,
-    });
   }
 
   componentDidMount() {

@@ -162,12 +162,16 @@ export class AuthForm extends Block<Props> {
 
           const { login, password } = this.props.values;
 
-          await signin({
-            login,
-            password,
-          });
+          try {
+            await signin({
+              login,
+              password,
+            });
 
-          this.setProps({ ...this.props, isLoading: false });
+            this.setProps({ ...this.props, isLoading: false });
+          } catch (error) {
+            this.setProps({ ...this.props, isLoading: false });
+          }
         }
       },
     });

@@ -59,12 +59,19 @@ export class InputModal extends Block<Props> {
       isLoading: true,
     });
 
-    await this.props.onSubmit(this.props.value);
+    try {
+      await this.props.onSubmit(this.props.value);
 
-    this.setProps({
-      ...this.props,
-      isLoading: false,
-    });
+      this.setProps({
+        ...this.props,
+        isLoading: false,
+      });
+    } catch (error) {
+      this.setProps({
+        ...this.props,
+        isLoading: false,
+      });
+    }
   };
 
   render() {

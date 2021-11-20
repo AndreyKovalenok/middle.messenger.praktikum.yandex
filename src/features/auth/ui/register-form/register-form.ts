@@ -284,12 +284,19 @@ export class RegisterForm extends Block<Props> {
             isSubmitting: true,
           });
 
-          await signup(this.props.values);
+          try {
+            await signup(this.props.values);
 
-          this.setProps({
-            ...this.props,
-            isSubmitting: false,
-          });
+            this.setProps({
+              ...this.props,
+              isSubmitting: false,
+            });
+          } catch (error) {
+            this.setProps({
+              ...this.props,
+              isSubmitting: false,
+            });
+          }
         }
       },
     });

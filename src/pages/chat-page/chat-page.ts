@@ -54,13 +54,20 @@ export class ChatPage extends Block<Props> {
       isChatsLoading: true,
     });
 
-    const chats = await chatModel.getChats();
+    try {
+      const chats = await chatModel.getChats();
 
-    this.setProps({
-      ...this.props,
-      isChatsLoading: true,
-      chats: chatMappers.mapChats(chats),
-    });
+      this.setProps({
+        ...this.props,
+        isChatsLoading: false,
+        chats: chatMappers.mapChats(chats),
+      });
+    } catch (error) {
+      this.setProps({
+        ...this.props,
+        isChatsLoading: false,
+      });
+    }
   }
 
   chatMessageHandler(message: MessageEvent<any>) {
@@ -158,16 +165,23 @@ export class ChatPage extends Block<Props> {
       isLoading: true,
     });
 
-    const data = await authModel.getUser();
+    try {
+      const data = await authModel.getUser();
 
-    if (data) {
-      this.setProps({ ...this.props, userId: String(data.id) });
+      if (data) {
+        this.setProps({ ...this.props, userId: String(data.id) });
+      }
+
+      this.setProps({
+        ...this.props,
+        isLoading: false,
+      });
+    } catch (error) {
+      this.setProps({
+        ...this.props,
+        isLoading: false,
+      });
     }
-
-    this.setProps({
-      ...this.props,
-      isLoading: false,
-    });
   }
 
   componentDidMount() {
