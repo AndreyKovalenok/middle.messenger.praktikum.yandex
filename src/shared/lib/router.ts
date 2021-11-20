@@ -20,11 +20,18 @@ class Route<T extends Record<string, unknown> = Record<string, unknown>> {
   private _pathname: string;
   private _block: Block;
   private _props: TProps<T>;
+  private _guard: TGuardFunc;
 
-  constructor(pathname: string, view: Block, props: TProps<T>) {
+  constructor(
+    pathname: string,
+    view: Block,
+    guard: TGuardFunc,
+    props: TProps<T>
+  ) {
     this._pathname = pathname;
     this._block = view;
     this._props = props;
+    this._guard = guard;
   }
 
   public navigate(pathname: string) {
@@ -40,17 +47,25 @@ class Route<T extends Record<string, unknown> = Record<string, unknown>> {
     return pathname === this._pathname;
   }
 
-  public render() {
+  public async render() {
+    const guardRes = await this._guard();
+
+    if (!guardRes) {
+      return;
+    }
+
     render(this._props.rootQuery, this._block);
   }
 }
+
+type TGuardFunc = () => Promise<boolean>;
 
 class Router {
   public routes: Route[];
   public history: History;
   private _currentRoute: Route | null;
   private _rootQuery: string;
-  private _guard: () => Promise<boolean>;
+  private _guard: TGuardFunc;
 
   constructor(rootQuery: string) {
     this.routes = [];
@@ -60,14 +75,20 @@ class Router {
     this._guard = () => new Promise((resolve) => resolve(true));
   }
 
-  use(pathname: string, block: Block) {
-    const route = new Route(pathname, block, { rootQuery: this._rootQuery });
+  use(
+    pathname: string,
+    block: Block,
+    guard: TGuardFunc = () => new Promise((r) => r(true))
+  ) {
+    const route = new Route(pathname, block, guard, {
+      rootQuery: this._rootQuery,
+    });
     this.routes.push(route);
 
     return this;
   }
 
-  guard(func: () => Promise<boolean>) {
+  guard(func: TGuardFunc) {
     this._guard = func;
     return this;
   }

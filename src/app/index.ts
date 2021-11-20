@@ -23,41 +23,48 @@ const routes = [
   "/messenger",
   "/settings",
 ];
-const availableRoutes = ["/login", "/sign-up", "/404", "/500"];
-const loginRoutes = ["/login", "/sign-up"];
 
-Router.use(ROUTES.signIn, LoginPage)
-  .use(ROUTES.signUp, RegisterPage)
-  .use(ROUTES.settings, ProfilePage)
-  .use(ROUTES.messenger, ChatPage)
-  .use(ROUTES.notFound, Page404)
-  .use(ROUTES.serverError, Page500)
-  .guard(async () => {
-    if (!availableRoutes.includes(window.location.pathname)) {
-      const res = await authModel.getUser();
-      if (res.reason === "Cookie is not valid") {
-        Router.go(ROUTES.signIn);
-        return false;
-      }
+const loggedInGuard = async () => {
+  try {
+    const res = await authModel.getUser();
+    if (res?.id) {
+      Router.go(ROUTES.messenger);
+      return false;
+    }
 
-      if (window.location.pathname !== ROUTES.notFound) {
-        if (!routes.includes(window.location.pathname)) {
-          Router.go(ROUTES.notFound);
-          return false;
-        }
-      }
-
+    return true;
+  } catch (error) {
+    console.error(error.response);
+    if (error.status === 401) {
       return true;
     }
 
-    if (loginRoutes.includes(window.location.pathname)) {
-      const res = await authModel.getUser();
-      if (res?.id) {
-        Router.go(ROUTES.messenger);
-        return false;
-      }
+    return false;
+  }
+};
 
-      return true;
+const signInGuard = async () => {
+  try {
+    const res = await authModel.getUser();
+
+    return true;
+  } catch (error) {
+    console.error(error.response);
+    Router.go(ROUTES.signIn);
+    return false;
+  }
+};
+
+Router.use(ROUTES.signIn, LoginPage, loggedInGuard)
+  .use(ROUTES.signUp, RegisterPage, loggedInGuard)
+  .use(ROUTES.settings, ProfilePage, signInGuard)
+  .use(ROUTES.messenger, ChatPage, signInGuard)
+  .use(ROUTES.notFound, Page404)
+  .use(ROUTES.serverError, Page500)
+  .guard(async () => {
+    if (!routes.includes(window.location.pathname)) {
+      Router.go(ROUTES.notFound);
+      return false;
     }
 
     return true;

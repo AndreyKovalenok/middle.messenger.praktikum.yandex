@@ -126,6 +126,10 @@ export class HTTP {
       }
 
       xhr.onload = function () {
+        if (xhr.status !== 200) {
+          reject(xhr);
+        }
+
         try {
           resolve(JSON.parse(xhr.response));
         } catch (e) {
