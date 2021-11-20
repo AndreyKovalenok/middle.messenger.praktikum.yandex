@@ -62,6 +62,11 @@ Router.use(ROUTES.signIn, LoginPage, loggedInGuard)
   .use(ROUTES.notFound, Page404)
   .use(ROUTES.serverError, Page500)
   .guard(async () => {
+    if (window.location.pathname === "/") {
+      Router.go(ROUTES.signIn);
+      return false;
+    }
+
     if (!routes.includes(window.location.pathname)) {
       Router.go(ROUTES.notFound);
       return false;
