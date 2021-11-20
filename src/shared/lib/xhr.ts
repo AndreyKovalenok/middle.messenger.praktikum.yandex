@@ -54,7 +54,11 @@ export class HTTP {
 
     return this.request(
       this.baseUrl + url,
-      { data, headers, method: METHODS.GET },
+      {
+        data: data ? queryStringify(data) : undefined,
+        headers,
+        method: METHODS.GET,
+      },
       timeout
     );
   };
@@ -109,12 +113,7 @@ export class HTTP {
       const xhr = new XMLHttpRequest();
       xhr.withCredentials = true;
 
-      const requestUrl =
-        method === METHODS.GET && data && data instanceof Object
-          ? url + queryStringify(data)
-          : url;
-
-      xhr.open(method, requestUrl, true);
+      xhr.open(method, url, true);
 
       xhr.timeout = timeout;
 
