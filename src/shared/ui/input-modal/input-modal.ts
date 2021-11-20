@@ -53,22 +53,24 @@ export class InputModal extends Block<Props> {
     this.focus.name = "input";
   }
 
+  submitHandler = async () => {
+    this.setProps({
+      ...this.props,
+      isLoading: true,
+    });
+
+    await this.props.onSubmit(this.props.value);
+
+    this.setProps({
+      ...this.props,
+      isLoading: false,
+    });
+  };
+
   render() {
     const button = new PrimaryButton({
       children: this.props.buttonText,
-      onClick: async () => {
-        this.setProps({
-          ...this.props,
-          isLoading: true,
-        });
-
-        await this.props.onSubmit(this.props.value);
-
-        this.setProps({
-          ...this.props,
-          isLoading: false,
-        });
-      },
+      onClick: this.submitHandler,
       isLoading: this.props.isLoading,
     });
 
@@ -80,9 +82,7 @@ export class InputModal extends Block<Props> {
 
         this.inputChangeHandler(target.value, target.selectionStart);
       },
-      onFocus: () => {
-        this.focusHandler();
-      },
+      onFocus: this.focusHandler.bind(this),
       onBlur: (evt) => {
         this.focus.caretPosition = (<HTMLInputElement>(
           evt.target
@@ -96,7 +96,7 @@ export class InputModal extends Block<Props> {
 
     const closeButton = new IconButton({
       icon: new CloseIcon(),
-      onClick: () => this.props.onClose(),
+      onClick: this.props.onClose,
     });
 
     return compile(template, { ...this.props, button, input, closeButton });
