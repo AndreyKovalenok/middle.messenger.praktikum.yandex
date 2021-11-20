@@ -62,6 +62,95 @@ export class ChatPage extends Block<Props> {
     });
   }
 
+  chatMessageHandler(message: MessageEvent<any>) {
+    const data = JSON.parse(message.data);
+
+    const messages = Array.isArray(data)
+      ? chatMappers.mapMessages(data, Number(this.props.userId))
+      : [
+          ...chatMappers.mapMessages([data], Number(this.props.userId)),
+          ...this.props.messages,
+        ];
+
+    this.setProps({
+      ...this.props,
+      messages,
+    });
+  }
+
+  async createSocketConnection(id: string, userId: string) {
+    const { token } = await chatsModel.token(id);
+
+    const socket = chatsModel.createSocket({
+      chatId: id,
+      token,
+      userId,
+    });
+
+    this.socket = socket;
+
+    this.setProps({
+      ...this.props,
+      messages: [],
+    });
+
+    socket.addEventListener("message", this.chatMessageHandler.bind(this));
+  }
+
+  selectChatHandler = async (chat: TChatItem) => {
+    this.setProps({
+      ...this.props,
+      selectedChat: chat,
+    });
+
+    if (this.props.userId) {
+      this.createSocketConnection(chat.id, this.props.userId);
+    }
+  };
+
+  sendMessageHandler = (message: string) => {
+    if (message) {
+      this.socket?.send(
+        JSON.stringify({
+          content: message,
+          type: "message",
+        })
+      );
+    }
+  };
+
+  addUserHandler = async (login: string) => {
+    if (this.props.selectedChat?.id) {
+      const user = await chatsModel.searchUser(login);
+      if (user) {
+        await chatsModel.addUser(
+          Number(this.props.selectedChat.id),
+          user[0].id
+        );
+      }
+    }
+    this.setProps({ ...this.props, isAddUserModalActive: false });
+  };
+
+  deleteUserHandler = async (login: string) => {
+    if (this.props.selectedChat?.id) {
+      const user = await chatsModel.searchUser(login);
+      if (user) {
+        await chatsModel.deleteUser(
+          Number(this.props.selectedChat.id),
+          user[0].id
+        );
+      }
+    }
+    this.setProps({ ...this.props, isDeleteUserModalActive: false });
+  };
+
+  addChatHandler = async (title: string) => {
+    await chatsModel.addChat(title);
+    this.fetchChats();
+    this.setProps({ ...this.props, isAddChatModalActive: false });
+  };
+
   async fetchUser() {
     this.setProps({
       ...this.props,
@@ -97,65 +186,7 @@ export class ChatPage extends Block<Props> {
     const chats = new Chats({
       selectedId: this.props.selectedChat?.id ?? null,
       chats: this.props.chats,
-      setSelectedElement: async (chat) => {
-        this.setProps({
-          ...this.props,
-          selectedChat: chat,
-        });
-
-        if (this.props.userId) {
-          const { token } = await chatsModel.token(chat.id);
-
-          const socket = chatsModel.createSocket({
-            chatId: chat.id,
-            token,
-            userId: this.props.userId,
-          });
-
-          this.socket = socket;
-
-          this.setProps({
-            ...this.props,
-            messages: [],
-          });
-
-          socket.addEventListener("message", (message) => {
-            const data = JSON.parse(message.data);
-
-            if (Array.isArray(data)) {
-              this.setProps({
-                ...this.props,
-                messages: [
-                  ...data.map((item) => ({
-                    isUserMessage: item.user_id === Number(this.props.userId),
-                    text: item.content,
-                    time:
-                      new Date(item.time).getHours() +
-                      ":" +
-                      new Date(item.time).getMinutes(),
-                  })),
-                  ...this.props.messages,
-                ],
-              });
-            } else {
-              this.setProps({
-                ...this.props,
-                messages: [
-                  {
-                    isUserMessage: data.user_id === Number(this.props.userId),
-                    text: data.content,
-                    time:
-                      new Date(data.time).getHours() +
-                      ":" +
-                      new Date(data.time).getMinutes(),
-                  },
-                  ...this.props.messages,
-                ],
-              });
-            }
-          });
-        }
-      },
+      setSelectedElement: this.selectChatHandler,
     });
     const chatHeader = new ChatHeader({
       avatarSrc: this.props.selectedChat?.avatar ?? "",
@@ -177,16 +208,7 @@ export class ChatPage extends Block<Props> {
     });
     const chatActions = new ChatActions({
       onActionsClick: () => console.log("onActionsClick"),
-      onSendMessage: (message: string) => {
-        if (message) {
-          this.socket?.send(
-            JSON.stringify({
-              content: message,
-              type: "message",
-            })
-          );
-        }
-      },
+      onSendMessage: this.sendMessageHandler,
     });
 
     const addChatButton = new AddChatButton({
@@ -198,11 +220,7 @@ export class ChatPage extends Block<Props> {
     const addChatModal = new InputModal({
       buttonText: "Добавить",
       inputLabel: "Название чата",
-      onSubmit: async (title: string) => {
-        await chatsModel.addChat(title);
-        this.fetchChats();
-        this.setProps({ ...this.props, isAddChatModalActive: false });
-      },
+      onSubmit: this.addChatHandler,
       onClose: () => {
         this.setProps({ ...this.props, isAddChatModalActive: false });
       },
@@ -213,18 +231,7 @@ export class ChatPage extends Block<Props> {
       buttonText: "Добавить",
       inputLabel: "Login",
       title: "Добавить пользователя",
-      onSubmit: async (login: string) => {
-        if (this.props.selectedChat?.id) {
-          const user = await chatsModel.searchUser(login);
-          if (user) {
-            await chatsModel.addUser(
-              Number(this.props.selectedChat.id),
-              user[0].id
-            );
-          }
-        }
-        this.setProps({ ...this.props, isAddUserModalActive: false });
-      },
+      onSubmit: this.addUserHandler,
       onClose: () => {
         this.setProps({ ...this.props, isAddUserModalActive: false });
       },
@@ -234,18 +241,7 @@ export class ChatPage extends Block<Props> {
       buttonText: "Удалить",
       inputLabel: "Login",
       title: "Удалить пользователя",
-      onSubmit: async (login: string) => {
-        if (this.props.selectedChat?.id) {
-          const user = await chatsModel.searchUser(login);
-          if (user) {
-            await chatsModel.deleteUser(
-              Number(this.props.selectedChat.id),
-              user[0].id
-            );
-          }
-        }
-        this.setProps({ ...this.props, isDeleteUserModalActive: false });
-      },
+      onSubmit: this.deleteUserHandler,
       onClose: () => {
         this.setProps({ ...this.props, isDeleteUserModalActive: false });
       },
