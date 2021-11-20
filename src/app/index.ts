@@ -1,4 +1,5 @@
 import { registerPartials } from "shared/lib";
+import { ROUTES } from "shared/config";
 import Router from "shared/lib/router";
 import {
   LoginPage,
@@ -8,7 +9,6 @@ import {
   Page500,
   ProfilePage,
 } from "pages";
-
 import { authModel } from "features/auth";
 
 import "./style/style.scss";
@@ -26,23 +26,23 @@ const routes = [
 const availableRoutes = ["/login", "/sign-up", "/404", "/500"];
 const loginRoutes = ["/login", "/sign-up"];
 
-Router.use("/login", LoginPage)
-  .use("/sign-up", RegisterPage)
-  .use("/settings", ProfilePage)
-  .use("/messenger", ChatPage)
-  .use("/404", Page404)
-  .use("/500", Page500)
+Router.use(ROUTES.signIn, LoginPage)
+  .use(ROUTES.signUp, RegisterPage)
+  .use(ROUTES.settings, ProfilePage)
+  .use(ROUTES.messenger, ChatPage)
+  .use(ROUTES.notFound, Page404)
+  .use(ROUTES.serverError, Page500)
   .guard(async () => {
     if (!availableRoutes.includes(window.location.pathname)) {
       const res = await authModel.getUser();
       if (res.reason === "Cookie is not valid") {
-        router.go("/login");
+        Router.go(ROUTES.signIn);
         return false;
       }
 
-      if (window.location.pathname !== "/404") {
+      if (window.location.pathname !== ROUTES.notFound) {
         if (!routes.includes(window.location.pathname)) {
-          router.go("/404");
+          Router.go(ROUTES.notFound);
           return false;
         }
       }
@@ -53,7 +53,7 @@ Router.use("/login", LoginPage)
     if (loginRoutes.includes(window.location.pathname)) {
       const res = await authModel.getUser();
       if (res?.id) {
-        router.go("/messenger");
+        Router.go(ROUTES.messenger);
         return false;
       }
 

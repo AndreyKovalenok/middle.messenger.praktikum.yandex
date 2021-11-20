@@ -8,7 +8,9 @@ import {
 } from "features/profile";
 import { authModel } from "features/auth";
 import { Block, compile } from "shared/lib";
-import { router, state } from "shared/utils";
+import { state } from "shared/utils";
+import { ROUTES } from "shared/config";
+import Router from "shared/lib/router";
 import { Loader } from "shared/ui";
 
 import { template } from "./profile-page.tmpl";
@@ -100,7 +102,7 @@ export class ProfilePage extends Block<Props> {
           return;
         }
 
-        router.go("/messenger");
+        Router.go(ROUTES.messenger);
       },
     });
 
