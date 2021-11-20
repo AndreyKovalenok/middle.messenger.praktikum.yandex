@@ -80,7 +80,7 @@ export class ChangeAvatarModal extends Block<Props> {
       title: "Загрузите файл",
       button,
       fileInput,
-      fileName: this.props.file ? this.props.file.name : undefined,
+      fileName: this.props.file?.name,
       closeButton,
     });
   }
