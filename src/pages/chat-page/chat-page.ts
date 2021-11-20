@@ -178,12 +178,14 @@ export class ChatPage extends Block<Props> {
     const chatActions = new ChatActions({
       onActionsClick: () => console.log("onActionsClick"),
       onSendMessage: (message: string) => {
-        this.socket?.send(
-          JSON.stringify({
-            content: message,
-            type: "message",
-          })
-        );
+        if (message) {
+          this.socket?.send(
+            JSON.stringify({
+              content: message,
+              type: "message",
+            })
+          );
+        }
       },
     });
 
