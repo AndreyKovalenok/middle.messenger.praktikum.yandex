@@ -122,8 +122,6 @@ export class ChatPage extends Block<Props> {
           socket.addEventListener("message", (message) => {
             const data = JSON.parse(message.data);
 
-            console.log(`this.props`, this.props);
-
             if (Array.isArray(data)) {
               this.setProps({
                 ...this.props,
@@ -200,6 +198,7 @@ export class ChatPage extends Block<Props> {
       inputLabel: "Название чата",
       onSubmit: async (title: string) => {
         await chatsModel.addChat(title);
+        this.fetchChats();
         this.setProps({ ...this.props, isAddChatModalActive: false });
       },
       onClose: () => {
