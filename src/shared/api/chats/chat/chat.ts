@@ -1,6 +1,6 @@
 import { HTTP } from "shared/lib";
 
-import { PATH } from "../../config";
+import { API_URL } from "../../config";
 import type {
   TGetChatFilesResponse,
   TChatUser,
@@ -9,7 +9,7 @@ import type {
 } from "./types";
 import type { TGetChatsResponse } from "../types";
 
-const chatInstance = new HTTP({ baseUrl: PATH + "/api/v2/chats" });
+const chatInstance = new HTTP({ baseUrl: API_URL + "/api/v2/chats" });
 
 export class Chat {
   getChatFiles = (id: string) =>

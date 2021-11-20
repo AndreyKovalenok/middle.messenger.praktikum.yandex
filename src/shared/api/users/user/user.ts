@@ -1,6 +1,6 @@
 import { HTTP } from "shared/lib";
 
-import { PATH } from "../../config";
+import { API_URL } from "../../config";
 import type {
   TChangeUserProfileRequestPayload,
   TChangePasswordRequestPayload,
@@ -8,7 +8,7 @@ import type {
 } from "./types";
 import type { TUser } from "../types";
 
-const userInstance = new HTTP({ baseUrl: PATH + "/api/v2/user" });
+const userInstance = new HTTP({ baseUrl: API_URL + "/api/v2/user" });
 
 export class User {
   changeProfile = (data: TChangeUserProfileRequestPayload) =>

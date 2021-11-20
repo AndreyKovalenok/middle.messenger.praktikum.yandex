@@ -1,1 +1,1 @@
-export const PATH = "https://ya-praktikum.tech";
+export const API_URL = "https://ya-praktikum.tech";

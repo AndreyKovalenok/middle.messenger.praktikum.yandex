@@ -1,12 +1,12 @@
 import { HTTP } from "shared/lib";
 
-import { PATH } from "../../config";
+import { API_URL } from "../../config";
 import type {
   TArchiveChatsRequestResponse,
   TArchiveChatReqestPayload,
 } from "./types";
 
-const archiveInstance = new HTTP({ baseUrl: PATH + "/api/v2/chats" });
+const archiveInstance = new HTTP({ baseUrl: API_URL + "/api/v2/chats" });
 
 export class Archive {
   get = () =>

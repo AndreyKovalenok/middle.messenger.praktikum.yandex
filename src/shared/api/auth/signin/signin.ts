@@ -1,9 +1,9 @@
 import { HTTP } from "shared/lib";
 
-import { PATH } from "../../config";
+import { API_URL } from "../../config";
 import type { TSigninRequestPayload } from "./types";
 
-const signinInstance = new HTTP({ baseUrl: PATH + "/api/v2/auth/signin" });
+const signinInstance = new HTTP({ baseUrl: API_URL + "/api/v2/auth/signin" });
 
 export class Signin {
   post = (payload: TSigninRequestPayload) =>

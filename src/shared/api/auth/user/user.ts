@@ -1,9 +1,9 @@
 import { HTTP } from "shared/lib";
 
-import { PATH } from "../../config";
+import { API_URL } from "../../config";
 import type { TUserReqestResponse } from "./types";
 
-const userInstance = new HTTP({ baseUrl: PATH + "/api/v2/auth/user" });
+const userInstance = new HTTP({ baseUrl: API_URL + "/api/v2/auth/user" });
 
 export class User {
   get = async () => {
