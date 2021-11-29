@@ -1,6 +1,7 @@
 import { BlancLayout } from "./blanc-layout";
+import { ModalLayout } from "./modal-layout";
 
-export const partials = [BlancLayout];
+export const partials = [BlancLayout, ModalLayout];
 
 export { InputField } from "./input-field";
 export { PrimaryButton } from "./primary-button";
@@ -10,3 +11,6 @@ export { TextButton } from "./text-button";
 export { Badge } from "./badge";
 export { Avatar } from "./avatar";
 export { IconButton } from "./icon-button";
+export { Loader } from "./loader";
+export { FileInputField } from "./file-input-field";
+export { InputModal } from "./input-modal";

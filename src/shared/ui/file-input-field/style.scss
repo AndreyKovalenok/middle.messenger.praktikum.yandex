@@ -1,0 +1,21 @@
+.label {
+  cursor: pointer;
+  color: var(--color-primary);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  text-decoration: underline;
+
+  input {
+    position: absolute;
+    clip: rect(0 0 0 0);
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+  }
+
+  span {
+    display: inline-flex;
+    text-align: center;
+  }
+}

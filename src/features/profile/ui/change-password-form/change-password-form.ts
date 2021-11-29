@@ -4,6 +4,7 @@ import { InputField, PrimaryButton } from "shared/ui";
 import { template } from "./change-pasword-form.tmpl";
 import type { TChangePasswordForm } from "../../types";
 import { changePasswordValidator } from "./validator";
+import { changePassword } from "../../model";
 
 const initialValues: TChangePasswordForm = {
   newPassword: "",
@@ -15,6 +16,8 @@ type Props = {
   values: TChangePasswordForm;
   errors: Partial<Record<keyof TChangePasswordForm, string>>;
   touched: Partial<Record<keyof TChangePasswordForm, boolean>>;
+  isLoading: boolean;
+  onSubmit: () => void;
 };
 export class ChangePasswordForm extends Block<Props> {
   focus: {
@@ -22,11 +25,13 @@ export class ChangePasswordForm extends Block<Props> {
     caretPosition: number | null;
   };
 
-  constructor() {
+  constructor({ onSubmit }: { onSubmit: () => void }) {
     super({
       values: initialValues,
       errors: {},
       touched: {},
+      isLoading: false,
+      onSubmit,
     });
 
     this.focus = {
@@ -162,7 +167,8 @@ export class ChangePasswordForm extends Block<Props> {
     });
     const submitButton = new PrimaryButton({
       children: "Сохранить",
-      onClick: () => {
+      isLoading: this.props.isLoading,
+      onClick: async () => {
         this.focus = {
           caretPosition: null,
           name: null,
@@ -179,7 +185,22 @@ export class ChangePasswordForm extends Block<Props> {
         });
 
         if (Object.keys(errors).length === 0) {
-          console.log(this.props.values);
+          this.setProps({
+            ...this.props,
+            isLoading: true,
+          });
+
+          await changePassword({
+            newPassword: this.props.values.newPassword,
+            oldPassword: this.props.values.oldPassword,
+          });
+
+          this.setProps({
+            ...this.props,
+            isLoading: false,
+          });
+
+          this.props.onSubmit();
         }
       },
     });

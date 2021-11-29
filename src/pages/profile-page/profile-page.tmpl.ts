@@ -7,12 +7,17 @@ export const template = `
         {{{asideButton}}}
       </div>
       <div class="${styles.profile}">
-        <div class="${styles.avatar}">
-          {{{avatarButton}}}
-        </div>
-        <p class="${styles.name}">{{name}}</p>
-        {{{profile}}}
+        {{#if isLoading}}
+          {{{loader}}}
+        {{else}}
+          <div class="${styles.avatar}">
+            {{{avatarButton}}}
+          </div>
+          <p class="${styles.name}">{{name}}</p>
+          {{{profile}}}
+        {{/if}}
       </div>
     </div>
   {{/blanc-layout}}
+  {{{changeAvatarModal}}}
 `;

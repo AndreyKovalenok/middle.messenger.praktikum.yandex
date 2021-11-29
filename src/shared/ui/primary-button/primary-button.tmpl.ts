@@ -1,1 +1,7 @@
-export const template = `{{children}}`;
+export const template = `
+  {{#if isLoading}}
+    {{{loader}}}
+  {{else}}
+    {{children}}
+  {{/if}}
+`;

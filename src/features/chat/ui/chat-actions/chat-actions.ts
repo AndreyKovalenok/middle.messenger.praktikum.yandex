@@ -78,6 +78,7 @@ class Input extends Block<Omit<InputProps, "onChange" | "onBlur" | "onFocus">> {
       },
       "input",
       {
+        name: "message",
         class: styles.textarea,
         placeholder: "Сообщение",
         value: props.value,
@@ -92,17 +93,18 @@ class Input extends Block<Omit<InputProps, "onChange" | "onBlur" | "onFocus">> {
 
 type Props = {
   messageInputValue: string;
-  onChange: (evt: InputEvent) => void;
-  onFocus: (evt: InputEvent) => void;
-  onBlur: (evt: InputEvent) => void;
   onActionsClick: () => void;
-  onSendMessage: () => void;
+  onSendMessage: (message: string) => void;
 };
 export class ChatActions extends Block<Props> {
-  constructor(props: Props) {
-    super(props, "div", {
+  value: string;
+
+  constructor(props: Omit<Props, "messageInputValue">) {
+    super({ ...props, messageInputValue: "" }, "div", {
       class: styles.wrapper,
     });
+
+    this.value = "";
   }
 
   render() {
@@ -111,13 +113,19 @@ export class ChatActions extends Block<Props> {
     });
 
     const submitButton = new SubmitButton({
-      onSend: this.props.onSendMessage,
+      onSend: () => {
+        this.props.onSendMessage(this.value);
+      },
     });
 
     const input = new Input({
-      onBlur: this.props.onBlur,
-      onChange: this.props.onChange,
-      onFocus: this.props.onFocus,
+      onChange: (evt) => {
+        const target = <HTMLInputElement>evt.target;
+
+        this.value = target.value;
+      },
+      onFocus: () => {},
+      onBlur: () => {},
       value: this.props.messageInputValue,
     });
 

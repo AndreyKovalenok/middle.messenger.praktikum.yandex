@@ -9,5 +9,11 @@ export const template = `
   </div>
   <div class=${styles.actions}>
     {{{actionsButton}}}
+    {{#if isOpen}}
+      <div class="${styles.dropdown}">
+        {{{addUserButton}}}
+        {{{removeUserButton}}}
+      </div>
+    {{/if}}
   </div>
 `;

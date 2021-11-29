@@ -4,7 +4,9 @@ import { template } from "./dots-icon.tmpl";
 
 export class DotsIcon extends Block {
   constructor() {
-    super({});
+    super({}, "div", {
+      style: "display: flex;",
+    });
   }
 
   render() {

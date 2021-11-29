@@ -12,7 +12,7 @@ export class Page500 extends Block {
     const content = new ErrorPageContent({
       title: "500",
       description: "Мы уже фиксим",
-      href: "/chats",
+      href: "/messenger",
       linkText: "Назад к чатам",
     });
 

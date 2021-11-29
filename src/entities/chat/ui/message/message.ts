@@ -12,10 +12,6 @@ const getClass = (isUserMessage: boolean) => {
 };
 
 const getMessageClass = (isUserMessage: boolean) => {
-  if (isUserMessage) {
-    return `${styles.message} ${styles.messageWrapper}`;
-  }
-
   return styles.message;
 };
 

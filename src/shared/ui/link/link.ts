@@ -1,4 +1,5 @@
 import { Block, compile } from "shared/lib";
+import Router from "shared/lib/router";
 
 import { template } from "./link.tmpl";
 import * as styles from "./style.scss";
@@ -11,10 +12,22 @@ type Props = {
 
 export class Link extends Block<Props> {
   constructor(props: Props) {
-    super(props, "a", {
-      href: props.href,
-      class: styles.link,
-    });
+    super(
+      {
+        ...props,
+        events: {
+          click: (evt: any) => {
+            evt.preventDefault();
+            Router.go(this.props.href);
+          },
+        },
+      },
+      "a",
+      {
+        href: props.href,
+        class: styles.link,
+      }
+    );
   }
 
   render() {

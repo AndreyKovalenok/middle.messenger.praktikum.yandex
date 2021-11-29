@@ -12,7 +12,7 @@ export class Page404 extends Block {
     const content = new ErrorPageContent({
       title: "404",
       description: "Не туда попали",
-      href: "/chats",
+      href: "/messenger",
       linkText: "Назад к чатам",
     });
 

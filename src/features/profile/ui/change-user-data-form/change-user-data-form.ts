@@ -5,11 +5,14 @@ import { template } from "./change-user-data-form.tmpl";
 import type { TChangeUserDataForm } from "../../types";
 import { changeUserDataValidator } from "./validator";
 import * as styles from "./style.scss";
+import { changeProfile } from "../../model";
 
 type Props = {
   values: TChangeUserDataForm;
   errors: Partial<TChangeUserDataForm>;
   touched: Partial<Record<keyof TChangeUserDataForm, boolean>>;
+  isLoading: boolean;
+  onSubmit: (values: TChangeUserDataForm) => void;
 };
 export class ChangeUserDataForm extends Block<Props> {
   focus: {
@@ -17,12 +20,16 @@ export class ChangeUserDataForm extends Block<Props> {
     caretPosition: number | null;
   };
 
-  constructor(props: { values: TChangeUserDataForm }) {
+  constructor(props: {
+    values: TChangeUserDataForm;
+    onSubmit: (values: TChangeUserDataForm) => void;
+  }) {
     super(
       {
         ...props,
         errors: {},
         touched: {},
+        isLoading: false,
       },
       "div",
       {
@@ -229,7 +236,8 @@ export class ChangeUserDataForm extends Block<Props> {
     });
     const submitButton = new PrimaryButton({
       children: "Сохранить",
-      onClick: () => {
+      isLoading: this.props.isLoading,
+      onClick: async () => {
         this.focus = {
           caretPosition: null,
           name: null,
@@ -246,7 +254,19 @@ export class ChangeUserDataForm extends Block<Props> {
         });
 
         if (Object.keys(errors).length === 0) {
-          console.log(this.props.values);
+          this.setProps({
+            ...this.props,
+            isLoading: true,
+          });
+
+          await changeProfile(this.props.values);
+
+          this.setProps({
+            ...this.props,
+            isLoading: false,
+          });
+
+          this.props.onSubmit(this.props.values);
         }
       },
     });

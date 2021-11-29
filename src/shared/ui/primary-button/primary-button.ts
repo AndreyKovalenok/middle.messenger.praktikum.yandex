@@ -1,11 +1,13 @@
 import { Block, compile } from "shared/lib";
 
+import { Loader } from "../loader";
 import { template } from "./primary-button.tmpl";
 import * as styles from "./style.scss";
 
 type Props = {
   children: string;
   type?: string;
+  isLoading?: boolean;
   onClick: () => void;
 };
 
@@ -28,6 +30,8 @@ export class PrimaryButton extends Block<Omit<Props, "onClick">> {
   }
 
   render() {
-    return compile(template, this.props);
+    const loader = new Loader();
+
+    return compile(template, { ...this.props, loader });
   }
 }
