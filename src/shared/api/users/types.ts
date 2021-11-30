@@ -8,3 +8,8 @@ export type TUser = {
   phone: string;
   avatar: string;
 };
+
+export {
+  TChangePasswordRequestPayload,
+  TChangeUserProfileRequestPayload,
+} from "./user/types";

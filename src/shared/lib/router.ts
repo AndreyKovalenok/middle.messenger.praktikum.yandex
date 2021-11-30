@@ -8,6 +8,7 @@ function render(query: string, block: Block) {
   }
 
   root.innerHTML = "";
+  //@ts-ignore
   root.insertAdjacentElement("afterbegin", new block().getContent());
   return root;
 }

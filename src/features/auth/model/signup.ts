@@ -8,7 +8,7 @@ const signupApi = new api.auth.Signup();
 export const signup = async (data: TSignupRequestPayload) => {
   const { login, password } = data;
 
-  const id = await signupApi.post(data);
+  await signupApi.post(data);
 
   await signin({
     login,

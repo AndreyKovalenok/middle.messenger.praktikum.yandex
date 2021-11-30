@@ -31,6 +31,7 @@ export const createSocket = ({ chatId, token, userId }: TChatSocketPayload) => {
   });
 
   socket.addEventListener("error", (event) => {
+    //@ts-ignore
     console.log("Ошибка", event.message);
   });
 
