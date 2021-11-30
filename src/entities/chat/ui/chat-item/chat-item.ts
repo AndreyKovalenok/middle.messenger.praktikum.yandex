@@ -4,7 +4,7 @@ import { Block, compile } from "shared/lib";
 import { template } from "./chat-item.tmpl";
 
 import type { TChatItem } from "../../types";
-import * as styles from "./style.scss";
+import styles from "./style.scss";
 
 type Props = TChatItem;
 

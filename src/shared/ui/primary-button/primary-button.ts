@@ -2,7 +2,7 @@ import { Block, compile } from "shared/lib";
 
 import { Loader } from "../loader";
 import { template } from "./primary-button.tmpl";
-import * as styles from "./style.scss";
+import styles from "./style.scss";
 
 type Props = {
   children: string;

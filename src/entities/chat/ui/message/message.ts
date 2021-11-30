@@ -1,7 +1,7 @@
 import { Block, compile } from "shared/lib";
 
 import { template } from "./message.tmpl";
-import * as styles from "./style.scss";
+import styles from "./style.scss";
 
 const getClass = (isUserMessage: boolean) => {
   if (isUserMessage) {

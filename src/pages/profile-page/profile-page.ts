@@ -14,7 +14,7 @@ import Router from "shared/lib/router";
 import { Loader } from "shared/ui";
 
 import { template } from "./profile-page.tmpl";
-import * as styles from "./style.scss";
+import styles from "./style.scss";
 
 type TActiveContent = "profile" | "password" | "change-profile";
 

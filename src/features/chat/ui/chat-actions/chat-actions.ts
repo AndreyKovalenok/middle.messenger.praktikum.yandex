@@ -3,7 +3,7 @@ import { Block, compile } from "shared/lib";
 import { ClipIcon, LeftArrowEllipse } from "shared/icons";
 
 import { template } from "./chat-actions.tmpl";
-import * as styles from "./style.scss";
+import styles from "./style.scss";
 
 type ActionsButtonProps = {
   onClick: () => void;

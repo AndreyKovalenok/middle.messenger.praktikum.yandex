@@ -1,7 +1,7 @@
 import { Block, compile } from "shared/lib";
 
 import { template } from "./text-button.tmpl";
-import * as styles from "./style.scss";
+import styles from "./style.scss";
 
 const getClass = (isRed: boolean) => {
   if (isRed) {

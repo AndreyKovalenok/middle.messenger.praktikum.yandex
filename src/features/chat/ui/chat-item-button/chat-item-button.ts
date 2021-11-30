@@ -2,7 +2,7 @@ import { Block, compile } from "shared/lib";
 import { ChatItem, TChatItem } from "entities/chat";
 
 import { template } from "./chat-item-button.tmpl";
-import * as styles from "./style.scss";
+import styles from "./style.scss";
 
 const getClass = (isSelected: boolean) => {
   if (isSelected) {

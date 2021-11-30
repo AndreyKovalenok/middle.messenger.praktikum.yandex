@@ -3,7 +3,7 @@ import { TextButton } from "shared/ui";
 import { Block, compile } from "shared/lib";
 
 import { template } from "./profile-info.tmpl";
-import * as styles from "./style.scss";
+import styles from "./style.scss";
 
 type Props = {
   email: string;

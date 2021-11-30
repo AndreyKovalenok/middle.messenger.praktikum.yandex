@@ -4,7 +4,7 @@ import { PrimaryButton, FileInputField, IconButton } from "shared/ui";
 import { CloseIcon } from "shared/icons";
 
 import { template } from "./change-avatar-modal.tmpl";
-import * as styles from "./style.scss";
+import styles from "./style.scss";
 
 const getWrapperClass = (isActive: boolean) => {
   if (isActive) {

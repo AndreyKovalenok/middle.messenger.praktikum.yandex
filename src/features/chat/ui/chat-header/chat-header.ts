@@ -3,7 +3,7 @@ import { Avatar, IconButton } from "shared/ui";
 import { DotsIcon } from "shared/icons";
 
 import { template } from "./chat-header.tmpl";
-import * as styles from "./style.scss";
+import styles from "./style.scss";
 
 type Props = {
   title: string;

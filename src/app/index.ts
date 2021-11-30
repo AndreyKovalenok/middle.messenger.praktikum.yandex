@@ -69,6 +69,7 @@ Router.use(ROUTES.signIn, LoginPage, loggedInGuard)
   .use(ROUTES.serverError, Page500)
   //@ts-ignore
   .guard(async () => {
+    console.log(`window.location.pathname`, window.location.pathname);
     if (window.location.pathname === "/") {
       Router.go(ROUTES.signIn);
       return false;

@@ -22,11 +22,37 @@ module.exports = {
     rules: [
       {
         test: /\.s[ac]ss$/i,
-        use: ["style-loader", "css-loader", "postcss-loader", "sass-loader"],
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              modules: true,
+            },
+          },
+          {
+            loader: "postcss-loader",
+            options: {
+              postcssOptions: {
+                modules: true,
+                plugins: [
+                  require("autoprefixer"),
+                  require("postcss-nested"),
+                  require("precss"),
+                  require("postcss-sorting"),
+                  require("postcss-modules")({
+                    scopeBehaviour: "global", // can be 'global' or 'local',
+                  }),
+                ],
+              },
+            },
+          },
+          "sass-loader",
+        ],
       },
       {
         test: /\.tsx?$/,
-        use: "ts-loader",
+        use: ["ts-loader"],
         exclude: /node_modules/,
       },
     ],
@@ -36,4 +62,12 @@ module.exports = {
       template: "static/index.html",
     }),
   ],
+  devServer: {
+    static: {
+      directory: path.join(__dirname, "dist"),
+    },
+    historyApiFallback: true,
+    compress: true,
+    port: 3000,
+  },
 };

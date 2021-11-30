@@ -3,7 +3,7 @@ import { Block, compile } from "shared/lib";
 import { SearchIcon } from "shared/icons";
 
 import { template } from "./search-input.tmpl";
-import * as styles from "./style.scss";
+import styles from "./style.scss";
 
 type InputProps = {
   value: string;

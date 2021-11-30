@@ -1,6 +1,6 @@
 import { Block, compile } from "shared/lib";
 
-import * as styles from "./style.scss";
+import styles from "./style.scss";
 
 type Props = {
   onClick: () => void;

@@ -4,7 +4,7 @@ import { InputField, PrimaryButton } from "shared/ui";
 import { template } from "./change-user-data-form.tmpl";
 import type { TChangeUserDataForm } from "../../types";
 import { changeUserDataValidator } from "./validator";
-import * as styles from "./style.scss";
+import styles from "./style.scss";
 import { changeProfile } from "../../model";
 
 type Props = {
