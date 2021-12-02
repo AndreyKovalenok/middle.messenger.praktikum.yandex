@@ -18,15 +18,18 @@ https://www.figma.com/file/24EUnEHGEDNLdOcxg7ULwV/Chat?node-id=1%3A515
 
 https://gallant-ardinghelli-f9388c.netlify.app/
 
-## Страницы
+## Heroku
 
-- /index.html
-- /login.html
-- /registration.html
-- /chats.html
-- /profile.html
-- /404.html
-- /500.html
+https://limitless-tor-65621.herokuapp.com/
+
+## Routes
+
+/login
+/sign-up
+/settings
+/messenger
+/404
+/500
 
 ## Используемые технологии
 
