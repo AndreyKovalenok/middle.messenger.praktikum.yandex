@@ -1,7 +1,7 @@
 import { Block, compile } from "shared/lib";
 
 import type { TDay, TMessage } from "../../types";
-import * as styles from "./style.scss";
+import styles from "./style.scss";
 import { MessagesDate } from "../messages-date";
 import { Message } from "../message";
 

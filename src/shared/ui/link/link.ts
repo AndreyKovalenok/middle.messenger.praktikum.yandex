@@ -2,7 +2,7 @@ import { Block, compile } from "shared/lib";
 import Router from "shared/lib/router";
 
 import { template } from "./link.tmpl";
-import * as styles from "./style.scss";
+import styles from "./style.scss";
 
 type Props = {
   href: string;

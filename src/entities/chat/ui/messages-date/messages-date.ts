@@ -1,7 +1,7 @@
 import { Block, compile } from "shared/lib";
 
 import { template } from "./messages-date.tmpl";
-import * as styles from "./style.scss";
+import styles from "./style.scss";
 
 type Props = {
   text: string;

@@ -3,7 +3,7 @@ import { Block, compile } from "shared/lib";
 import { ArrowRight } from "shared/icons";
 
 import { template } from "./go-back-button.tmpl";
-import * as styles from "./style.scss";
+import styles from "./style.scss";
 
 type Props = {
   onClick: () => void;

@@ -1,7 +1,7 @@
 import { Block, compile } from "shared/lib";
 
 import { template } from "./message.tmpl";
-import * as styles from "./style.scss";
+import styles from "./style.scss";
 
 const getClass = (isUserMessage: boolean) => {
   if (isUserMessage) {
@@ -11,7 +11,7 @@ const getClass = (isUserMessage: boolean) => {
   return styles.wrapper;
 };
 
-const getMessageClass = (isUserMessage: boolean) => {
+const getMessageClass = () => {
   return styles.message;
 };
 
@@ -30,7 +30,7 @@ export class Message extends Block<Props> {
   render() {
     return compile(template, {
       ...this.props,
-      messageClass: getMessageClass(this.props.isUserMessage),
+      messageClass: getMessageClass(),
     });
   }
 }

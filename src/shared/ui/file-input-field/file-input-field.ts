@@ -2,7 +2,7 @@ import { Block, compile } from "shared/lib";
 
 import { FileInput } from "../file-input";
 import { template } from "./file-input-field.tmpl";
-import * as styles from "./style.scss";
+import styles from "./style.scss";
 
 type Props = {
   name: string;

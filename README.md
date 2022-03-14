@@ -6,26 +6,37 @@
 ## Команды
 
 - запуск дев сервера на 3000-ом порту
+
 ```sh
 npm run dev
 ```
+
 - сборка проекта
+
 ```
 npm run build
 ```
+
 - установка зависимостей и запуск проекта на 3000-ом порту
+
 ```sh
 npm run start
 ```
+
 - запуск eslint
+
 ```sh
 npm run lint
 ```
+
 - запуск stylelint
+
 ```sh
 npm run lint:scc
 ```
+
 - запуск тестов
+
 ```sh
 npm run test
 ```
@@ -37,3 +48,7 @@ https://www.figma.com/file/24EUnEHGEDNLdOcxg7ULwV/Chat?node-id=1%3A515
 ## Netlify хостинг
 
 https://gallant-ardinghelli-f9388c.netlify.app/
+
+## Heroku
+
+https://limitless-tor-65621.herokuapp.com/

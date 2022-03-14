@@ -2,7 +2,7 @@ import { TChatItem } from "entities/chat";
 import { Block, compile } from "shared/lib";
 
 import { ChatItemButton } from "../chat-item-button";
-import * as styles from "./style.scss";
+import styles from "./style.scss";
 import { template } from "./chats.tmpl";
 
 type Props = {

@@ -1,4 +1,4 @@
-import * as styles from "./style.scss";
+import styles from "./style.scss";
 
 export const template = `<div class="${styles.layout}">
       <p class="${styles.title}">Вход</p>

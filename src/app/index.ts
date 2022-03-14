@@ -33,7 +33,7 @@ const loggedInGuard = async () => {
     }
 
     return true;
-  } catch (error) {
+  } catch (error: any) {
     console.error(error.response);
     if (error.status === 401) {
       return true;
@@ -45,22 +45,29 @@ const loggedInGuard = async () => {
 
 const signInGuard = async () => {
   try {
-    const res = await authModel.getUser();
+    await authModel.getUser();
 
     return true;
-  } catch (error) {
+  } catch (error: any) {
     console.error(error.response);
     Router.go(ROUTES.signIn);
     return false;
   }
 };
 
+//@ts-ignore
 Router.use(ROUTES.signIn, LoginPage, loggedInGuard)
+  //@ts-ignore
   .use(ROUTES.signUp, RegisterPage, loggedInGuard)
+  //@ts-ignore
   .use(ROUTES.settings, ProfilePage, signInGuard)
+  //@ts-ignore
   .use(ROUTES.messenger, ChatPage, signInGuard)
+  //@ts-ignore
   .use(ROUTES.notFound, Page404)
+  //@ts-ignore
   .use(ROUTES.serverError, Page500)
+  //@ts-ignore
   .guard(async () => {
     if (window.location.pathname === "/") {
       Router.go(ROUTES.signIn);
