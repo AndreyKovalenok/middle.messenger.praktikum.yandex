@@ -1,14 +1,45 @@
-Sprint 1 - [PR](https://github.com/AndreyKovalenok/middle.messenger.praktikum.yandex/pull/1)
+# Яндекс Практикум. Мидл фронтент-разработчик. Мессенджер
 
-Sprint 2 - [PR](https://github.com/AndreyKovalenok/middle.messenger.praktikum.yandex/pull/2)
-
-Sprint 3 - [PR](https://github.com/AndreyKovalenok/middle.messenger.praktikum.yandex/pull/6)
+Проект реализован в рамках курса "Мидл фронтенд-разработчик" на платформе "Яндекс практикум".
+В проекте используется `handlebard` для шаблонов компонентов. Для рендера написан свой класс, реагирующий на изменение пропсов. Для работы с API написан своя обертка на xhr. Написан свой роутер. Для хостинка используется `netlify`.
 
 ## Команды
 
-- dev: запуск дев сервера на 3000-ом порту
-- build: сборка проекта
-- start: запуск проекта на 3000-ом порту
+- запуск дев сервера на 3000-ом порту
+
+```sh
+npm run dev
+```
+
+- сборка проекта
+
+```
+npm run build
+```
+
+- установка зависимостей и запуск проекта на 3000-ом порту
+
+```sh
+npm run start
+```
+
+- запуск eslint
+
+```sh
+npm run lint
+```
+
+- запуск stylelint
+
+```sh
+npm run lint:scc
+```
+
+- запуск тестов
+
+```sh
+npm run test
+```
 
 ## Макет
 
@@ -21,17 +52,3 @@ https://gallant-ardinghelli-f9388c.netlify.app/
 ## Heroku
 
 https://limitless-tor-65621.herokuapp.com/
-
-## Routes
-
-/login
-/sign-up
-/settings
-/messenger
-/404
-/500
-
-## Используемые технологии
-
-- Шаблонизатор - [handlebars](https://handlebarsjs.com/)
-- CSS - [PostCss](https://postcss.org/)
