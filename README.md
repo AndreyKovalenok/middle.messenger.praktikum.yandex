@@ -41,6 +41,24 @@ npm run lint:scc
 npm run test
 ```
 
+## Деплой
+1. Для деплоя прпиложения в первую очередь необходимо залогиниться на heroku:
+```sh
+heroku container:login
+```
+2. Далее необходимо собрать и запушить docker-образ:
+```sh
+heroku container:push web
+```
+3. После того как образ запушится необходимо "зарелизить" новую версию приложения:
+```sh
+heroku container:release web 
+```
+4. Чтобы открыть приложение необходимо ввести следующую команду:
+```sh
+heroku open
+```
+
 ## Макет
 
 https://www.figma.com/file/24EUnEHGEDNLdOcxg7ULwV/Chat?node-id=1%3A515
