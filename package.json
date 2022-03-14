@@ -81,7 +81,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint \"src/**/*.ts\" --fix"
+      "pre-commit": "npm run lint"
     }
   }
 }
